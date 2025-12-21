@@ -1,0 +1,36 @@
+.login-img {
+  min-height: calc(100vh - 210px);
+}
+
+@media (min-width: 768px) {
+  .login-img {
+    flex-basis: 100%;
+    flex-grow: 0;
+    max-width: 100%;
+    min-height: 100vh;
+  }
+}
+
+@media (min-width: 1024px) {
+  .login-img {
+    flex-basis: 100%;
+    flex-grow: 0;
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 1266px) {
+  .login-img {
+    flex-basis: 100%;
+    flex-grow: 0;
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 1440px) {
+  .login-img {
+    flex-basis: 100%;
+    flex-grow: 0;
+    max-width: 100%;
+  }
+}
