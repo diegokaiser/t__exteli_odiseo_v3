@@ -1,5 +1,5 @@
 import { Nav } from "@/app/components/organisms";
-import { Header } from "@/app/components/layout";
+import { Header, Footer } from "@/app/components/layout";
 
 const DashboardWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -14,6 +14,7 @@ const DashboardWrapper = ({ children }: { children: React.ReactNode }) => {
         >
 
           {children}
+          <Footer />
         </div>
       </main>
     </div>
