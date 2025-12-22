@@ -1,8 +1,10 @@
 import { Nav } from "@/app/components/organisms";
+import { Header } from "@/app/components/layout";
 
 const DashboardWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex w-full">
+      <Header />
       <Nav />
       <main className="flex-grow-1 p-2 md:p-6" style={{ width: 'calc(100% - 280px)' }}>
         <div className="flex items-center min-h-[74px] px-4 py-2 md:px-6"></div>
