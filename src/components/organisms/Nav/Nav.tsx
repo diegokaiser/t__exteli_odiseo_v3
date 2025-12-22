@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { useRouter, usePathname } from "next/navigation";
 import Link from 'next/link';
-import { constants } from "@/app/lib/constants/constants";
-import { useAuth } from "@/app/features/auth/hooks/useAuth";
-import { Loader, LoadingScreen } from "@/app/components/atoms";
+import { constants } from "@/lib/constants/constants";
+import { useAuth } from "@/auth/hooks/useAuth";
+import { Loader, LoadingScreen } from "@/components/atoms";
 
 const sidebarMenu = constants.sidebarMenu;
 const sidebarAdminMenu = constants.sidebarAdminMenu;
@@ -29,8 +29,6 @@ const Nav = () => {
       setSubmitting(false);
     }
   }
-
-  console.log(user?.labels[0])
 
   return (
     <>

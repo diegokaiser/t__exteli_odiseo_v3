@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import Nav from '@/app/components/organisms/Nav/Nav';
-import { useAuth } from '@/app/features/auth/hooks/useAuth';
+import { useAuth } from '@/auth/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 
 jest.mock('@/app/features/auth/hooks/useAuth', () => ({

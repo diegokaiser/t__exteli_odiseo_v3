@@ -1,5 +1,5 @@
-import { Nav } from "@/app/components/organisms";
-import { Header, Footer } from "@/app/components/layout";
+import { Nav } from "@/components/organisms";
+import { Header, Footer } from "@/components/layout";
 
 const DashboardWrapper = ({ children }: { children: React.ReactNode }) => {
   return (

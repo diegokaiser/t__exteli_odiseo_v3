@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-import { Login } from "@/app/components/organisms";
+import { Login } from "@/components/organisms";
 
 const AuthBackgroundImg = '/assets/images/auth/background.jpeg';
 

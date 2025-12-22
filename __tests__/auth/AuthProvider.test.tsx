@@ -1,7 +1,7 @@
 import { renderHook, act } from "@testing-library/react";
-import { AuthProvider } from "@/app/features/auth/context/AuthProvider";
-import { useAuth } from "@/app/features/auth/hooks/useAuth";
-import { account } from "@/app/lib/appwrite"
+import { AuthProvider } from "@/auth/context/AuthProvider";
+import { useAuth } from "@/auth/hooks/useAuth";
+import { account } from "@/lib/appwrite"
 
 jest.mock('@/app/lib/appwrite', () => ({
   account: {

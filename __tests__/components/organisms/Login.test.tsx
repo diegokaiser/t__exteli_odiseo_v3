@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { Login } from "@/app/components/organisms";
-import { AuthProvider } from "@/app/features/auth/context/AuthProvider";
+import { AuthProvider } from "@/auth/context/AuthProvider";
 
 jest.mock('@/app/lib/appwrite', () => ({
   account: {

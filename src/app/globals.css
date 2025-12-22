@@ -4,6 +4,6 @@
 @import 'primereact/resources/primereact.min.css';
 @import 'primeicons/primeicons.css';
 
-@import "./components/styles/dashboard.css";
-@import "./components/styles/login.css";
-@import "./components/styles/header.css";
+@import "./styles/dashboard.css";
+@import "./styles/login.css";
+@import "./styles/header.css";

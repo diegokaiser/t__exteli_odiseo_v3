@@ -1,5 +1,4 @@
-import React from 'react';
-import Loader from '@/app/components/atoms/Loader';
+import Loader from '@/components/atoms/Loader';
 
 const LoadingScreen = () => {
   return (

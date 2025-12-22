@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { account } from '@/app/lib/appwrite';
+import { account } from '@/lib/appwrite';
 import { Models } from 'appwrite';
 
 interface AuthContextType {

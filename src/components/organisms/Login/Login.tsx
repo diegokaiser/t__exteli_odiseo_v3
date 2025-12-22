@@ -9,8 +9,8 @@ import { Button } from 'primereact/button'
 import { Checkbox } from 'primereact/checkbox';
 import { InputText } from 'primereact/inputtext';
 
-import { useAuth } from '@/app/features/auth/hooks/useAuth';
-import { LoadingScreen } from '@/app/components/atoms';
+import { useAuth } from '@/auth/hooks/useAuth';
+import { LoadingScreen } from '@/components/atoms';
 
 type LoginFormValues = {
   email: string;
