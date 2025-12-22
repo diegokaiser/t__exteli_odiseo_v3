@@ -1,13 +1,18 @@
 'use client'
 
 import { useState } from 'react';
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import Link from 'next/link';
+import { constants } from "@/app/lib/constants/constants";
 import { useAuth } from "@/app/features/auth/hooks/useAuth";
 import { Loader, LoadingScreen } from "@/app/components/atoms";
 
+const sidebarMenu = constants.sidebarMenu;
+const sidebarAdminMenu = constants.sidebarAdminMenu;
 const UserAvatar = '/assets/images/users/avatar-6.png'
 
 const Nav = () => {
+  const pathname = usePathname();
   const { user, loading, logout } = useAuth();
   const [submitting, setSubmitting] = useState(false);
 
@@ -25,6 +30,8 @@ const Nav = () => {
     }
   }
 
+  console.log(user?.labels[0])
+
   return (
     <>
       {submitting && <LoadingScreen />}
@@ -39,7 +46,165 @@ const Nav = () => {
             </div>
             {/** menu */}
             <div className="flex-grow-1 h-full overflow-hidden">
-
+              <div
+                className="relative flex-col flex-wrap justify-start min-h-[100%]"
+                style={{ alignContent: 'flex-start', alignItems: 'flex-start' }}
+              >
+                <div
+                  className="m-0 overflow-hidden"
+                  style={{
+                    width: 'inherit',
+                    height: 'inherit',
+                    maxWidth: 'inherit',
+                    maxHeight: 'inherit',
+                  }}
+                >
+                  <div
+                    className="h-full w-full max-w-1 relative float-left max-h-1 overflow-hidden z-[-1] p-0 m-0 pointer-events-none"
+                    style={{ boxSizing: 'inherit' }}
+                  >
+                    <div className="block opacity-0 absolute top-0 left-0 h-[1000%] w-[1000%] min-h-[1px] min-w-[1px] overflow-hidden pointer-events-none z-[-1]"></div>
+                  </div>
+                  <div
+                    className="absolute overflow-hidden p-0 m-0 left-0 top-0 bottom-0 right-0"
+                    style={{ direction: 'inherit', width: 'auto', height: 'auto', zIndex: 'inherit' }}
+                  >
+                    <div
+                      className="absolute top-0 left-0 p-0 m-0"
+                      style={{
+                        direction: 'inherit',
+                        boxSizing: 'inherit',
+                        resize: 'none',
+                        right: '0',
+                        bottom: '0',
+                      }}
+                    >
+                      <div
+                        className="box-border relative block w-auto max-w-full max-h-full"
+                        style={{
+                          direction: 'inherit',
+                          height: 'auto',
+                          overflow: 'hidden scroll',
+                          scrollbarWidth: 'none',
+                        }}
+                      >
+                        <div className="flex flex-col" style={{ padding: '0' }}>
+                          <div className="block items-center pt-4">
+                            {sidebarMenu.map((section, sectionIndex) => (
+                              <ul
+                                key={sectionIndex}
+                                className="mt-0 m-0 p-0 relative pt-3 pb-0 z-0"
+                                style={{ listStyle: 'none' }}
+                              >
+                                <div className="pl-6 mb-3 ">
+                                  <h5
+                                    className="m-0 font-semibold text-[#3e4853] uppercase text-xs"
+                                    style={{ lineHeight: '1.5' }}
+                                  >
+                                    {section.title}
+                                  </h5>
+                                </div>
+                                <div className="mb-3">
+                                  {section.items.map((item, itemIndex) => (
+                                    <div key={itemIndex} className="relative">
+                                      <Link
+                                        href={item.href}
+                                        className={`outline-0 m-0 p-0 cursor-pointer align-middle flex justify-start items-center relative min-w-0 text-left pr-4 z-[1201] pl-5 py-2 mx-[10px] my-1 rounded-[8px] text-sm hover:bg-[#e5e7eb] ${
+                                          pathname === item.href
+                                            ? 'bg-[#e5e7eb] border border-solid border-[#e5e7eb] text-[#4680FF]'
+                                            : 'bg-transparent text-[#5b6b79]'
+                                        }`}
+                                        style={{
+                                          transition:
+                                            'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+                                        }}
+                                      >
+                                        <div className="inline-flex shrink-0 min-w-[30px]">
+                                          {item.icon && (
+                                            <span className={`text-sm ${item.icon}`}></span>
+                                          )}
+                                        </div>
+                                        <div className="min-w-0 my-1" style={{ flex: '1 1 auto' }}>
+                                          {item.title}
+                                        </div>
+                                        <span
+                                          className="overflow-hidden pointer-events-none absolute z-0 top-0 right-0 bottom-0 left-0"
+                                          style={{ borderRadius: 'inherit' }}
+                                        ></span>
+                                      </Link>
+                                    </div>
+                                  ))}
+                                </div>
+                              </ul>
+                            ))}
+                            {user?.labels[0] === 'Administrador' && (
+                              <>
+                                {sidebarAdminMenu.map((section, sectionIndex) => (
+                                  <ul
+                                    key={sectionIndex}
+                                    className="mt-0 m-0 p-0 relative pt-3 pb-0 z-0"
+                                    style={{ listStyle: 'none' }}
+                                  >
+                                    <div className="pl-6 mb-3 ">
+                                      <h5
+                                        className="m-0 font-semibold text-[#3e4853] uppercase text-xs"
+                                        style={{ lineHeight: '1.5' }}
+                                      >
+                                        {section.title}
+                                      </h5>
+                                    </div>
+                                    <div className="mb-3">
+                                      {section.items.map((item, itemIndex) => (
+                                        <div key={itemIndex} className="relative">
+                                          <Link
+                                            href={item.href}
+                                            className={`outline-0 m-0 p-0 cursor-pointer align-middle flex justify-start items-center relative min-w-0 text-left pr-4 z-[1201] pl-5 py-2 mx-[10px] my-1 rounded-[8px] text-sm hover:bg-[#e5e7eb] ${
+                                              pathname === item.href
+                                                ? 'bg-[#e5e7eb] border border-solid border-[#e5e7eb] text-[#4680FF]'
+                                                : 'bg-transparent text-[#5b6b79]'
+                                            }`}
+                                            style={{
+                                              transition:
+                                                'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+                                            }}
+                                          >
+                                            <div className="inline-flex shrink-0 min-w-[30px]">
+                                              {item.icon && (
+                                                <span className={`text-sm ${item.icon}`}></span>
+                                              )}
+                                            </div>
+                                            <div
+                                              className="min-w-0 my-1"
+                                              style={{ flex: '1 1 auto' }}
+                                            >
+                                              {item.title}
+                                            </div>
+                                            <span
+                                              className="overflow-hidden pointer-events-none absolute z-0 top-0 right-0 bottom-0 left-0"
+                                              style={{ borderRadius: 'inherit' }}
+                                            ></span>
+                                          </Link>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </ul>
+                                ))}
+                              </>
+                            )}
+                          </div>
+                        </div>
+                        <div className="h-20"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="min-h-full min-w-full pointer-events-none"></div>
+                </div>
+                <div
+                  className="left-0 h-[11px] z-[1] absolute right-0 bottom-0 pointer-events-none overflow-hidden"
+                  style={{ visibility: 'hidden' }}
+                ></div>
+                <div className="w-[10px] top-0 z-[1] absolute right-0 bottom-0 pointer-events-none overflow-hidden"></div>
+              </div>
             </div>
             {/** user */}
             <div
