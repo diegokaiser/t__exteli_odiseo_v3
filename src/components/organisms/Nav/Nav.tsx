@@ -1,15 +1,16 @@
-'use client'
+'use client';
 
-import { useState } from 'react';
-import { useRouter, usePathname } from "next/navigation";
+import { useAuth } from '@/auth/hooks/useAuth';
+import { Loader, LoadingScreen } from '@/components/atoms';
+import { constants } from '@/lib/constants/constants';
 import Link from 'next/link';
-import { constants } from "@/lib/constants/constants";
-import { useAuth } from "@/auth/hooks/useAuth";
-import { Loader, LoadingScreen } from "@/components/atoms";
+import { usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const sidebarMenu = constants.sidebarMenu;
 const sidebarAdminMenu = constants.sidebarAdminMenu;
-const UserAvatar = '/assets/images/users/avatar-6.png'
+const UserAvatarMale = '/assets/images/users/avatarCustomerMale.png';
+const UserAvatarFemale = '/assets/images/users/avatarCustomerFem.png';
 
 const Nav = () => {
   const pathname = usePathname();
@@ -28,7 +29,7 @@ const Nav = () => {
     } finally {
       setSubmitting(false);
     }
-  }
+  };
 
   return (
     <>
@@ -40,8 +41,7 @@ const Nav = () => {
             <div
               className="flex items-center justify-start min-h-[74px] pb-2 pl-6 pt-2"
               style={{ width: 'initial' }}
-            >
-            </div>
+            ></div>
             {/** menu */}
             <div className="flex-grow-1 h-full overflow-hidden">
               <div
@@ -65,7 +65,12 @@ const Nav = () => {
                   </div>
                   <div
                     className="absolute overflow-hidden p-0 m-0 left-0 top-0 bottom-0 right-0"
-                    style={{ direction: 'inherit', width: 'auto', height: 'auto', zIndex: 'inherit' }}
+                    style={{
+                      direction: 'inherit',
+                      width: 'auto',
+                      height: 'auto',
+                      zIndex: 'inherit',
+                    }}
                   >
                     <div
                       className="absolute top-0 left-0 p-0 m-0"
@@ -218,14 +223,14 @@ const Nav = () => {
                     <div className="relative flex items-center justify-center shrink-0 leading-1 rounded-[50%] overflow-hidden bg-[#e9f0ff80] w-[46px] h-[46px]">
                       <img
                         className="w-full h-full text-center object-cover text-transparent indent-[10000px]"
-                        src={UserAvatar}
+                        src={user?.labels[1] == 'Masculino' ? UserAvatarMale : UserAvatarFemale}
                         alt={user?.name || ''}
                       />
                     </div>
                   </div>
                   <div className="mb-[6px] mt-[6px] min-w-0" style={{ flex: '1 1 auto' }}>
                     <span className="font-semibold text-sm">{user?.name ?? <Loader />}</span>
-                    <p className="font-light text-xs">{user?.email ?? <Loader />}</p>
+                    <p className="font-light text-xs">{user?.labels[0] ?? <Loader />}</p>
                   </div>
                   <div
                     className="absolute right-0 top-[50%]"
@@ -272,6 +277,6 @@ const Nav = () => {
       </nav>
     </>
   );
-}
+};
 
-export default Nav
+export default Nav;

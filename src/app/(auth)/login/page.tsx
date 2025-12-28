@@ -1,5 +1,6 @@
-import { twMerge } from "tailwind-merge";
-import { Login } from "@/components/organisms";
+import { twMerge } from 'tailwind-merge';
+
+import { Login } from '@/components/organisms';
 
 const AuthBackgroundImg = '/assets/images/auth/background.jpeg';
 
@@ -8,7 +9,7 @@ const LoginPage = () => {
     <div className="min-h-screen">
       <div
         className={twMerge(
-          "bg-white box-border flex flex-col flex-wrap justify-center min-h-screen w-full"
+          'bg-white box-border flex flex-col flex-wrap justify-center min-h-screen w-full'
         )}
       >
         <div
@@ -27,7 +28,9 @@ const LoginPage = () => {
               <img
                 src={AuthBackgroundImg}
                 alt="Auth Background"
-                className={twMerge('bg-center bg-cover bg-no-repeat block min-h-screen object-cover relative w-full')}
+                className={twMerge(
+                  'bg-center bg-cover bg-no-repeat block min-h-screen object-cover relative w-full'
+                )}
               />
             </div>
             <div

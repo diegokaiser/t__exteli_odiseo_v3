@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
+import { AppProviders } from '@/providers/AppProviders';
+import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import "./globals.css";
-import { AuthProvider } from "@/auth/context/AuthProvider";
+
+import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Extranjería Grupo Ramirez Ventura",
+  title: 'Extranjería Grupo Ramirez Ventura',
   description: 'by    t r a s c e n d i e n d o',
 };
 
@@ -18,9 +19,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${inter.className} relative`}>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   );

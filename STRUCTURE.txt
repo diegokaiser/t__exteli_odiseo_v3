@@ -1,24 +1,159 @@
 .
 ├── README.md
 ├── STRUCTURE.txt
+├── __tests__
+│   ├── auth
+│   │   └── AuthProvider.test.tsx
+│   └── components
+│       └── organisms
+│           ├── Login.test.tsx
+│           └── Nav.test.tsx
 ├── eslint.config.mjs
+├── jest.config.ts
+├── jest.setup.ts
 ├── next-env.d.ts
 ├── next.config.ts
 ├── package-lock.json
 ├── package.json
 ├── postcss.config.mjs
 ├── public
+│   ├── assets
+│   │   └── images
+│   │       ├── auth
+│   │       │   └── background.jpeg
+│   │       └── users
+│   │           ├── avatarCustomerFem.png
+│   │           ├── avatarCustomerMale.png
+│   │           ├── avatarUserFem.png
+│   │           └── avatarUserMale.png
 │   ├── file.svg
 │   ├── globe.svg
 │   ├── next.svg
 │   ├── vercel.svg
 │   └── window.svg
 ├── src
-│   └── app
-│       ├── favicon.ico
-│       ├── globals.css
-│       ├── layout.tsx
-│       └── page.tsx
+│   ├── apis
+│   │   ├── customers.ts
+│   │   ├── index.ts
+│   │   ├── nationalities.ts
+│   │   └── timelines.ts
+│   ├── app
+│   │   ├── (auth)
+│   │   │   ├── login
+│   │   │   │   └── page.tsx
+│   │   │   └── logout
+│   │   │       └── page.tsx
+│   │   ├── (dashboard)
+│   │   │   ├── accountability
+│   │   │   ├── billing
+│   │   │   ├── calendar
+│   │   │   ├── clockify
+│   │   │   ├── customers
+│   │   │   │   ├── [id]
+│   │   │   │   │   └── page.tsx
+│   │   │   │   └── page.tsx
+│   │   │   ├── dashboard
+│   │   │   │   └── page.tsx
+│   │   │   ├── debug
+│   │   │   │   └── firebase
+│   │   │   │       └── page.tsx
+│   │   │   ├── layout.tsx
+│   │   │   ├── settings
+│   │   │   └── users
+│   │   ├── favicon.ico
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   └── styles
+│   │       ├── dashboard.css
+│   │       ├── header.css
+│   │       └── login.css
+│   ├── auth
+│   │   └── hooks
+│   │       └── useAuth.ts
+│   ├── components
+│   │   ├── atoms
+│   │   │   ├── Loader
+│   │   │   │   ├── Loader.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── LoadingScreen
+│   │   │   │   ├── LoadingScreen.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── Message
+│   │   │   │   ├── Message.tsx
+│   │   │   │   └── index.tsx
+│   │   │   └── index.tsx
+│   │   ├── layout
+│   │   │   ├── Footer
+│   │   │   │   ├── Footer.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── Header
+│   │   │   │   ├── Header.tsx
+│   │   │   │   └── index.tsx
+│   │   │   └── index.tsx
+│   │   ├── molecules
+│   │   │   └── index.tsx
+│   │   ├── organisms
+│   │   │   ├── Breadcrumbs
+│   │   │   │   ├── Breadcrumbs.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── CardCustomer
+│   │   │   │   ├── CardCustomer.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── DataCustomer
+│   │   │   │   ├── DataCustomer.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── Login
+│   │   │   │   ├── Login.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── Nav
+│   │   │   │   ├── Nav.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── TimelineCustomer
+│   │   │   │   ├── TimelineCustomer.tsx
+│   │   │   │   └── index.tsx
+│   │   │   └── index.tsx
+│   │   ├── skeletons
+│   │   │   ├── index.tsx
+│   │   │   └── organisms
+│   │   │       ├── CardCustomer
+│   │   │       │   ├── CardCustomer.tsx
+│   │   │       │   └── index.tsx
+│   │   │       ├── DataCustomer
+│   │   │       │   ├── DataCustomer.tsx
+│   │   │       │   └── index.tsx
+│   │   │       ├── Timeline
+│   │   │       │   ├── Timeline.tsx
+│   │   │       │   └── index.tsx
+│   │   │       └── index.tsx
+│   │   └── wrappers
+│   │       ├── Dashboard
+│   │       │   ├── DashboardWrapper.tsx
+│   │       │   └── index.tsx
+│   │       └── index.tsx
+│   ├── features
+│   ├── hocs
+│   │   └── withAuth.tsx
+│   ├── hooks
+│   │   ├── index.ts
+│   │   ├── useCustomer.ts
+│   │   ├── useNationality.ts
+│   │   └── useTimeline.ts
+│   ├── lib
+│   │   ├── appwrite.ts
+│   │   ├── constants
+│   │   │   └── constants.ts
+│   │   └── firebase.ts
+│   ├── providers
+│   │   └── AppProviders.tsx
+│   ├── types
+│   │   ├── breadcrumbs.ts
+│   │   ├── customers.ts
+│   │   ├── nationalities.ts
+│   │   └── timelines.ts
+│   └── utils
+│       └── dateTimeline.ts
+├── tailwind.config.js
 └── tsconfig.json
 
-4 directories, 18 files
+62 directories, 95 files
