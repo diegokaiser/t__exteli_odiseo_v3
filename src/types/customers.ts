@@ -2,10 +2,11 @@ import { Timestamp } from 'firebase/firestore';
 
 import { constants } from '@/lib/constants/constants';
 
-const { documentType, gender, status } = constants;
+const { documentType, gender, messenger, status } = constants;
 
 type DocumentType = (typeof documentType)[number];
 type Gender = (typeof gender)[number];
+type Messenger = (typeof messenger)[number];
 type Status = (typeof status)[number];
 
 export interface Customer {
@@ -48,4 +49,29 @@ export interface Customer {
   [key: string]: any;
 }
 
-export interface CustomerForm extends Customer {}
+export interface CustomerForm {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  phoneSecondary?: string;
+  gender?: Gender;
+  birthday?: string;
+  nationality?: string;
+
+  documentType?: DocumentType;
+  documentNumber?: string;
+
+  agent?: string;
+  servicePack?: string;
+  procedure?: string;
+  status?: Status;
+
+  totalPrice?: string;
+  paid?: string;
+  threeMonths?: boolean;
+  messenger?: Messenger;
+
+  enterDate: string;
+  createdAt: Timestamp;
+}

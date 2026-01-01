@@ -127,8 +127,6 @@ const CustomersPage = () => {
 
   const header = renderHeader();
 
-  console.log(customers);
-
   return (
     <>
       <Breadcrumbs labels={{ customers: 'Clientes' }} pageTitle="Clientes" />
