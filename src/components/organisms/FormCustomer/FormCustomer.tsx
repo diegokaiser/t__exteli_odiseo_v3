@@ -65,6 +65,9 @@ const FormCustomer = () => {
     },
   });
 
+  const selectedProcedure = watch('procedure');
+  const selectedPack = watch('servicePack');
+
   const onSubmit = (data: any) => {
     console.log(data);
   };
@@ -454,6 +457,7 @@ const FormCustomer = () => {
                         id="procedure"
                         className="border-0 box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px]"
                         {...register('procedure')}
+                        disabled={!!selectedPack}
                       >
                         <option value="">Seleccione</option>
                         {allProcedures?.map((procedure) => (
@@ -491,6 +495,7 @@ const FormCustomer = () => {
                         id="servicePack"
                         className="border-0 box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px]"
                         {...register('servicePack')}
+                        disabled={!!selectedProcedure}
                       >
                         <option value="">Seleccione</option>
                         {allPacks?.map((pack) => (
