@@ -14,6 +14,7 @@ import { useProcedures } from '@/hooks/useProcedure';
 import { useUsers } from '@/hooks/useUsers';
 import { constants } from '@/lib/constants/constants';
 import { CustomerForm } from '@/types/customers';
+import { daysSince, format90DaysStatus } from '@/utils/dateThreeMonths';
 
 const FormCustomer = () => {
   const {
@@ -37,6 +38,7 @@ const FormCustomer = () => {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { isValid },
   } = useForm<CustomerForm>({
     mode: 'onChange',
@@ -417,7 +419,14 @@ const FormCustomer = () => {
                 ¿Cumple 90 días en España?
               </label>
               <div className="inline-flex flex-col relative min-w-0 p-0 border-0 align-top w-full mb-2 mt-2">
-                <div className="box-border inline-flex w-full relative rounded-[8px] border border-solid border-[#bec8d0] h-12"></div>
+                <div className="box-border inline-flex w-full relative rounded-[8px] border border-solid border-[#bec8d0] h-12">
+                  <div className="p-[12px]">
+                    <span className="text-[14px]">
+                      {format90DaysStatus(watch('enterDate'))}, días transcurridos:{' '}
+                      {daysSince(watch('enterDate'))}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
