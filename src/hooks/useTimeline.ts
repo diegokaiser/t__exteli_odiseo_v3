@@ -33,7 +33,7 @@ export const usePostTimeline = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: Timeline) => apis.timelines.PostTimeline(data),
+    mutationFn: (data: Omit<Timeline, 'createdAt'>) => apis.timelines.PostTimeline(data),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['timelines'],

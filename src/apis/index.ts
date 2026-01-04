@@ -1,3 +1,4 @@
+import accounting from './accounting';
 import customers from './customers';
 import nationalities from './nationalities';
 import packs from './packs';
@@ -6,6 +7,7 @@ import timelines from './timelines';
 import users from './users';
 
 const apis = {
+  accounting,
   customers,
   nationalities,
   packs,

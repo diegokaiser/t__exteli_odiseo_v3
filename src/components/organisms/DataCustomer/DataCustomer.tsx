@@ -66,7 +66,7 @@ const DataCustomer = ({ customerId }: { customerId: string }) => {
                   <InputText
                     id="firstName"
                     type="text"
-                    className="border-0! box-border bg-none m-0 block capitalize min-w-0 w-full p-[14px]"
+                    className="border-0! box-border bg-none m-0 block capitalize min-w-0 w-full p-[14px] bg-transparent"
                     defaultValue={customer?.firstName}
                     disabled={!isAdmin}
                     {...register('firstName', { required: true })}
@@ -89,7 +89,7 @@ const DataCustomer = ({ customerId }: { customerId: string }) => {
                   <InputText
                     id="lastName"
                     type="text"
-                    className="border-0! box-border bg-none m-0 block capitalize min-w-0 w-full p-[14px]"
+                    className="border-0! box-border bg-none m-0 block capitalize min-w-0 w-full p-[14px] bg-transparent"
                     defaultValue={customer?.lastName}
                     disabled={!isAdmin}
                     {...register('lastName', { required: true })}
@@ -112,7 +112,7 @@ const DataCustomer = ({ customerId }: { customerId: string }) => {
                   <InputText
                     id="email"
                     type="email"
-                    className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px]"
+                    className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] bg-transparent"
                     defaultValue={customer?.email}
                     disabled={!isAdmin}
                     {...register('email', { required: true })}
@@ -134,7 +134,7 @@ const DataCustomer = ({ customerId }: { customerId: string }) => {
                 <div className="box-border inline-flex w-full relative rounded-[8px] border border-solid border-[#bec8d0] h-12">
                   <select
                     id="gender"
-                    className="border-0 box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px]"
+                    className="border-0 box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px] bg-transparent"
                     defaultValue={customer?.gender}
                     disabled={!isAdmin}
                     {...register('gender', { required: true })}
@@ -163,7 +163,7 @@ const DataCustomer = ({ customerId }: { customerId: string }) => {
                   <InputText
                     id="birthday"
                     type="date"
-                    className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px]"
+                    className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] bg-transparent"
                     defaultValue={customer?.birthday}
                     disabled={!isAdmin}
                     {...register('birthday', { required: true })}
@@ -185,7 +185,7 @@ const DataCustomer = ({ customerId }: { customerId: string }) => {
                 <div className="box-border inline-flex w-full relative rounded-[8px] border border-solid border-[#bec8d0] h-12">
                   {loadingAllNationalities ? (
                     <>
-                      <div className="border-0 box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px]">
+                      <div className="border-0 box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px] bg-transparent">
                         <Loader />
                       </div>
                     </>
@@ -193,7 +193,7 @@ const DataCustomer = ({ customerId }: { customerId: string }) => {
                     <>
                       <select
                         id="nationality"
-                        className="border-0 box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px]"
+                        className="border-0 box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px] bg-transparent"
                         defaultValue={customer?.nationality}
                         disabled={!isAdmin}
                         {...register('nationality', { required: true })}
@@ -224,7 +224,7 @@ const DataCustomer = ({ customerId }: { customerId: string }) => {
                   <InputText
                     id="phone"
                     type="text"
-                    className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px]"
+                    className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px] bg-transparent"
                     defaultValue={customer?.phone}
                     disabled={!isAdmin}
                     {...register('phone', { required: true })}
@@ -246,7 +246,7 @@ const DataCustomer = ({ customerId }: { customerId: string }) => {
                 <div className="box-border inline-flex w-full relative rounded-[8px] border border-solid border-[#bec8d0] h-12">
                   <select
                     id="messenger"
-                    className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px]"
+                    className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px] bg-transparent"
                     defaultValue={customer?.messenger}
                     disabled={!isAdmin}
                     {...register('messenger', { required: true })}
@@ -274,7 +274,7 @@ const DataCustomer = ({ customerId }: { customerId: string }) => {
                 <div className="box-border inline-flex w-full relative rounded-[8px] border border-solid border-[#bec8d0] h-12">
                   <select
                     id="documentType"
-                    className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px]"
+                    className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px] bg-transparent"
                     defaultValue={customer?.documentType}
                     disabled={!isAdmin}
                     {...register('documentType', { required: true })}
@@ -303,7 +303,7 @@ const DataCustomer = ({ customerId }: { customerId: string }) => {
                   <InputText
                     id="documentNumber"
                     type="text"
-                    className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px]"
+                    className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px] bg-transparent"
                     defaultValue={customer?.documentNumber}
                     disabled={!isAdmin}
                     {...register('documentNumber', { required: true })}
@@ -326,7 +326,7 @@ const DataCustomer = ({ customerId }: { customerId: string }) => {
                   <InputText
                     id="enterDate"
                     type="date"
-                    className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px]"
+                    className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px] bg-transparent"
                     defaultValue={customer?.enterDate}
                     disabled={!isAdmin}
                     {...register('enterDate', { required: true })}
@@ -349,7 +349,7 @@ const DataCustomer = ({ customerId }: { customerId: string }) => {
                   <InputText
                     id="agent"
                     type="text"
-                    className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px]"
+                    className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px] bg-transparent"
                     defaultValue={customer?.agent}
                     disabled={!isAdmin}
                     {...register('agent', { required: true })}
@@ -371,7 +371,7 @@ const DataCustomer = ({ customerId }: { customerId: string }) => {
                 <div className="box-border inline-flex w-full relative rounded-[8px] border border-solid border-[#bec8d0] h-12">
                   <select
                     id="status"
-                    className="border-0 box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px]"
+                    className="border-0 box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px] bg-transparent"
                     defaultValue={customer?.status}
                     disabled={!isAdmin}
                     {...register('status', { required: true })}
@@ -400,7 +400,7 @@ const DataCustomer = ({ customerId }: { customerId: string }) => {
                   <InputText
                     id="registerdBy"
                     type="text"
-                    className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px]"
+                    className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px] bg-transparent"
                     defaultValue={customer?.registerdBy}
                     disabled={!isAdmin}
                     {...register('registerdBy', { required: true })}

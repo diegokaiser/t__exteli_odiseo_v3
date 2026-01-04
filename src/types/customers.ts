@@ -72,6 +72,10 @@ export interface CustomerForm {
   threeMonths?: boolean;
   messenger?: Messenger;
 
+  registerdBy?: string;
+  timeline?: string;
+
   enterDate: string;
-  createdAt: Timestamp;
+  createdAt: string;
+  updatedAt?: string;
 }

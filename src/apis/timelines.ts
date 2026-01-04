@@ -48,21 +48,21 @@ const timelines = {
       throw err;
     }
   },
-  PostTimeline: async (timeline: Omit<Timeline, 'id' | 'createdAt' | 'updatedAt'>) => {
+  PostTimeline: async (timeline: Omit<Timeline, 'updatedAt'>) => {
     try {
       const timelineDocRef = doc(collection(db, 'timelines'));
+      //const timelineDocRef = doc(collection(db, 'timelines-test'));
       const timelineUid = timelineDocRef.id;
 
-      const linesDocRef = doc(collection(db, 'timelines', timelineUid, 'lines'));
+      const linesDocRef = doc(collection(db, `timelines/${timelineUid}/lines`));
+      //const linesDocRef = doc(collection(db, `timelines-test/${timelineUid}/lines`));
       const linesUid = linesDocRef.id;
 
-      await setDoc(timelineDocRef, {
+      await setDoc(linesDocRef, {
         ...timeline,
         uid: linesUid,
       });
-      return {
-        timelineDocRef,
-      };
+      return timelineDocRef;
     } catch (err) {
       console.error(`PostTimeline error: ${err}`);
       throw err;
