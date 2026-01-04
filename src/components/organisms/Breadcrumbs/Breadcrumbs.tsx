@@ -38,7 +38,7 @@ const breadcrumbs: React.FC<Breadcrumb> = ({ labels, pageTitle }) => {
                         {item.label}
                       </Link>
                     ) : (
-                      <></>
+                      <span className="flex items-center capitalize">{item.label}</span>
                     )}
                   </li>
                   {index < items.length - 1 && <li className="flex ml-2 mr-2">/</li>}
