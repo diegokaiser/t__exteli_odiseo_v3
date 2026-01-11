@@ -133,7 +133,7 @@ const FormCustomer = () => {
       });
     } finally {
       setLoading(false);
-      router.push('/dashboard/customers');
+      router.push('/customers');
     }
   };
 

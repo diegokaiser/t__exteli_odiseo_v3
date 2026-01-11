@@ -264,7 +264,7 @@ const FormBill = () => {
       });
     } finally {
       setLoading(false);
-      router.push('/dashboard/billing');
+      router.push('/billing');
     }
   };
 

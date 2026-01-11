@@ -1,7 +1,6 @@
 import apis from '@/apis';
 import { Company } from '@/types/company';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import router from 'next/router';
 
 export const useCompany = (id: string) => {
   return useQuery<Company | null>({
@@ -52,9 +51,6 @@ export const usePatchCompany = () => {
       queryClient.invalidateQueries({
         queryKey: ['companies'],
       });
-      setTimeout(() => {
-        router.push('/settings/company');
-      }, 3000);
     },
     onError: (error) => {
       console.error('Error al actualizar datos de la empresa', error);

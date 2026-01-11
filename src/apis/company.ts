@@ -1,7 +1,14 @@
 import { db } from '@/lib/firebase';
 import { Company } from '@/types/company';
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
-import { addDoc, updateDoc } from 'firebase/firestore/lite';
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  serverTimestamp,
+  updateDoc,
+} from 'firebase/firestore';
 
 const company = {
   GetCompany: async (uid: string): Promise<Company | null> => {
@@ -43,11 +50,18 @@ const company = {
       throw err;
     }
   },
-  PatchCompany: async (uid: string, company: Omit<Company, 'createdAt'>): Promise<void> => {
+  PatchCompany: async (
+    uid: string,
+    company: Omit<Company, 'id' | 'createdAt' | 'logo'>
+  ): Promise<void> => {
     try {
       const companyRef = doc(db, 'companies', uid);
+
+      const { updatedAt, ...rest } = company;
+
       await updateDoc(companyRef, {
-        ...company,
+        ...rest,
+        updatedAt: serverTimestamp(),
       });
     } catch (err) {
       console.error(`PatchCompany error (${uid}): ${err}`);

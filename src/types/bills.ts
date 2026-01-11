@@ -1,5 +1,7 @@
 import { Timestamp } from 'firebase/firestore';
 
+import { Company } from '@/types/company';
+
 export interface BillDescriptionItem {
   id?: string;
   concept: string;
@@ -19,22 +21,6 @@ export interface BillIva {
 export interface BillIrpf {
   irpf: number;
   value: number;
-}
-
-export interface BillProvider {
-  id?: string;
-  name: string;
-  email: string;
-  document: string;
-  documentType: 'CIF' | 'NIF' | 'NIE';
-  address: string;
-  city: string;
-  country: string;
-  zipcode: string;
-  agentUid: string;
-  createdAt: Timestamp;
-  updatedAt?: Timestamp;
-  logo?: string;
 }
 
 export interface BillCustomerObject {
@@ -95,7 +81,7 @@ export interface Bill {
   notes: string;
   status: 'pendiente' | 'pagada' | 'cancelada';
 
-  provider: BillProvider;
+  provider: Company;
 
   paymentMethod: 'Efectivo' | 'Bizum' | 'Tarjeta' | 'Transferencia bancaria' | string;
 
@@ -127,7 +113,7 @@ export interface BillForm {
   notes: string;
   status: 'pendiente' | 'pagada' | 'cancelada';
 
-  provider: BillProvider;
+  provider: Company;
 
   paymentMethod: 'Efectivo' | 'Bizum' | 'Tarjeta' | 'Transferencia bancaria' | string;
 

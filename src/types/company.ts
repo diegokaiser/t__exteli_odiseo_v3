@@ -16,7 +16,7 @@ export interface Company {
   city: string;
   country: string;
   zipcode: string;
-  agentUid: string;
+  agentUid?: string;
   createdAt: Timestamp;
   updatedAt?: Timestamp;
   logo?: string;
