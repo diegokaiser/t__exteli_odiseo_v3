@@ -2,6 +2,8 @@ const gender = ['Masculino', 'Femenino', 'Otro'] as const;
 const documentType = ['Pasaporte', 'NIE', 'DNI', 'Otro'] as const;
 const status = ['Activo', 'Incompleto', 'Pendiente', 'Finalizado'] as const;
 const messenger = ['Sí', 'No'] as const;
+const paymentMethods = ['Efectivo', 'Bizum', 'Tarjeta', 'Transferencia bancaria'] as const;
+const companyDocumentType = ['CIF', 'NIF', 'NIE'] as const;
 
 const sidebarMenu = [
   {
@@ -39,7 +41,7 @@ const sidebarMenu = [
       },
       {
         title: 'Generar',
-        href: '/billing/new',
+        href: '/billing/add',
         icon: 'pi pi-file-plus',
       },
     ],
@@ -125,10 +127,12 @@ const sidebarAdminMenu = [
 ];
 
 export const constants = {
-  gender,
+  companyDocumentType,
   documentType,
+  gender,
   status,
   messenger,
+  paymentMethods,
   sidebarMenu,
   sidebarAdminMenu,
 };

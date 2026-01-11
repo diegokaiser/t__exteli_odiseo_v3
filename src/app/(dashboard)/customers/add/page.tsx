@@ -1,6 +1,7 @@
 'use client';
 
 import { Breadcrumbs, FormCustomer } from '@/components/organisms';
+import { withAuth } from '@/hocs/withAuth';
 
 const AddCustomerPage = () => {
   return (
@@ -28,4 +29,4 @@ const AddCustomerPage = () => {
   );
 };
 
-export default AddCustomerPage;
+export default withAuth(AddCustomerPage);

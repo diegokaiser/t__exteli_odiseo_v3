@@ -116,7 +116,6 @@ const FormCustomer = () => {
         createdAt: Timestamp.fromDate(new Date(data.createdAt)),
         updatedAt: Timestamp.fromDate(new Date()),
       };
-      console.log(payload);
       await postCustomer.mutateAsync(payload);
 
       toast.current.show({
@@ -134,6 +133,7 @@ const FormCustomer = () => {
       });
     } finally {
       setLoading(false);
+      router.push('/dashboard/customers');
     }
   };
 

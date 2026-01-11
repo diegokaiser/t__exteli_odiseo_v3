@@ -1,6 +1,9 @@
 export { default as Breadcrumbs } from './Breadcrumbs';
 export { default as CardCustomer } from './CardCustomer';
+export { default as CompanyData } from './CompanyData';
+export { default as CompanyLogo } from './CompanyLogo';
 export { default as DataCustomer } from './DataCustomer';
+export { default as FormBill } from './FormBill';
 export { default as FormCustomer } from './FormCustomer';
 export { default as Login } from './Login';
 export { default as Nav } from './Nav';

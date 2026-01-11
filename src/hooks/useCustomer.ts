@@ -73,6 +73,24 @@ export const useCustomersByAgent = (agentUid: string) => {
   });
 };
 
+export const useCustomersSelect = () => {
+  return useQuery<any[]>({
+    queryKey: ['customers-select'],
+    queryFn: async () => {
+      const response = await apis.customers.GetAllCustomers();
+      if (!response) return [];
+
+      return response.map((item: any) => ({
+        id: item.id,
+        name: `${item.customer.firstName} ${item.customer.lastName}`,
+        phone: item.customer.phone,
+      }));
+    },
+    staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: false,
+  });
+};
+
 export const usePostCustomer = () => {
   const queryClient = useQueryClient();
 

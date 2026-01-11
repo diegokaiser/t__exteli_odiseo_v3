@@ -10,6 +10,7 @@ import {
   SkeletonDataCustomer,
   SkeletonTimeline,
 } from '@/components/skeletons/organisms';
+import { withAuth } from '@/hocs/withAuth';
 import { useCustomerName } from '@/hooks/useCustomer';
 
 const CustomerPage = () => {
@@ -71,4 +72,4 @@ const CustomerPage = () => {
   );
 };
 
-export default CustomerPage;
+export default withAuth(CustomerPage);

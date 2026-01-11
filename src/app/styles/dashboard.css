@@ -126,3 +126,9 @@ select[readonly]::placeholder {
   font-size: 13.6px;
   padding: 14px;
 }
+
+/* hack confirmdialog */
+.p-confirm-dialog-message {
+  margin-left: 0 !important;
+  width: 100% !important;
+}
