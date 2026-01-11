@@ -2,6 +2,14 @@ import AddCustomerPage from '@/app/(dashboard)/customers/add/page';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 
+jest.mock('@/hocs/withAuth', () => ({
+  withAuth: (Component: any) => Component,
+}));
+
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({ push: jest.fn(), replace: jest.fn() }),
+}));
+
 // Mock de Breadcrumbs y FormCustomer
 jest.mock('@/components/organisms', () => ({
   Breadcrumbs: (props: any) => (

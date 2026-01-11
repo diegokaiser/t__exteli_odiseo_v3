@@ -260,4 +260,3 @@ const BillingPage = () => {
 };
 
 export default withAuth(BillingPage);
-7;

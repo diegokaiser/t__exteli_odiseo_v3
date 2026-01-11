@@ -51,6 +51,7 @@ const BillPage = () => {
                     irpfs={bill?.irpfs}
                     total={bill?.total}
                     notes={bill?.notes}
+                    paymentMethod={bill?.paymentMethod}
                     status={bill?.status}
                   />
                 </PDFViewer>
