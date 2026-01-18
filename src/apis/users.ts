@@ -1,6 +1,6 @@
 import { db } from '@/lib/firebase';
 import { User } from '@/types/users';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 
 const users = {
   GetUsers: async (): Promise<User[]> => {
@@ -14,6 +14,21 @@ const users = {
       }));
     } catch (err) {
       console.error(`GetUsers error: ${err}`);
+      throw err;
+    }
+  },
+  GetUserName: async (userUid: string) => {
+    try {
+      const userRef = doc(db, 'users', userUid);
+      const snap = await getDoc(userRef);
+
+      if (!snap.exists()) return '';
+
+      return {
+        fullName: `${snap.data().firstName} ${snap.data().lastName}`,
+      };
+    } catch (err) {
+      console.error(`GetUserName error: ${err}`);
       throw err;
     }
   },

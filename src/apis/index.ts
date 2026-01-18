@@ -1,5 +1,6 @@
 import accounting from './accounting';
 import bills from './bills';
+import clockify from './clockify';
 import company from './company';
 import customers from './customers';
 import nationalities from './nationalities';
@@ -11,6 +12,7 @@ import users from './users';
 const apis = {
   accounting,
   bills,
+  clockify,
   company,
   customers,
   nationalities,

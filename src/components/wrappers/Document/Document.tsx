@@ -1,6 +1,7 @@
 'use client';
 
-import { BillCustomer, BillProvider } from '@/types/bills';
+import { BillCustomer } from '@/types/bills';
+import { Company } from '@/types/company';
 import { parsePrice } from '@/utils/parsePrice';
 import {
   Document as DocumentPDF,
@@ -159,7 +160,7 @@ const Document = ({
 }: {
   billSerial: string;
   billNumber: string;
-  provider: BillProvider;
+  provider: Company;
   customerData: BillCustomer;
   customerPhone: string | undefined;
   createDate: string;

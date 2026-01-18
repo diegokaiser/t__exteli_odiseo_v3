@@ -1,5 +1,6 @@
 export { default as Breadcrumbs } from './Breadcrumbs';
 export { default as CardCustomer } from './CardCustomer';
+export { default as ClockifyCalendar } from './ClockifyCalendar';
 export { default as CompanyData } from './CompanyData';
 export { default as CompanyLogo } from './CompanyLogo';
 export { default as DataCustomer } from './DataCustomer';

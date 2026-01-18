@@ -56,7 +56,7 @@ const sidebarMenu = [
       },
       {
         title: 'Generar Reporte',
-        href: '/clockify/new',
+        href: '/clockify/report',
         icon: 'pi pi-calendar-clock',
       },
     ],
@@ -121,6 +121,11 @@ const sidebarAdminMenu = [
         title: 'Datos empresa',
         href: '/settings/company',
         icon: 'pi pi-cog',
+      },
+      {
+        title: 'Alertas',
+        href: '/settings/clockify',
+        icon: 'pi pi-stopwatch',
       },
     ],
   },
