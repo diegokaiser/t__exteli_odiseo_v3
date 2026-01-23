@@ -20,6 +20,7 @@ import { useUsers } from '@/hooks/useUsers';
 import { constants } from '@/lib/constants/constants';
 import { CustomerForm } from '@/types/customers';
 import { daysSince, format90DaysStatus } from '@/utils/dateThreeMonths';
+import Link from 'next/link';
 
 const FormCustomer = () => {
   const { user } = useAuth();
@@ -685,7 +686,12 @@ const FormCustomer = () => {
 
             <div className="box-border m-0 basis-[100%] grow-0 min-w-[100%] mt-4 pl-6 pt-6 lg:basis-[50%] lg:min-w-[50%]">
               <div className="flex flex-col">
-                <Button label="Cancelar" severity="danger" disabled={loading} />
+                <Link
+                  href="/customers"
+                  className="bg-[#ef4444] border-[2px] border-[#ef4444] flex font-medium justify-center px-[20px] py-[12px] rounded-[6px] text-white"
+                >
+                  Cancelar
+                </Link>
               </div>
             </div>
           </div>

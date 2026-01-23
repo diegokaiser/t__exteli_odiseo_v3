@@ -4,6 +4,7 @@ const status = ['Activo', 'Incompleto', 'Pendiente', 'Finalizado'] as const;
 const messenger = ['Sí', 'No'] as const;
 const paymentMethods = ['Efectivo', 'Bizum', 'Tarjeta', 'Transferencia bancaria'] as const;
 const companyDocumentType = ['CIF', 'NIF', 'NIE'] as const;
+const officeLocations = ['Puerto de Balbarán 15'] as const;
 
 const sidebarMenu = [
   {
@@ -71,7 +72,7 @@ const sidebarMenu = [
       },
       {
         title: 'Agregar citas',
-        href: '/calendar/new',
+        href: '/calendar/add',
         icon: 'pi pi-calendar-clock',
       },
     ],
@@ -137,6 +138,7 @@ export const constants = {
   gender,
   status,
   messenger,
+  officeLocations,
   paymentMethods,
   sidebarMenu,
   sidebarAdminMenu,
