@@ -1,6 +1,6 @@
 'use client';
 
-import { Breadcrumbs } from '@/components/organisms';
+import { Breadcrumbs, CardNotification, FormClockifyAlert } from '@/components/organisms';
 import { withAuth } from '@/hocs/withAuth';
 
 const SettingsClockify = () => {
@@ -19,6 +19,7 @@ const SettingsClockify = () => {
               </div>
             </div>
             <hr className="border-[#dbe0e5a6]" />
+            <CardNotification />
           </div>
         </div>
 
@@ -30,6 +31,7 @@ const SettingsClockify = () => {
               </div>
             </div>
             <hr className="border-[#dbe0e5a6]" />
+            <FormClockifyAlert />
           </div>
         </div>
       </div>

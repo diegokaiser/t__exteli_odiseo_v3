@@ -1,3 +1,4 @@
+import Notification from '@/components/atoms/Notification/Notification';
 import { Footer, Header } from '@/components/layout';
 import { Nav } from '@/components/organisms';
 
@@ -17,6 +18,7 @@ const DashboardWrapper = ({ children }: { children: React.ReactNode }) => {
           <Footer />
         </div>
       </main>
+      <Notification />
     </div>
   );
 };

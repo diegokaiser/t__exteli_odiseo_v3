@@ -5,6 +5,7 @@ import clockify from './clockify';
 import company from './company';
 import customers from './customers';
 import nationalities from './nationalities';
+import notification from './notification';
 import packs from './packs';
 import procedures from './procedures';
 import timelines from './timelines';
@@ -18,6 +19,7 @@ const apis = {
   company,
   customers,
   nationalities,
+  notification,
   packs,
   procedures,
   timelines,

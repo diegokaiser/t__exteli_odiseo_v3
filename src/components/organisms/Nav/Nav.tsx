@@ -43,7 +43,13 @@ const Nav = () => {
               className="flex items-center justify-start min-h-[74px] pb-3 pl-6 pt-3"
               style={{ width: 'initial' }}
             >
-              <Image src="/assets/images/logo.svg" alt="Logo" width={74} height={74} />
+              <Image
+                src="/assets/images/logo.svg"
+                alt="Logo"
+                width={74}
+                height={74}
+                loading="eager"
+              />
               <span
                 style={{
                   background: 'linear-gradient(206.48deg, #A389D4 11.14%, #899ED4 104.6%)',
