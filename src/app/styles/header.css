@@ -1,0 +1,9 @@
+header {
+  width: 100%;
+}
+
+@media (min-width: 1266px) {
+  header {
+    width: calc(100% - 280px);
+  }
+}

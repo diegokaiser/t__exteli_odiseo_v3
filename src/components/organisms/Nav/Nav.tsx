@@ -3,6 +3,7 @@
 import { useAuth } from '@/auth/hooks/useAuth';
 import { Loader, LoadingScreen } from '@/components/atoms';
 import { constants } from '@/lib/constants/constants';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -36,12 +37,31 @@ const Nav = () => {
       {submitting && <LoadingScreen />}
       <nav className="shrink-0 z-[1000]">
         <div className="box-border border-r border-dashed border-[#bec8d0] shadow-none overflow-x-hidden whitespace-nowrap w-[280px]">
-          <div className="bg-[#F8F9FA] bg-none border-r border-dashed border-[#bec8d0] fixed flex flex-col h-full left-0 overflow-x-hidden outline-0 overflow-y-auto shadow-none text-[#1D2630] top-0 w-[280px] z-[1200]">
+          <div className="bg-white bg-none border-r border-dashed border-[#bec8d0] fixed flex flex-col h-full left-0 overflow-x-hidden outline-0 overflow-y-auto shadow-none text-[#1D2630] top-0 w-[280px] z-[1200]">
             {/** logo */}
             <div
-              className="flex items-center justify-start min-h-[74px] pb-2 pl-6 pt-2"
+              className="flex items-center justify-start min-h-[74px] pb-3 pl-6 pt-3"
               style={{ width: 'initial' }}
-            ></div>
+            >
+              <Image src="/assets/images/logo.svg" alt="Logo" width={74} height={74} />
+              <span
+                style={{
+                  background: 'linear-gradient(206.48deg, #A389D4 11.14%, #899ED4 104.6%)',
+                  borderRadius: '50rem',
+                  color: '#fff',
+                  display: 'inline-block',
+                  fontSize: '.75rem',
+                  fontWeight: 500,
+                  lineHeight: 1,
+                  marginLeft: '.5rem',
+                  padding: '.45rem .8rem',
+                  verticalAlign: 'baseline',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                v2.1
+              </span>
+            </div>
             {/** menu */}
             <div className="flex-grow-1 h-full overflow-hidden">
               <div
