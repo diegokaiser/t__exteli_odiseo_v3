@@ -14,3 +14,15 @@ export interface User {
 
   [key: string]: any;
 }
+
+export interface UserForm {
+  firstName: string;
+  lastName: string;
+  email: string;
+  gender: string;
+  phone: string;
+  phoneSecondary: string;
+  role: string;
+  status: string;
+  updatedAt?: Timestamp;
+}

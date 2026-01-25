@@ -14,7 +14,15 @@ export const useUser = (userUid: string) => {
 export const useUsers = () => {
   return useQuery<User[]>({
     queryKey: ['users'],
-    queryFn: () => apis.users.GetUsers(),
+    queryFn: async () => {
+      const response = await apis.users.GetUsers();
+      if (!response) return [];
+      return response.map((item: any) => ({
+        id: item.uid,
+        name: `${item.firstName} ${item.lastName}`,
+        ...item,
+      }));
+    },
     staleTime: 1000 * 60 * 5,
   });
 };
@@ -22,7 +30,11 @@ export const useUsers = () => {
 export const useUserName = (userUid: string) => {
   return useQuery({
     queryKey: ['user-name', userUid],
-    queryFn: () => apis.users.GetUserName(userUid),
+    queryFn: async () => {
+      const response = await apis.users.GetUser(userUid);
+      if (!response) return '';
+      return `${response.firstName} ${response.lastName}`;
+    },
     staleTime: 1000 * 60 * 5,
     enabled: !!userUid,
   });
