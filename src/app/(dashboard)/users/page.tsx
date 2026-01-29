@@ -12,8 +12,8 @@ import { LoadingScreen, Message } from '@/components/atoms';
 import { Breadcrumbs } from '@/components/organisms';
 import { withAuth } from '@/hocs/withAuth';
 import { useUsers } from '@/hooks/useUsers';
-import { constants } from '@/lib/constants/constants';
 import { User } from '@/types/users';
+import { SelectItem } from 'primereact/selectitem';
 import { Tag } from 'primereact/tag';
 
 const UsersPage = () => {
@@ -34,7 +34,19 @@ const UsersPage = () => {
   if (errorUsers)
     return <Message severity="error" summary="Error" detail="Error al cargar los clientes" />;
 
-  const { userRoles, userStatus } = constants;
+  const userRoles: SelectItem[] = [
+    { label: 'Administrador', value: 'Administrador' },
+    { label: 'Colaborador', value: 'Colaborador' },
+    { label: 'Practicante', value: 'Practicante' },
+  ];
+
+  const userStatus: SelectItem[] = [
+    { label: 'Activo', value: 'Activo' },
+    { label: 'Pendiente', value: 'Pendiente' },
+    { label: 'Baja', value: 'Baja' },
+    { label: 'Inhabilitado', value: 'Inhabilitado' },
+  ];
+
   const getRoles = (role: string) => {
     switch (role) {
       case 'Administrador':
