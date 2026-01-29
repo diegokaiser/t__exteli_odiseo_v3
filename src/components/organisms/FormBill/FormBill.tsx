@@ -184,7 +184,6 @@ const FormBill = () => {
   }, [subtotal, descuentos, ivas, irpfs]);
 
   const showModal = () => {
-    console.log('modal');
     confirmDialog({
       group: 'templating',
       header: 'Confirmación',

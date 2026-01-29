@@ -70,8 +70,6 @@ const Calendar = ({ userUid }: { userUid: string }) => {
   const handleCancelEvent = () => {};
   const handleEditEvent = () => {};
 
-  console.log(user);
-
   return (
     <>
       <FullCalendar

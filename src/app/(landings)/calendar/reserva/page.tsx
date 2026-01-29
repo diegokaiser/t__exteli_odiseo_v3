@@ -143,7 +143,6 @@ const ReservasCalendar = () => {
         start: Timestamp.fromDate(startDate),
         end: Timestamp.fromDate(endDate),
       };
-      console.log(payload);
       await postCalendarEvent.mutateAsync({ userUid: userUid!, event: payload });
       localStorage.setItem(
         'lastReservation',

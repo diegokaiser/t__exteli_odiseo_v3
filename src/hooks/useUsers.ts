@@ -1,6 +1,11 @@
 import apis from '@/apis';
 import { User } from '@/types/users';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
+type UpdatePayload = {
+  id: string;
+  updates: Partial<Omit<User, 'createdAt'>>;
+};
 
 export const useUser = (userUid: string) => {
   return useQuery<User | null>({
@@ -14,7 +19,15 @@ export const useUser = (userUid: string) => {
 export const useUsers = () => {
   return useQuery<User[]>({
     queryKey: ['users'],
-    queryFn: () => apis.users.GetUsers(),
+    queryFn: async () => {
+      const response = await apis.users.GetUsers();
+      if (!response) return [];
+      return response.map((item: any) => ({
+        id: item.uid,
+        name: `${item.firstName} ${item.lastName}`,
+        ...item,
+      }));
+    },
     staleTime: 1000 * 60 * 5,
   });
 };
@@ -22,8 +35,34 @@ export const useUsers = () => {
 export const useUserName = (userUid: string) => {
   return useQuery({
     queryKey: ['user-name', userUid],
-    queryFn: () => apis.users.GetUserName(userUid),
+    queryFn: async () => {
+      const response = await apis.users.GetUser(userUid);
+      if (!response) return '';
+      return `${response.firstName} ${response.lastName}`;
+    },
     staleTime: 1000 * 60 * 5,
     enabled: !!userUid,
+  });
+};
+
+export const usePostUser = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: Omit<User, 'createdAt'>) => apis.users.PostUser(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+    },
+  });
+};
+
+export const useUpdateUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, updates }: UpdatePayload) => apis.users.PatchUser(id, updates),
+    onSuccess: (_, { id }) => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+      queryClient.invalidateQueries({ queryKey: ['user', id] });
+    },
   });
 };

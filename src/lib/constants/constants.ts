@@ -5,6 +5,8 @@ const messenger = ['Sí', 'No'] as const;
 const paymentMethods = ['Efectivo', 'Bizum', 'Tarjeta', 'Transferencia bancaria'] as const;
 const companyDocumentType = ['CIF', 'NIF', 'NIE'] as const;
 const officeLocations = ['Puerto de Balbarán 15'] as const;
+const userRoles = ['Administrador', 'Colaborador', 'Practicante'] as const;
+const userStatus = ['Activo', 'Pendiente', 'Baja', 'Inhabilitado'] as const;
 
 const sidebarMenu = [
   {
@@ -88,14 +90,16 @@ const sidebarAdminMenu = [
         href: '/users',
         icon: 'pi pi-users',
       },
+      /*
       {
         title: 'Agregar nuevo',
         href: '/users/add',
         icon: 'pi pi-user-plus',
       },
+      */
       {
         title: 'Actividades',
-        href: '/users/activity',
+        href: '/users/activities',
         icon: 'pi pi-chart-bar',
       },
     ],
@@ -142,4 +146,6 @@ export const constants = {
   paymentMethods,
   sidebarMenu,
   sidebarAdminMenu,
+  userRoles,
+  userStatus,
 };
