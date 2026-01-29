@@ -190,6 +190,8 @@ const BillingPage = () => {
 
   const header = renderHeader();
 
+  console.log(bills);
+
   return (
     <>
       {isPaidBillLoading || (isCancelBillLoading && <LoadingScreen />)}

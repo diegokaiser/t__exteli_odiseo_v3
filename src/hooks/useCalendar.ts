@@ -28,6 +28,29 @@ export const useCalendarEvents = (userUid: string) => {
   });
 };
 
+export const useCalendarEventsToday = (userUid: string) => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  const formattedDate = `${year}-${month}-${day}`;
+
+  return useQuery<CalendarEventUI[]>({
+    queryKey: ['calendar-events-today', userUid, formattedDate],
+    queryFn: async () => {
+      const events = await apis.calendar.GetEvents(userUid);
+      if (!events) return [];
+      return events.filter((event) => {
+        const eventDate = new Date(event.start);
+        const eventDateStr = eventDate.toISOString().split('T')[0];
+        return eventDateStr === formattedDate;
+      });
+    },
+    staleTime: 1000 * 60 * 5,
+    enabled: !!userUid,
+  });
+};
+
 export const usePostCalendarEvent = () => {
   const queryClient = useQueryClient();
 
