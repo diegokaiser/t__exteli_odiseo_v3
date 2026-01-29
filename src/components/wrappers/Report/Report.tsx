@@ -166,8 +166,6 @@ const Report = ({
   endDate: string;
   userName: string;
 }) => {
-  console.log(records);
-
   return (
     <DocumentPDF>
       <Page size="A4" style={styles.body}>

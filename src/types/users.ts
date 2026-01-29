@@ -26,3 +26,16 @@ export interface UserForm {
   status: string;
   updatedAt?: Timestamp;
 }
+
+export interface UserAppwrite {
+  $id: string;
+  name: string;
+  email: string;
+  labels: string[];
+  password: string;
+  phone: string;
+  status: string;
+  registration: string;
+  createdAt: string;
+  updatedAt?: string;
+}

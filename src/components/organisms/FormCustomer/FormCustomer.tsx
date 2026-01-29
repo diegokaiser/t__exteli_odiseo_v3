@@ -126,6 +126,7 @@ const FormCustomer = () => {
         life: 4000,
       });
     } catch (err: any) {
+      console.log(err);
       toast.current.show({
         severity: 'error',
         summary: 'Error',

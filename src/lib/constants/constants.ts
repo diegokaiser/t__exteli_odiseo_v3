@@ -90,11 +90,13 @@ const sidebarAdminMenu = [
         href: '/users',
         icon: 'pi pi-users',
       },
+      /*
       {
         title: 'Agregar nuevo',
         href: '/users/add',
         icon: 'pi pi-user-plus',
       },
+      */
       {
         title: 'Actividades',
         href: '/users/activities',

@@ -1,85 +1,62 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Toast } from 'primereact/toast';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useAuth } from '@/auth/hooks/useAuth';
 import { LoadingScreen } from '@/components/atoms';
-import { useUpdateUser, useUser } from '@/hooks/useUsers';
 import { constants } from '@/lib/constants/constants';
-import { UserForm } from '@/types/users';
-import { dateTimeline } from '@/utils/dateTimeline';
+import Link from 'next/link';
+import { Button } from 'primereact/button';
 
-const { gender, userRoles, userStatus } = constants;
-
-const DataUser = ({ userId }: { userId: string }) => {
+const FormUser = () => {
   const { user } = useAuth();
   const toast = useRef<any>(null);
   const router = useRouter();
-  const isAdmin = user?.labels[0] === 'Administrador';
 
-  const { data: userData, isLoading: loadingUserData, isError: errorUserData } = useUser(userId);
-  const { mutate: updateUser, isPending: pendingUpdateUser } = useUpdateUser();
   const [loading, setLoading] = useState(false);
+
+  const { gender, userRoles, userStatus } = constants;
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    reset,
+    setValue,
     watch,
-  } = useForm<UserForm>({
-    defaultValues: {},
+    formState: { isValid },
+  } = useForm({
+    mode: 'onChange',
   });
 
-  const onSubmit = async (data: UserForm) => {
+  const onSubmit = async (data: any) => {
     setLoading(true);
     try {
-      await updateUser({ id: userId, updates: data });
-
       toast.current.show({
         severity: 'success',
-        summary: 'Éxito',
-        detail: 'Usuario actualizado correctamente',
-        life: 4000,
+        summary: 'Success',
+        detail: 'Usuario agregado correctamente',
       });
-    } catch (err: any) {
-      console.log(err);
+      router.push('/users');
+    } catch (error) {
       toast.current.show({
         severity: 'error',
         summary: 'Error',
-        detail: err.message || 'Ocurrió un error al actualizar el usuario',
-        life: 4000,
+        detail: 'Ocurrió un error al agregar el usuario',
       });
     } finally {
       setLoading(false);
-      router.push('/users');
+      //router.push('/users');
     }
   };
-
-  useEffect(() => {
-    if (userData) {
-      reset({
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        email: userData.email,
-        phone: userData.phone,
-        gender: userData.gender,
-        role: userData.role,
-        status: userData.status,
-      });
-    }
-  }, [userData, reset]);
 
   return (
     <>
       <Toast ref={toast} />
-      {loading || loadingUserData || (pendingUpdateUser && <LoadingScreen />)}
-      <form className="p-6" onSubmit={handleSubmit(onSubmit)}>
+      {loading && <LoadingScreen />}
+      <form onSubmit={handleSubmit(onSubmit)} className="p-6">
         <div className="basis-[50%] min-w-[50%]">
           <div
             className="box-border flex flex-wrap mt-[-24px] mb-[24px] ml-[-24px] text-[#5b6b79]"
@@ -99,7 +76,7 @@ const DataUser = ({ userId }: { userId: string }) => {
                       id="firstName"
                       type="text"
                       className="border-0! box-border bg-none m-0 block capitalize min-w-0 w-full p-[14px] bg-transparent"
-                      disabled={!isAdmin}
+                      placeholder="John"
                       {...register('firstName', { required: true })}
                     />
                   </div>
@@ -120,7 +97,7 @@ const DataUser = ({ userId }: { userId: string }) => {
                       id="lastName"
                       type="text"
                       className="border-0! box-border bg-none m-0 block capitalize min-w-0 w-full p-[14px] bg-transparent"
-                      disabled={!isAdmin}
+                      placeholder="Doe"
                       {...register('lastName', { required: true })}
                     />
                   </div>
@@ -140,9 +117,9 @@ const DataUser = ({ userId }: { userId: string }) => {
                   <div className="box-border inline-flex w-full relative rounded-[8px] border border-solid border-[#bec8d0] h-12">
                     <InputText
                       id="email"
-                      type="text"
+                      type="email"
                       className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] bg-transparent"
-                      disabled={!isAdmin}
+                      placeholder="john.doe@example.com"
                       {...register('email', { required: true })}
                     />
                   </div>
@@ -162,8 +139,8 @@ const DataUser = ({ userId }: { userId: string }) => {
                     <InputText
                       id="phone"
                       type="text"
-                      className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] bg-transparent"
-                      disabled={!isAdmin}
+                      className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px] bg-transparent"
+                      placeholder="654 32 19 87"
                       {...register('phone', { required: true })}
                     />
                   </div>
@@ -174,7 +151,7 @@ const DataUser = ({ userId }: { userId: string }) => {
             <div className="box-border m-0 basis-[100%] grow-0 min-w-[100%] pl-6 pt-6 lg:basis-[50%] lg:min-w-[50%]">
               <div className="flex flex-col">
                 <label
-                  htmlFor="gender"
+                  htmlFor="rol"
                   className="text-xs font-light p-0 relative block whitespace-nowrap overflow-hidden max-w-[100%]"
                 >
                   Rol
@@ -182,14 +159,14 @@ const DataUser = ({ userId }: { userId: string }) => {
                 <div className="inline-flex flex-col relative min-w-0 p-0 border-0 align-top w-full mb-2 mt-2">
                   <div className="box-border inline-flex w-full relative rounded-[8px] border border-solid border-[#bec8d0] h-12">
                     <select
-                      id="role"
+                      id="rol"
                       className="border-0 box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px] bg-transparent"
-                      disabled={!isAdmin}
-                      {...register('role', { required: true })}
+                      {...register('rol', { required: true })}
                     >
-                      {userRoles.map((role) => (
-                        <option key={role} value={role}>
-                          {role}
+                      <option value="">Seleccione</option>
+                      {userRoles.map((item) => (
+                        <option key={item} value={item}>
+                          {item}
                         </option>
                       ))}
                     </select>
@@ -203,19 +180,19 @@ const DataUser = ({ userId }: { userId: string }) => {
                   htmlFor="gender"
                   className="text-xs font-light p-0 relative block whitespace-nowrap overflow-hidden max-w-[100%]"
                 >
-                  Genero
+                  Género
                 </label>
                 <div className="inline-flex flex-col relative min-w-0 p-0 border-0 align-top w-full mb-2 mt-2">
                   <div className="box-border inline-flex w-full relative rounded-[8px] border border-solid border-[#bec8d0] h-12">
                     <select
                       id="gender"
                       className="border-0 box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px] bg-transparent"
-                      disabled={!isAdmin}
                       {...register('gender', { required: true })}
                     >
-                      {gender.map((gen) => (
-                        <option key={gen} value={gen}>
-                          {gen}
+                      <option value="">Seleccione</option>
+                      {gender.map((item) => (
+                        <option key={item} value={item}>
+                          {item}
                         </option>
                       ))}
                     </select>
@@ -237,12 +214,12 @@ const DataUser = ({ userId }: { userId: string }) => {
                     <select
                       id="status"
                       className="border-0 box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px] bg-transparent"
-                      disabled={!isAdmin}
                       {...register('status', { required: true })}
                     >
-                      {userStatus.map((stat) => (
-                        <option key={stat} value={stat}>
-                          {stat}
+                      <option value="">Seleccione</option>
+                      {userStatus.map((item) => (
+                        <option key={item} value={item}>
+                          {item}
                         </option>
                       ))}
                     </select>
@@ -252,22 +229,26 @@ const DataUser = ({ userId }: { userId: string }) => {
             </div>
             <div className="box-border m-0 basis-[100%] grow-0 min-w-[100%] pl-6 pt-6 lg:basis-[50%] lg:min-w-[50%]"></div>
 
-            <div className="box-border m-0 basis-[100%] text-xs grow-0 min-w-[100%] pl-6 pt-6">
-              Creado el: {dateTimeline(userData?.createdAt!)}
-            </div>
-
-            <div className="box-border m-0 basis-[100%] text-xs grow-0 min-w-[100%] pl-6 pt-6">
-              Actualizado el: {dateTimeline(userData?.updatedAt!)}
-            </div>
-
-            <div className="box-border m-0 basis-[100%] grow-0 min-w-[100%] pl-6 pt-6 lg:basis-[50%] lg:min-w-[50%]">
+            <div className="box-border m-0 basis-[100%] grow-0 min-w-[100%] mt-4 pl-6 pt-6 lg:basis-[50%] lg:min-w-[50%]">
               <div className="flex flex-col">
                 <Button
-                  label="Actualizar"
                   type="submit"
-                  className="w-full"
-                  disabled={loading || loadingUserData || pendingUpdateUser}
+                  label="Guardar"
+                  severity="success"
+                  disabled={!isValid || loading}
+                  className="disabled:bg-transparent! disabled:cursor-not-allowed! disabled:text-[#dbe0e5]! disabled:border-[#dbe0e5]! disabled:border-[2px]!"
                 />
+              </div>
+            </div>
+
+            <div className="box-border m-0 basis-[100%] grow-0 min-w-[100%] mt-4 pl-6 pt-6 lg:basis-[50%] lg:min-w-[50%]">
+              <div className="flex flex-col">
+                <Link
+                  href="/customers"
+                  className="bg-[#ef4444] border-[2px] border-[#ef4444] flex font-medium justify-center px-[20px] py-[12px] rounded-[6px] text-white"
+                >
+                  Cancelar
+                </Link>
               </div>
             </div>
           </div>
@@ -277,4 +258,4 @@ const DataUser = ({ userId }: { userId: string }) => {
   );
 };
 
-export default DataUser;
+export default FormUser;

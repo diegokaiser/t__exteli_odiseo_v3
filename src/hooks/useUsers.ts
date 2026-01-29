@@ -1,6 +1,11 @@
 import apis from '@/apis';
 import { User } from '@/types/users';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
+type UpdatePayload = {
+  id: string;
+  updates: Partial<Omit<User, 'createdAt'>>;
+};
 
 export const useUser = (userUid: string) => {
   return useQuery<User | null>({
@@ -37,5 +42,27 @@ export const useUserName = (userUid: string) => {
     },
     staleTime: 1000 * 60 * 5,
     enabled: !!userUid,
+  });
+};
+
+export const usePostUser = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: Omit<User, 'createdAt'>) => apis.users.PostUser(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+    },
+  });
+};
+
+export const useUpdateUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, updates }: UpdatePayload) => apis.users.PatchUser(id, updates),
+    onSuccess: (_, { id }) => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+      queryClient.invalidateQueries({ queryKey: ['user', id] });
+    },
   });
 };

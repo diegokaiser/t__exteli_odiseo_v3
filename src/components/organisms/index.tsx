@@ -11,6 +11,7 @@ export { default as DataUser } from './DataUser';
 export { default as FormBill } from './FormBill';
 export { default as FormClockifyAlert } from './FormClockifyAlert';
 export { default as FormCustomer } from './FormCustomer';
+export { default as FormUser } from './FormUser';
 export { default as Login } from './Login';
 export { default as Nav } from './Nav';
 export { default as TimelineCustomer } from './TimelineCustomer';

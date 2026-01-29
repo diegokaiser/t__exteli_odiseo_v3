@@ -108,8 +108,6 @@ const UsersPage = () => {
     );
   };
 
-  console.log(users);
-
   return (
     <>
       <Breadcrumbs labels={{ users: 'Usuarios' }} pageTitle="Usuarios" />
