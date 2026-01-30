@@ -109,7 +109,7 @@ const sidebarAdminMenu = [
     items: [
       {
         title: 'Ingresos por servicios',
-        href: '/accountability/incomings',
+        href: '/accountability/incomes',
         icon: 'pi pi-chart-line',
       },
       {
