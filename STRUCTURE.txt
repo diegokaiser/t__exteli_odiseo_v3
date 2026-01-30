@@ -1,13 +1,41 @@
 .
 ├── README.md
 ├── STRUCTURE.txt
-├── __tests__
-│   ├── auth
-│   │   └── AuthProvider.test.tsx
+├── __test__
+│   ├── (dashboard)
+│   │   ├── billing
+│   │   │   ├── [id]
+│   │   │   │   └── page.test.tsx
+│   │   │   └── page.test.tsx
+│   │   ├── calendar
+│   │   │   └── page.test.tsx
+│   │   ├── clockify
+│   │   │   ├── page.test.tsx
+│   │   │   └── report
+│   │   │       └── page.test.tsx
+│   │   ├── customers
+│   │   │   ├── add
+│   │   │   │   └── page.test.tsx
+│   │   │   ├── id
+│   │   │   │   └── page.test.tsx
+│   │   │   └── page.test.tsx
+│   │   ├── dashboard
+│   │   │   └── page.test.tsx
+│   │   ├── settings
+│   │   │   └── company
+│   │   │       └── page.test.tsx
+│   │   └── users
+│   │       └── page.test.tsx
 │   └── components
 │       └── organisms
-│           ├── Login.test.tsx
-│           └── Nav.test.tsx
+│           ├── Breadcrumbs
+│           │   └── Breadcrumbs.test.tsx
+│           ├── CardCustomer
+│           │   └── CardCustomer.test.tsx
+│           ├── DataCustomer
+│           │   └── DataCustomer.test.tsx
+│           └── TimelineCustomer
+│               └── TimelineCustomer.test.tsx
 ├── eslint.config.mjs
 ├── jest.config.ts
 ├── jest.setup.ts
@@ -18,9 +46,69 @@
 ├── postcss.config.mjs
 ├── public
 │   ├── assets
+│   │   ├── fonts
+│   │   │   └── Inter
+│   │   │       ├── Inter-Italic-VariableFont_opsz,wght.ttf
+│   │   │       ├── Inter-VariableFont_opsz,wght.ttf
+│   │   │       ├── Inter_18pt-Black.ttf
+│   │   │       ├── Inter_18pt-BlackItalic.ttf
+│   │   │       ├── Inter_18pt-Bold.ttf
+│   │   │       ├── Inter_18pt-BoldItalic.ttf
+│   │   │       ├── Inter_18pt-ExtraBold.ttf
+│   │   │       ├── Inter_18pt-ExtraBoldItalic.ttf
+│   │   │       ├── Inter_18pt-ExtraLight.ttf
+│   │   │       ├── Inter_18pt-ExtraLightItalic.ttf
+│   │   │       ├── Inter_18pt-Italic.ttf
+│   │   │       ├── Inter_18pt-Light.ttf
+│   │   │       ├── Inter_18pt-LightItalic.ttf
+│   │   │       ├── Inter_18pt-Medium.ttf
+│   │   │       ├── Inter_18pt-MediumItalic.ttf
+│   │   │       ├── Inter_18pt-Regular.ttf
+│   │   │       ├── Inter_18pt-SemiBold.ttf
+│   │   │       ├── Inter_18pt-SemiBoldItalic.ttf
+│   │   │       ├── Inter_18pt-Thin.ttf
+│   │   │       ├── Inter_18pt-ThinItalic.ttf
+│   │   │       ├── Inter_24pt-Black.ttf
+│   │   │       ├── Inter_24pt-BlackItalic.ttf
+│   │   │       ├── Inter_24pt-Bold.ttf
+│   │   │       ├── Inter_24pt-BoldItalic.ttf
+│   │   │       ├── Inter_24pt-ExtraBold.ttf
+│   │   │       ├── Inter_24pt-ExtraBoldItalic.ttf
+│   │   │       ├── Inter_24pt-ExtraLight.ttf
+│   │   │       ├── Inter_24pt-ExtraLightItalic.ttf
+│   │   │       ├── Inter_24pt-Italic.ttf
+│   │   │       ├── Inter_24pt-Light.ttf
+│   │   │       ├── Inter_24pt-LightItalic.ttf
+│   │   │       ├── Inter_24pt-Medium.ttf
+│   │   │       ├── Inter_24pt-MediumItalic.ttf
+│   │   │       ├── Inter_24pt-Regular.ttf
+│   │   │       ├── Inter_24pt-SemiBold.ttf
+│   │   │       ├── Inter_24pt-SemiBoldItalic.ttf
+│   │   │       ├── Inter_24pt-Thin.ttf
+│   │   │       ├── Inter_24pt-ThinItalic.ttf
+│   │   │       ├── Inter_28pt-Black.ttf
+│   │   │       ├── Inter_28pt-BlackItalic.ttf
+│   │   │       ├── Inter_28pt-Bold.ttf
+│   │   │       ├── Inter_28pt-BoldItalic.ttf
+│   │   │       ├── Inter_28pt-ExtraBold.ttf
+│   │   │       ├── Inter_28pt-ExtraBoldItalic.ttf
+│   │   │       ├── Inter_28pt-ExtraLight.ttf
+│   │   │       ├── Inter_28pt-ExtraLightItalic.ttf
+│   │   │       ├── Inter_28pt-Italic.ttf
+│   │   │       ├── Inter_28pt-Light.ttf
+│   │   │       ├── Inter_28pt-LightItalic.ttf
+│   │   │       ├── Inter_28pt-Medium.ttf
+│   │   │       ├── Inter_28pt-MediumItalic.ttf
+│   │   │       ├── Inter_28pt-Regular.ttf
+│   │   │       ├── Inter_28pt-SemiBold.ttf
+│   │   │       ├── Inter_28pt-SemiBoldItalic.ttf
+│   │   │       ├── Inter_28pt-Thin.ttf
+│   │   │       └── Inter_28pt-ThinItalic.ttf
 │   │   └── images
 │   │       ├── auth
 │   │       │   └── background.jpeg
+│   │       ├── logo.svg
+│   │       ├── logo2.jpeg
 │   │       └── users
 │   │           ├── avatarCustomerFem.png
 │   │           ├── avatarCustomerMale.png
@@ -33,10 +121,19 @@
 │   └── window.svg
 ├── src
 │   ├── apis
+│   │   ├── accounting.ts
+│   │   ├── bills.ts
+│   │   ├── calendar.ts
+│   │   ├── clockify.ts
+│   │   ├── company.ts
 │   │   ├── customers.ts
 │   │   ├── index.ts
 │   │   ├── nationalities.ts
-│   │   └── timelines.ts
+│   │   ├── notification.ts
+│   │   ├── packs.ts
+│   │   ├── procedures.ts
+│   │   ├── timelines.ts
+│   │   └── users.ts
 │   ├── app
 │   │   ├── (auth)
 │   │   │   ├── login
@@ -44,12 +141,24 @@
 │   │   │   └── logout
 │   │   │       └── page.tsx
 │   │   ├── (dashboard)
-│   │   │   ├── accountability
 │   │   │   ├── billing
+│   │   │   │   ├── [id]
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── add
+│   │   │   │   │   └── page.tsx
+│   │   │   │   └── page.tsx
 │   │   │   ├── calendar
+│   │   │   │   ├── add
+│   │   │   │   │   └── page.tsx
+│   │   │   │   └── page.tsx
 │   │   │   ├── clockify
+│   │   │   │   ├── page.tsx
+│   │   │   │   └── report
+│   │   │   │       └── page.tsx
 │   │   │   ├── customers
 │   │   │   │   ├── [id]
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── add
 │   │   │   │   │   └── page.tsx
 │   │   │   │   └── page.tsx
 │   │   │   ├── dashboard
@@ -59,7 +168,22 @@
 │   │   │   │       └── page.tsx
 │   │   │   ├── layout.tsx
 │   │   │   ├── settings
+│   │   │   │   ├── clockify
+│   │   │   │   │   └── page.tsx
+│   │   │   │   └── company
+│   │   │   │       └── page.tsx
 │   │   │   └── users
+│   │   │       ├── [id]
+│   │   │       │   └── page.tsx
+│   │   │       ├── activities
+│   │   │       │   └── page.tsx
+│   │   │       ├── add
+│   │   │       │   └── page.tsx
+│   │   │       └── page.tsx
+│   │   ├── (landings)
+│   │   │   └── calendar
+│   │   │       └── reserva
+│   │   │           └── page.tsx
 │   │   ├── favicon.ico
 │   │   ├── globals.css
 │   │   ├── layout.tsx
@@ -82,6 +206,9 @@
 │   │   │   ├── Message
 │   │   │   │   ├── Message.tsx
 │   │   │   │   └── index.tsx
+│   │   │   ├── Notification
+│   │   │   │   ├── Notification.tsx
+│   │   │   │   └── index.tsx
 │   │   │   └── index.tsx
 │   │   ├── layout
 │   │   │   ├── Footer
@@ -97,11 +224,59 @@
 │   │   │   ├── Breadcrumbs
 │   │   │   │   ├── Breadcrumbs.tsx
 │   │   │   │   └── index.tsx
+│   │   │   ├── Calendar
+│   │   │   │   ├── Calendar.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── CardBill
+│   │   │   │   ├── CardBill.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── CardCalendar
+│   │   │   │   ├── CardCalendar.tsx
+│   │   │   │   └── index.tsx
 │   │   │   ├── CardCustomer
 │   │   │   │   ├── CardCustomer.tsx
 │   │   │   │   └── index.tsx
+│   │   │   ├── CardNotification
+│   │   │   │   ├── CardNotification.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── CardUser
+│   │   │   │   ├── CardUser.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── ClockifyCalendar
+│   │   │   │   ├── ClockifyCalendar.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── CompanyData
+│   │   │   │   ├── CompanyData.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── CompanyLogo
+│   │   │   │   ├── CompanyLogo.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── DashboardBill
+│   │   │   │   ├── DashboardBill.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── DashboardBillCount
+│   │   │   │   ├── DashboardBillCount.tsx
+│   │   │   │   └── index.tsx
 │   │   │   ├── DataCustomer
 │   │   │   │   ├── DataCustomer.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── DataUser
+│   │   │   │   ├── DataUser.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── FormBill
+│   │   │   │   ├── FormBill.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── FormCalendar
+│   │   │   │   ├── FormCalendar.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── FormClockifyAlert
+│   │   │   │   ├── FormClockifyAlert.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── FormCustomer
+│   │   │   │   ├── FormCustomer.tsx
+│   │   │   │   └── index.tsx
+│   │   │   ├── FormUser
+│   │   │   │   ├── FormUser.tsx
 │   │   │   │   └── index.tsx
 │   │   │   ├── Login
 │   │   │   │   ├── Login.tsx
@@ -114,10 +289,19 @@
 │   │   │   │   └── index.tsx
 │   │   │   └── index.tsx
 │   │   ├── skeletons
+│   │   │   ├── Document
+│   │   │   │   ├── Document.tsx
+│   │   │   │   └── index.tsx
 │   │   │   ├── index.tsx
 │   │   │   └── organisms
 │   │   │       ├── CardCustomer
 │   │   │       │   ├── CardCustomer.tsx
+│   │   │       │   └── index.tsx
+│   │   │       ├── CompanyData
+│   │   │       │   ├── CompanyData.tsx
+│   │   │       │   └── index.tsx
+│   │   │       ├── CompanyLogo
+│   │   │       │   ├── CompanyLogo.tsx
 │   │   │       │   └── index.tsx
 │   │   │       ├── DataCustomer
 │   │   │       │   ├── DataCustomer.tsx
@@ -130,15 +314,32 @@
 │   │       ├── Dashboard
 │   │       │   ├── DashboardWrapper.tsx
 │   │       │   └── index.tsx
+│   │       ├── Document
+│   │       │   ├── Document.tsx
+│   │       │   └── index.tsx
+│   │       ├── Report
+│   │       │   ├── Report.tsx
+│   │       │   └── index.tsx
 │   │       └── index.tsx
 │   ├── features
 │   ├── hocs
 │   │   └── withAuth.tsx
 │   ├── hooks
 │   │   ├── index.ts
+│   │   ├── useAccounting.ts
+│   │   ├── useBills.ts
+│   │   ├── useCalendar.ts
+│   │   ├── useClockify.ts
+│   │   ├── useClockifyAlerts.ts
+│   │   ├── useCompany.ts
 │   │   ├── useCustomer.ts
+│   │   ├── useGlobalAuth.ts
 │   │   ├── useNationality.ts
-│   │   └── useTimeline.ts
+│   │   ├── useNotification.ts
+│   │   ├── usePack.ts
+│   │   ├── useProcedure.ts
+│   │   ├── useTimeline.ts
+│   │   └── useUsers.ts
 │   ├── lib
 │   │   ├── appwrite.ts
 │   │   ├── constants
@@ -147,13 +348,35 @@
 │   ├── providers
 │   │   └── AppProviders.tsx
 │   ├── types
+│   │   ├── accounting.ts
+│   │   ├── bills.ts
 │   │   ├── breadcrumbs.ts
+│   │   ├── calendar.ts
+│   │   ├── clockify.ts
+│   │   ├── company.ts
 │   │   ├── customers.ts
 │   │   ├── nationalities.ts
-│   │   └── timelines.ts
+│   │   ├── notification.ts
+│   │   ├── packs.ts
+│   │   ├── procedures.ts
+│   │   ├── timelines.ts
+│   │   └── users.ts
 │   └── utils
-│       └── dateTimeline.ts
+│       ├── calendarDateFormat.ts
+│       ├── calendarDayFormat.ts
+│       ├── calendarHourFormat.ts
+│       ├── clockifyDaysInMonth.ts
+│       ├── clockifyRecordDate.ts
+│       ├── clockifyReportDate.ts
+│       ├── clockifyReportHour.ts
+│       ├── dashboardBill.ts
+│       ├── dashboardBillCount.ts
+│       ├── dateEnterDate.ts
+│       ├── dateThreeMonths.ts
+│       ├── dateTimeline.ts
+│       ├── formatHour.ts
+│       └── parsePrice.ts
 ├── tailwind.config.js
 └── tsconfig.json
 
-62 directories, 95 files
+114 directories, 266 files

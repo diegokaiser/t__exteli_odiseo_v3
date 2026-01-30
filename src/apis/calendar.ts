@@ -1,7 +1,16 @@
 import { db } from '@/lib/firebase';
 import { CalendarEvent, CalendarEventUI } from '@/types/calendar';
 import { calendarDayFormat } from '@/utils/calendarDayFormat';
-import { addDoc, collection, doc, getDoc, getDocs, Timestamp } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  Timestamp,
+  where,
+} from 'firebase/firestore';
 
 const calendar = {
   GetEvent: async (uid: string): Promise<CalendarEvent | null> => {
@@ -63,6 +72,32 @@ const calendar = {
       const querySnapshot = await getDocs(eventRef);
 
       return querySnapshot.docs.map((doc) => {
+        const data = doc.data() as CalendarEvent;
+
+        return {
+          id: doc.id,
+          ...data,
+          start: calendarDayFormat(data.start)!,
+          end: calendarDayFormat(data.end)!,
+        };
+      });
+    } catch (err) {
+      console.error(`GetEvents (${uid}) error: ${err}`);
+      throw err;
+    }
+  },
+  GetEventsToday: async (uid: string): Promise<CalendarEventUI[]> => {
+    try {
+      const now = new Date();
+      const startOfDay = new Date(now.setHours(0, 0, 0, 0));
+      const endOfDay = new Date(now.setHours(23, 59, 59, 999));
+
+      const eventRef = collection(db, 'calendar', uid, 'events');
+      const q = query(eventRef, where('start', '>=', startOfDay), where('start', '<=', endOfDay));
+
+      const snapshot = await getDocs(q);
+
+      return snapshot.docs.map((doc) => {
         const data = doc.data() as CalendarEvent;
 
         return {
