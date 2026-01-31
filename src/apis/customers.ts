@@ -33,7 +33,8 @@ const customers = {
   GetAllCustomers: async (): Promise<Customer[]> => {
     try {
       const customersRef = collection(db, 'customers');
-      const snapshot = await getDocs(customersRef);
+      const q = query(customersRef, orderBy('firstName', 'asc'));
+      const snapshot = await getDocs(q);
 
       const customers = snapshot.docs
         .map((doc) => ({
@@ -58,7 +59,8 @@ const customers = {
   ): Promise<{ customers: Customer[]; lastDoc: QueryDocumentSnapshot | null }> => {
     try {
       const customersRef = collection(db, 'customers');
-      let q = query(customersRef, orderBy('createdAt', 'desc'), limit(limitValue));
+      //let q = query(customersRef, orderBy('firstName', 'asc'), limit(limitValue));
+      let q = query(customersRef, orderBy('firstName', 'asc'), limit(limitValue));
 
       if (startAfterDoc) {
         q = query(q, startAfter(startAfterDoc));

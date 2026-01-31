@@ -1,66 +1,27 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import { QueryDocumentSnapshot } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import { FilterMatchMode } from 'primereact/api';
 import { Column, ColumnFilterElementTemplateOptions } from 'primereact/column';
-import { DataTable, DataTablePageEvent } from 'primereact/datatable';
+import { DataTable } from 'primereact/datatable';
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
 import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
 import { InputText } from 'primereact/inputtext';
 import { Tag } from 'primereact/tag';
 
-import apis from '@/apis';
+import { LoadingScreen, Message } from '@/components/atoms';
 import { Breadcrumbs } from '@/components/organisms';
 import { withAuth } from '@/hocs/withAuth';
+import { useCustomers } from '@/hooks/useCustomer';
 import { Customer } from '@/types/customers';
 import { dateEnterDate } from '@/utils/dateEnterDate';
 
 const CustomersPage = () => {
   const router = useRouter();
-
-  const [customers, setCustomers] = useState<Customer[]>([]);
-  const [totalCustomers, setTotalCustomers] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [page, setPage] = useState<number>(0);
-  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
-  const [cursors, setCursors] = useState<(QueryDocumentSnapshot | null)[]>([null]);
-
-  const fetchCustomers = async (page: number) => {
-    setLoading(true);
-    try {
-      const cursor = cursors[page];
-      const { customers: fetched, lastDoc } = await apis.customers.GetCustomersPage(
-        rowsPerPage,
-        cursor ?? undefined
-      );
-      setCustomers(fetched);
-
-      if (lastDoc && !cursors[page + 1]) {
-        setCursors((prev) => {
-          const next = [...prev];
-          next[page + 1] = lastDoc;
-          return next;
-        });
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchCustomers(page);
-  }, [page, rowsPerPage]);
-
-  const onPage = (event: DataTablePageEvent) => {
-    setPage(event.page ?? 0);
-    setRowsPerPage(event.rows ?? 10);
-  };
+  const { data: customers, isLoading, isError } = useCustomers();
 
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -73,6 +34,10 @@ const CustomersPage = () => {
     status: { value: null, matchMode: FilterMatchMode.EQUALS },
   });
   const [globalFilterValue, setGlobalFilterValue] = useState<string>('');
+
+  if (isLoading) return <LoadingScreen />;
+  if (isError)
+    return <Message severity="error" summary="Error" detail="Error al cargar los clientes" />;
 
   const statusOptions = ['Pendiente', 'Activo', 'Incompleto', 'Finalizado'];
   const getSeverity = (statusOptions: string) => {
@@ -174,12 +139,7 @@ const CustomersPage = () => {
             <DataTable
               value={customers}
               paginator
-              lazy
-              rows={rowsPerPage}
-              first={page * rowsPerPage}
-              totalRecords={totalCustomers}
-              loading={loading}
-              onPage={onPage}
+              rows={10}
               dataKey="id"
               filters={filters}
               filterDisplay="row"
@@ -204,41 +164,16 @@ const CustomersPage = () => {
                 filter
                 filterPlaceholder="Buscar"
               />
-              <Column
-                field="documentNumber"
-                header="DNI"
-                showFilterMenu={false}
-                filter
-                filterPlaceholder="Buscar"
-              />
-              <Column
-                field="phone"
-                header="Telefono"
-                showFilterMenu={false}
-                filter
-                filterPlaceholder="Buscar"
-              />
-              <Column
-                field="nationality"
-                header="Nacionalidad"
-                showFilterMenu={false}
-                filter
-                filterPlaceholder="Buscar"
-              />
+              <Column field="documentNumber" header="DNI" filter filterPlaceholder="Buscar" />
+              <Column field="phone" header="Telefono" filter filterPlaceholder="Buscar" />
+              <Column field="nationality" header="Nacionalidad" filter filterPlaceholder="Buscar" />
               <Column
                 field="enterDate"
                 header="Fecha de entrada"
-                showFilterMenu={false}
                 filter
                 filterPlaceholder="Buscar"
               />
-              <Column
-                field="agent"
-                header="Agente"
-                showFilterMenu={false}
-                filter
-                filterPlaceholder="Buscar"
-              />
+              <Column field="agent" header="Agente" filter filterPlaceholder="Buscar" />
               <Column
                 field="status"
                 header="Estado"
