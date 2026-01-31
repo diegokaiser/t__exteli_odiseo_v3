@@ -1,8 +1,8 @@
+import apis from '@/apis';
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
 export async function POST(req: Request) {
@@ -18,29 +18,44 @@ export async function POST(req: Request) {
   try {
     event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
   } catch (err) {
-    console.error('Stripe error stripe/webhook/route.ts', err);
+    console.error('Stripe error stripe/webhook/route.ts, invalid signature', err);
     return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
   }
 
-  switch (event.type) {
-    case 'checkout.session.completed':
-      const session = event.data.object as Stripe.Checkout.Session;
-      const appointmentId = session.metadata?.appointmentId;
-      console.log('Pago OK;', appointmentId);
+  try {
+    switch (event.type) {
+      case 'checkout.session.completed': {
+        const session = event.data.object as Stripe.Checkout.Session;
+        if (session.payment_status !== 'paid') {
+          console.warn('Session not paid');
+          break;
+        }
+        const appointmentId = session.metadata?.appointmentId;
+        if (!appointmentId) {
+          console.error('No appointmentId in metadata');
+          break;
+        }
+        await apis.calendar.ConfirmEventStripe(appointmentId);
+        break;
+      }
 
-      // TODO: guardar en DB
-      // await confirmAppointment(appointmentId);
-      break;
+      case 'checkout.session.expired': {
+        const session = event.data.object as Stripe.Checkout.Session;
+        const appointmentId = session.metadata?.appointmentId;
+        if (!appointmentId) {
+          console.error('No appointmentId in metadata');
+          break;
+        }
+        await apis.calendar.CancelEventStripe(appointmentId);
+        break;
+      }
 
-    case 'checkout.session.expired':
-      console.log('Pago expirado');
-      break;
-
-    case 'payment_intent.payment_failed':
-      console.log('Pago fallido');
-      break;
-    default:
-      console.log(`Evento ignorado: ${event.type}`);
+      default:
+        console.log(`Evento ignorado: ${event.type}`);
+    }
+  } catch (err) {
+    console.error('Stripe error stripe/webhook/route.ts, webhook processing error', err);
+    return NextResponse.json({ error: 'Error processing webhook' }, { status: 500 });
   }
 
   return NextResponse.json({ received: true });

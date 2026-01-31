@@ -16,30 +16,35 @@ export async function POST(req: Request) {
       );
     }
 
-    const session = await stripe.checkout.sessions.create({
-      mode: 'payment',
-      payment_method_types: ['card'],
-      customer_email: customerEmail,
-      line_items: [
-        {
-          price_data: {
-            currency: 'eur',
-            product_data: {
-              name: serviceName,
+    const session = await stripe.checkout.sessions.create(
+      {
+        mode: 'payment',
+        payment_method_types: ['card'],
+        customer_email: customerEmail,
+        line_items: [
+          {
+            price_data: {
+              currency: 'eur',
+              product_data: {
+                name: serviceName,
+              },
+              unit_amount: Math.round(price * 100),
             },
-            unit_amount: Math.round(price * 100),
+            quantity: 1,
           },
-          quantity: 1,
+        ],
+
+        metadata: {
+          appointmentId: String(appointmentId),
         },
-      ],
 
-      metadata: {
-        appointmentId: String(appointmentId),
+        success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/calendar/reserva/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/calendar/reserva/cancel`,
       },
-
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/calendar/reserva/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/calendar/reserva/cancel`,
-    });
+      {
+        idempotencyKey: appointmentId,
+      }
+    );
 
     return NextResponse.json({ url: session.url });
   } catch (err) {

@@ -110,11 +110,12 @@ const FormCalendar = () => {
         phone: data.phone,
         documentType: data.documentType,
         documentNumber: data.documentNumber,
-        message: data.message,
+        message: data.description,
         status: 'confirmed',
         paid: true,
         stripeSessionId: null,
       };
+      console.log(payload);
       await postCalendarEvent.mutateAsync({ userUid: userUid!, event: payload });
       toast.current.show({
         severity: 'success',
@@ -131,7 +132,7 @@ const FormCalendar = () => {
       });
     } finally {
       setLoading(false);
-      //router.push('/calendar');
+      router.push('/calendar');
     }
   };
 

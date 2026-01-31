@@ -25,15 +25,24 @@ const ReservasCalendar = () => {
   const [privacyPolicy, setPrivacyPolicy] = useState(false);
   const [termsAndConditions, setTermsAndConditions] = useState(false);
 
+  const submittingRef = useRef(false);
+
   const postCalendarEvent = usePostCalendarEvent();
 
   const handleStripeCheckout = async (data: any) => {
+    if (submittingRef.current) return;
+    submittingRef.current = true;
     try {
       setLoading(true);
 
       const appointmentId = self.crypto?.randomUUID?.() || Date.now().toString();
-      const endDate = new Date(data.start);
-      endDate.setHours(endDate.getMinutes() + 30);
+      const [h, m] = data.hour.split(':').map(Number);
+      const startDate = new Date(data.start);
+      startDate.setHours(h, m, 0, 0);
+      const endDate = new Date(startDate);
+      endDate.setMinutes(endDate.getMinutes() + 30);
+
+      const { start, hour, ...rest } = data;
 
       const payload: CalendarEvent = {
         agent: 'np6Q466WIEW2ngYpPBbz7VxJHNY2',
@@ -42,13 +51,14 @@ const ReservasCalendar = () => {
         title: 'Reserva de Cita Online',
         venue: 'Puerto de Balbarán 15',
 
+        start: Timestamp.fromDate(startDate),
         end: Timestamp.fromDate(endDate),
 
         status: 'pending',
 
         paid: false,
         stripeSessionId: appointmentId,
-        ...data,
+        ...rest,
       };
 
       console.log(payload);
@@ -98,6 +108,7 @@ const ReservasCalendar = () => {
       });
     } finally {
       setLoading(false);
+      submittingRef.current = false;
     }
   };
 
