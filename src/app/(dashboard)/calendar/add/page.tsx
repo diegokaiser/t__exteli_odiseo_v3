@@ -1,7 +1,6 @@
 'use client';
 
-import { Breadcrumbs } from '@/components/organisms';
-import FormCalendar from '@/components/organisms/FormCalendar';
+import { Breadcrumbs, FormCalendar } from '@/components/organisms';
 import { withAuth } from '@/hocs/withAuth';
 
 const AddCalendar = () => {

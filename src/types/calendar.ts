@@ -10,6 +10,16 @@ export interface CalendarEvent {
   title: string;
   venue: string;
   hour?: string;
+  name?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  documentType?: string;
+  documentNumber?: string;
+  message?: string;
+  status?: string;
+  paid?: boolean;
+  stripeSessionId?: string | null;
 }
 
 export interface CalendarEventUI extends Omit<CalendarEvent, 'start' | 'end'> {

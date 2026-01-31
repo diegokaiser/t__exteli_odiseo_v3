@@ -9,6 +9,7 @@ import {
   getDocs,
   query,
   Timestamp,
+  updateDoc,
   where,
 } from 'firebase/firestore';
 
@@ -120,7 +121,7 @@ const calendar = {
     event: Omit<CalendarEvent, 'id' | 'hour'>;
   }): Promise<string> => {
     try {
-      const eventRef = collection(db, 'calendar', userUid, 'events');
+      const eventRef = collection(db, 'calendar-test', userUid, 'events');
 
       const newEvent: CalendarEvent = {
         ...event,
@@ -137,6 +138,18 @@ const calendar = {
     }
   },
   UpdateEvent: async () => {},
+  ConfirmEventStripe: async (uid: string) => {
+    try {
+      const eventDocRef = doc(db, 'calendar-test', uid);
+      await updateDoc(eventDocRef, {
+        paid: true,
+        status: 'confirmed',
+      });
+    } catch (err) {
+      console.error(`ConfirmEventStripe (${uid}) error: ${err}`);
+      throw err;
+    }
+  },
   DeleteEvent: async () => {},
 };
 

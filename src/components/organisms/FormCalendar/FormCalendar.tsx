@@ -28,7 +28,7 @@ const FormCalendar = () => {
   const postCalendarEvent = usePostCalendarEvent();
 
   const { data: allUsers, isLoading: loadingAllUsers, isError: errorAllUsers } = useUsers();
-  const { officeLocations } = constants;
+  const { officeLocations, documentType } = constants;
 
   const {
     register,
@@ -103,6 +103,17 @@ const FormCalendar = () => {
 
         start: Timestamp.fromDate(startDate),
         end: Timestamp.fromDate(endDate),
+
+        name: data.name,
+        lastName: data.lastName,
+        email: data.email,
+        phone: data.phone,
+        documentType: data.documentType,
+        documentNumber: data.documentNumber,
+        message: data.message,
+        status: 'confirmed',
+        paid: true,
+        stripeSessionId: null,
       };
       await postCalendarEvent.mutateAsync({ userUid: userUid!, event: payload });
       toast.current.show({
@@ -280,10 +291,144 @@ const FormCalendar = () => {
             <div className="box-border m-0 basis-[100%] grow-0 min-w-[100%] pl-6 pt-6 lg:basis-[50%] lg:min-w-[50%]">
               <div className="flex flex-col">
                 <label
+                  htmlFor="name"
+                  className="text-xs font-light p-0 relative block whitespace-nowrap overflow-hidden max-w-[100%]"
+                >
+                  Nombre
+                </label>
+                <div className="inline-flex flex-col relative min-w-0 p-0 border-0 align-top w-full mb-2 mt-2">
+                  <div className="box-border inline-flex w-full relative rounded-[8px] border border-solid border-[#bec8d0] h-12">
+                    <InputText
+                      id="name"
+                      type="text"
+                      className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] bg-transparent"
+                      placeholder="Juan"
+                      {...register('name', { required: true })}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="box-border m-0 basis-[100%] grow-0 min-w-[100%] pl-6 pt-6 lg:basis-[50%] lg:min-w-[50%]">
+              <div className="flex flex-col">
+                <label
+                  htmlFor="lastName"
+                  className="text-xs font-light p-0 relative block whitespace-nowrap overflow-hidden max-w-[100%]"
+                >
+                  Apellido
+                </label>
+                <div className="inline-flex flex-col relative min-w-0 p-0 border-0 align-top w-full mb-2 mt-2">
+                  <div className="box-border inline-flex w-full relative rounded-[8px] border border-solid border-[#bec8d0] h-12">
+                    <InputText
+                      id="lastName"
+                      type="text"
+                      className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] bg-transparent"
+                      placeholder="Pérez"
+                      {...register('lastName', { required: true })}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="box-border m-0 basis-[100%] grow-0 min-w-[100%] pl-6 pt-6 lg:basis-[50%] lg:min-w-[50%]">
+              <div className="flex flex-col">
+                <label
+                  htmlFor="email"
+                  className="text-xs font-light p-0 relative block whitespace-nowrap overflow-hidden max-w-[100%]"
+                >
+                  Correo electrónico
+                </label>
+                <div className="inline-flex flex-col relative min-w-0 p-0 border-0 align-top w-full mb-2 mt-2">
+                  <div className="box-border inline-flex w-full relative rounded-[8px] border border-solid border-[#bec8d0] h-12">
+                    <InputText
+                      id="email"
+                      type="text"
+                      className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] bg-transparent"
+                      placeholder="juan.perez@ejemplo.com"
+                      {...register('email', { required: true })}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="box-border m-0 basis-[100%] grow-0 min-w-[100%] pl-6 pt-6 lg:basis-[50%] lg:min-w-[50%]">
+              <div className="flex flex-col">
+                <label
+                  htmlFor="phone"
+                  className="text-xs font-light p-0 relative block whitespace-nowrap overflow-hidden max-w-[100%]"
+                >
+                  Número de teléfono
+                </label>
+                <div className="inline-flex flex-col relative min-w-0 p-0 border-0 align-top w-full mb-2 mt-2">
+                  <div className="box-border inline-flex w-full relative rounded-[8px] border border-solid border-[#bec8d0] h-12">
+                    <InputText
+                      id="phone"
+                      type="text"
+                      className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] bg-transparent"
+                      placeholder="+34 654321987"
+                      {...register('phone', { required: true })}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="box-border m-0 basis-[100%] grow-0 min-w-[100%] pl-6 pt-6 lg:basis-[50%] lg:min-w-[50%]">
+              <div className="flex flex-col">
+                <label
+                  htmlFor="documentType"
+                  className="text-xs font-light p-0 relative block whitespace-nowrap overflow-hidden max-w-[100%]"
+                >
+                  Tipo de documento
+                </label>
+                <div className="inline-flex flex-col relative min-w-0 p-0 border-0 align-top w-full mb-2 mt-2">
+                  <div className="box-border inline-flex w-full relative rounded-[8px] border border-solid border-[#bec8d0] h-12">
+                    <select
+                      id="documentType"
+                      className="border-0 box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px] bg-transparent"
+                      {...register('documentType', { required: true })}
+                    >
+                      <option value="">Seleccione</option>
+                      {documentType.map((item) => (
+                        <option key={item} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="box-border m-0 basis-[100%] grow-0 min-w-[100%] pl-6 pt-6 lg:basis-[50%] lg:min-w-[50%]">
+              <div className="flex flex-col">
+                <label
+                  htmlFor="documentNumber"
+                  className="text-xs font-light p-0 relative block whitespace-nowrap overflow-hidden max-w-[100%]"
+                >
+                  Número de documento
+                </label>
+                <div className="inline-flex flex-col relative min-w-0 p-0 border-0 align-top w-full mb-2 mt-2">
+                  <div className="box-border inline-flex w-full relative rounded-[8px] border border-solid border-[#bec8d0] h-12">
+                    <InputText
+                      id="documentNumber"
+                      type="text"
+                      className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] bg-transparent"
+                      placeholder="Número del documento"
+                      {...register('documentNumber', { required: true })}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="box-border m-0 basis-[100%] grow-0 min-w-[100%] pl-6 pt-6 lg:basis-[50%] lg:min-w-[50%]">
+              <div className="flex flex-col">
+                <label
                   htmlFor="description"
                   className="text-xs font-light p-0 relative block whitespace-nowrap overflow-hidden max-w-[100%]"
                 >
-                  Descripción del evento
+                  Observaciones
                 </label>
                 <div className="inline-flex flex-col relative min-w-0 p-0 border-0 align-top w-full mb-2 mt-2">
                   <div className="box-border inline-flex w-full relative rounded-[8px] border border-solid border-[#bec8d0] h-[102px]">
