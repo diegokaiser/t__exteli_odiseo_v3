@@ -1,6 +1,7 @@
-export const dynamic = 'force-dynamic';
+// prettier-ignore
+'use client';
 
-('use client');
+export const dynamic = 'force-dynamic';
 
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
