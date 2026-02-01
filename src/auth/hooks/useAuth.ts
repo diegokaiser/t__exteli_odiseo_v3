@@ -5,10 +5,11 @@ import { Models } from 'appwrite';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+const ALLOW_UNAUTHENTICATED = ['/landings', '/calendar/reserva', '/api/stripe'];
+
 export const useAuth = (
   redirectAuthenticated = '/dashboard',
-  redirectUnauthenticated = '/login',
-  allowUnauthenticated: string[] = []
+  redirectUnauthenticated = '/login'
 ) => {
   const [user, setUser] = useState<Models.User<{}> | null>(null);
   const [loading, setLoading] = useState(true);
@@ -21,7 +22,7 @@ export const useAuth = (
         setUser(currentUser);
 
         const currentPath = window.location.pathname;
-        const isPublicRoute = allowUnauthenticated.includes(currentPath);
+        const isPublicRoute = ALLOW_UNAUTHENTICATED.some((path) => currentPath.startsWith(path));
 
         if (isPublicRoute) {
           router.replace(redirectAuthenticated);
@@ -31,7 +32,7 @@ export const useAuth = (
         setUser(null);
 
         const currentPath = window.location.pathname;
-        const isPublicRoute = allowUnauthenticated.includes(currentPath);
+        const isPublicRoute = ALLOW_UNAUTHENTICATED.some((path) => currentPath.startsWith(path));
 
         if (!isPublicRoute) {
           router.replace(redirectUnauthenticated);
