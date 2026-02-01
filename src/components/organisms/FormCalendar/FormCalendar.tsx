@@ -115,7 +115,6 @@ const FormCalendar = () => {
         paid: true,
         stripeSessionId: null,
       };
-      console.log(payload);
       await postCalendarEvent.mutateAsync({ userUid: userUid!, event: payload });
       toast.current.show({
         severity: 'success',

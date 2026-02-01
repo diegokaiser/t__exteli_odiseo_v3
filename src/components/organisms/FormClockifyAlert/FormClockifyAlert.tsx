@@ -66,6 +66,7 @@ const FormClockifyAlert = () => {
       });
     } finally {
       setLoading(false);
+      window.location.reload();
     }
   };
 

@@ -61,8 +61,6 @@ const ReservasCalendar = () => {
         ...rest,
       };
 
-      console.log(payload);
-
       await postCalendarEvent.mutateAsync({
         userUid: 'np6Q466WIEW2ngYpPBbz7VxJHNY2',
         event: payload,
@@ -218,7 +216,6 @@ const ReservasCalendar = () => {
               <div className="flex justify-center w-full">
                 <Calendar
                   inline
-                  disabledDays={[0, 6]}
                   locale="es"
                   onChange={(e) => {
                     if (!e.value) return;
@@ -514,14 +511,14 @@ const ReservasCalendar = () => {
                   <div className="flex items-center w-2/12">
                     <i className="pi pi-clock"></i>
                   </div>
-                  <div className="w-10/12">35 minutos</div>
+                  <div className="w-10/12">30 minutos</div>
                 </div>
               </div>
               <hr className="border-[#dbe0e5a6]" />
               <div className="p-5">
                 <span className="m-0 text-xs font-semibold block uppercase">Fecha y hora</span>
                 <div className="flex m-0 mt-5 text-sm font-light block uppercase">
-                  {eventDate && eventHour && eventEnd && (
+                  {eventDate && eventHour && eventEnd ? (
                     <>
                       <div className="flex items-center w-2/12">
                         <i className="pi pi-calendar-clock"></i>
@@ -530,6 +527,8 @@ const ReservasCalendar = () => {
                         {reservasDateTime(eventDate, eventHour, eventEnd)}
                       </div>
                     </>
+                  ) : (
+                    <Loader />
                   )}
                 </div>
               </div>
