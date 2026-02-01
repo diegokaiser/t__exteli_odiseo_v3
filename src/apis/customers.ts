@@ -126,7 +126,6 @@ const customers = {
   PostCustomer: async (customer: Omit<Customer, 'createdAt'>): Promise<void> => {
     try {
       const customerRef = collection(db, 'customers');
-      //const customerRef = collection(db, 'customers-test');
       await addDoc(customerRef, {
         customer,
       });
@@ -141,7 +140,6 @@ const customers = {
   ): Promise<void> => {
     try {
       const customerDocRef = doc(db, 'customers', uid);
-      //const customerDocRef = doc(db, 'customers-test', uid);
       await updateDoc(customerDocRef, updates);
     } catch (err) {
       console.error(`PatchCustomer error (${uid}): ${err}`);

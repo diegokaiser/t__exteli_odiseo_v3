@@ -52,7 +52,6 @@ const accounting = {
   PostAccounting: async (accounting: Omit<Accounting, 'createdAt'>): Promise<void> => {
     try {
       const accountingRef = doc(collection(db, 'accounting'));
-      //const accountingRef = doc(collection(db, 'accounting-test'));
       await setDoc(accountingRef, {
         accounting,
       });
