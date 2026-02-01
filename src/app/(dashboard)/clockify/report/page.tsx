@@ -34,6 +34,8 @@ const ReportPage = () => {
     setEndDate(dates?.[1]?.toISOString().split('T')[0] || '');
   }, [dates]);
 
+  console.log(userName);
+
   return (
     <>
       <Breadcrumbs pageTitle="Generar reporte" />
@@ -82,7 +84,7 @@ const ReportPage = () => {
                     records={records}
                     startDate={startDate}
                     endDate={endDate}
-                    userName={userName?.fullName}
+                    userName={userName}
                   />
                 </PDFViewer>
               )}
