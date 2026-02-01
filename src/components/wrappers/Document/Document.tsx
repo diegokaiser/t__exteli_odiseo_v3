@@ -176,6 +176,9 @@ const Document = ({
 }) => {
   const isCustomerObject = typeof customerData !== 'string' && customerData?.customer !== undefined;
 
+  console.log(isCustomerObject);
+  console.log(customerData);
+
   return (
     <DocumentPDF>
       <Page size="A4" style={styles.body}>
@@ -221,7 +224,13 @@ const Document = ({
                 {!isCustomerObject && (
                   <>
                     <View style={styles.tableColw12d12}>
-                      <Text style={styles.fontExtralight}>{customerData}</Text>
+                      <Text style={styles.fontExtralight}>
+                        {typeof customerData === 'string'
+                          ? customerData
+                          : customerData.customer.documentType +
+                            ': ' +
+                            customerData.customer.documentNumber}
+                      </Text>
                     </View>
                     <View style={styles.tableColw12d12}>
                       <Text style={styles.fontExtralight}>{customerPhone}</Text>
