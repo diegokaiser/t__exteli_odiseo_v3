@@ -176,9 +176,6 @@ const Document = ({
 }) => {
   const isCustomerObject = typeof customerData !== 'string' && customerData?.customer !== undefined;
 
-  console.log(isCustomerObject);
-  console.log(customerData);
-
   return (
     <DocumentPDF>
       <Page size="A4" style={styles.body}>

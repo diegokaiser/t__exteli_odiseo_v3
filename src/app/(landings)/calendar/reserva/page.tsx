@@ -211,8 +211,6 @@ const ReservasCalendar = () => {
     await handleStripeCheckout(data);
   };
 
-  console.log(eventDate);
-
   return (
     <>
       <Toast ref={toast} />
