@@ -164,41 +164,16 @@ const CustomersPage = () => {
                 filter
                 filterPlaceholder="Buscar"
               />
-              <Column
-                field="documentNumber"
-                header="DNI"
-                showFilterMenu={false}
-                filter
-                filterPlaceholder="Buscar"
-              />
-              <Column
-                field="phone"
-                header="Telefono"
-                showFilterMenu={false}
-                filter
-                filterPlaceholder="Buscar"
-              />
-              <Column
-                field="nationality"
-                header="Nacionalidad"
-                showFilterMenu={false}
-                filter
-                filterPlaceholder="Buscar"
-              />
+              <Column field="documentNumber" header="DNI" filter filterPlaceholder="Buscar" />
+              <Column field="phone" header="Telefono" filter filterPlaceholder="Buscar" />
+              <Column field="nationality" header="Nacionalidad" filter filterPlaceholder="Buscar" />
               <Column
                 field="enterDate"
                 header="Fecha de entrada"
-                showFilterMenu={false}
                 filter
                 filterPlaceholder="Buscar"
               />
-              <Column
-                field="agent"
-                header="Agente"
-                showFilterMenu={false}
-                filter
-                filterPlaceholder="Buscar"
-              />
+              <Column field="agent" header="Agente" filter filterPlaceholder="Buscar" />
               <Column
                 field="status"
                 header="Estado"

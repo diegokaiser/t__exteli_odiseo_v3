@@ -6,7 +6,11 @@ import {
   doc,
   getDoc,
   getDocs,
+  limit,
+  orderBy,
   query,
+  QueryDocumentSnapshot,
+  startAfter,
   updateDoc,
   where,
 } from 'firebase/firestore';
@@ -29,7 +33,8 @@ const customers = {
   GetAllCustomers: async (): Promise<Customer[]> => {
     try {
       const customersRef = collection(db, 'customers');
-      const snapshot = await getDocs(customersRef);
+      const q = query(customersRef, orderBy('firstName', 'asc'));
+      const snapshot = await getDocs(q);
 
       const customers = snapshot.docs
         .map((doc) => ({
@@ -45,6 +50,34 @@ const customers = {
       return customers;
     } catch (err) {
       console.error(`GetAllCustomers error: ${err}`);
+      throw err;
+    }
+  },
+  GetCustomersPage: async (
+    limitValue: number,
+    startAfterDoc?: QueryDocumentSnapshot
+  ): Promise<{ customers: Customer[]; lastDoc: QueryDocumentSnapshot | null }> => {
+    try {
+      const customersRef = collection(db, 'customers');
+      //let q = query(customersRef, orderBy('firstName', 'asc'), limit(limitValue));
+      let q = query(customersRef, orderBy('firstName', 'asc'), limit(limitValue));
+
+      if (startAfterDoc) {
+        q = query(q, startAfter(startAfterDoc));
+      }
+
+      const snapshot = await getDocs(q);
+
+      const customers = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...(doc.data() as Customer),
+      }));
+
+      const lastDoc = snapshot.docs.length > 0 ? snapshot.docs[snapshot.docs.length - 1] : null;
+
+      return { customers, lastDoc };
+    } catch (err) {
+      console.error(`GetCustomersPage error: ${err}`);
       throw err;
     }
   },

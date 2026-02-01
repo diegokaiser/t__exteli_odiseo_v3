@@ -1,6 +1,6 @@
 import apis from '@/apis';
 import { Procedure } from '@/types/procedures';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useProcedure = (id: string) => {
   return useQuery<Procedure | null>({
@@ -32,6 +32,20 @@ export const useProcedures = () => {
       }));
     },
     staleTime: 1000 * 60 * 5,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
+  });
+};
+
+export const usePostProcedure = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (procedure: Procedure) => {
+      const response = await apis.procedures.PostProcedure({ procedure });
+      return response;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['procedures'] });
+    },
   });
 };

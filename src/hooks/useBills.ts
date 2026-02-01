@@ -1,7 +1,5 @@
 import apis from '@/apis';
 import { Bill } from '@/types/bills';
-import { sumBillsByMonth } from '@/utils/dashboardBill';
-import { countBillsByMonth } from '@/utils/dashboardBillCount';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 type Status = 'Pagado' | 'pendiente' | 'Cancelado';
@@ -74,6 +72,19 @@ export const useGetBillsByStatus = (status: string) => {
   });
 };
 
+export const useGetBillsByStatusDashboard = (status: string) => {
+  return useQuery({
+    queryKey: ['bills-by-status-dashboard', status],
+    queryFn: async () => {
+      const response = await apis.bills.GetBillsByStatusDashboard(status);
+      if (!response) return [];
+      return response;
+    },
+    staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: false,
+  });
+};
+
 export const useGetBillsByStatusRaw = (status: string) => {
   return useQuery({
     queryKey: ['bills-by-status-raw', status],
@@ -88,9 +99,8 @@ export const useGetBillsByStatusRaw = (status: string) => {
 };
 
 export const useMonthlyBillTotal = (status: Status, period: Period = 'actual') => {
-  const { data: bills = [], ...query } = useGetBillsByStatusRaw(status);
-
   const now = new Date();
+
   const month = now.getMonth();
   const year = now.getFullYear();
 
@@ -99,11 +109,13 @@ export const useMonthlyBillTotal = (status: Status, period: Period = 'actual') =
   const selectedMonth = isPrevious ? (month === 0 ? 11 : month - 1) : month;
   const selectedYear = isPrevious && month === 0 ? year - 1 : year;
 
-  const total = sumBillsByMonth(bills, {
-    month: selectedMonth,
-    year: selectedYear,
-    status,
+  const query = useQuery({
+    queryKey: ['bills-total-by-month', status, selectedMonth, selectedYear],
+    queryFn: () => apis.bills.GetBillsByStatusAndMonth(status, selectedMonth, selectedYear),
+    staleTime: 1000 * 60 * 10,
   });
+
+  const total = query.data?.reduce((acc, bill) => acc + bill.total, 0) ?? 0;
 
   return {
     total,
@@ -112,8 +124,6 @@ export const useMonthlyBillTotal = (status: Status, period: Period = 'actual') =
 };
 
 export const useMonthlyBillCount = (status: Status, period: Period = 'actual') => {
-  const { data: bills = [], ...query } = useGetBillsByStatusRaw(status);
-
   const now = new Date();
   const month = now.getMonth();
   const year = now.getFullYear();
@@ -123,13 +133,14 @@ export const useMonthlyBillCount = (status: Status, period: Period = 'actual') =
   const selectedMonth = isPrevious ? (month === 0 ? 11 : month - 1) : month;
   const selectedYear = isPrevious && month === 0 ? year - 1 : year;
 
-  const count = countBillsByMonth(bills, {
-    month: selectedMonth,
-    year: selectedYear,
+  const query = useQuery({
+    queryKey: ['bills-count-by-month', status, selectedMonth, selectedYear],
+    queryFn: () => apis.bills.GetBillsByStatusAndMonthCount(status, selectedMonth, selectedYear),
+    staleTime: 1000 * 60 * 10,
   });
 
   return {
-    count,
+    count: query.data ?? 0,
     ...query,
   };
 };

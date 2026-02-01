@@ -1,9 +1,10 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @import 'primereact/resources/themes/lara-light-blue/theme.css';
 @import 'primereact/resources/primereact.min.css';
 @import 'primeicons/primeicons.css';
 
-@import "./styles/dashboard.css";
-@import "./styles/login.css";
-@import "./styles/header.css";
+@import './styles/dashboard.css';
+@import './styles/login.css';
+@import './styles/header.css';
+@import './styles/calendar.css';

@@ -132,6 +132,11 @@ const sidebarAdminMenu = [
         href: '/settings/clockify',
         icon: 'pi pi-stopwatch',
       },
+      {
+        title: 'Trámites',
+        href: '/settings/procedures',
+        icon: 'pi pi-file-import',
+      },
     ],
   },
 ];

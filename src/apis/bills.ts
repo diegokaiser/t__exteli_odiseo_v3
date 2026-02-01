@@ -4,6 +4,7 @@ import {
   addDoc,
   collection,
   doc,
+  getCountFromServer,
   getDoc,
   getDocs,
   limit,
@@ -49,10 +50,83 @@ const bills = {
       throw err;
     }
   },
+  // trae todas las facturas, necesita optimización
   GetBillsByStatus: async (status: string): Promise<Bill[]> => {
     try {
       const billsRef = collection(db, 'bills');
       const q = query(billsRef, where('status', '==', status));
+      const snapshot = await getDocs(q);
+
+      return snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...(doc.data() as Bill),
+      }));
+    } catch (err) {
+      console.error(`GetBillsByStatus (${status}) error: ${err}`);
+      throw err;
+    }
+  },
+  GetBillsByStatusAndMonth: async (
+    status: string,
+    month: number,
+    year: number
+  ): Promise<Bill[]> => {
+    try {
+      const start = new Date(year, month, 1, 0, 0, 0);
+      const end = new Date(year, month + 1, 1, 0, 0, 0);
+
+      const billsRef = collection(db, 'bills');
+      const q = query(
+        billsRef,
+        where('status', '==', status),
+        where('createdAt', '>=', start),
+        where('createdAt', '<', end)
+      );
+      const snapshot = await getDocs(q);
+
+      return snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...(doc.data() as Bill),
+      }));
+    } catch (err) {
+      console.error(`GetBillsByStatus (${status}) error: ${err}`);
+      throw err;
+    }
+  },
+  GetBillsByStatusAndMonthCount: async (
+    status: string,
+    month: number,
+    year: number
+  ): Promise<number> => {
+    try {
+      const start = new Date(year, month, 1, 0, 0, 0);
+      const end = new Date(year, month + 1, 1, 0, 0, 0);
+
+      const billsRef = collection(db, 'bills');
+
+      const q = query(
+        billsRef,
+        where('status', '==', status),
+        where('createdAt', '>=', start),
+        where('createdAt', '<', end)
+      );
+      const snapshot = await getCountFromServer(q);
+
+      return snapshot.data().count;
+    } catch (err) {
+      console.error(`GetBillsByStatus (${status}) error: ${err}`);
+      throw err;
+    }
+  },
+  GetBillsByStatusDashboard: async (status: string): Promise<Bill[]> => {
+    try {
+      const billsRef = collection(db, 'bills');
+      const q = query(
+        billsRef,
+        where('status', '==', status),
+        orderBy('createdAt', 'desc'),
+        limit(10)
+      );
       const snapshot = await getDocs(q);
 
       return snapshot.docs.map((doc) => ({

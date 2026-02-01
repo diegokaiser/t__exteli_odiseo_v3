@@ -3,7 +3,7 @@
 import { useAuth } from '@/auth/hooks/useAuth';
 import { CardBill, CardCalendar, DashboardBill, DashboardBillCount } from '@/components/organisms';
 import { withAuth } from '@/hocs/withAuth';
-import { useGetBillsByStatus } from '@/hooks/useBills';
+import { useGetBillsByStatusDashboard } from '@/hooks/useBills';
 
 const DashboardPage = () => {
   const { user } = useAuth();
@@ -11,19 +11,19 @@ const DashboardPage = () => {
     data: approvedBills,
     isLoading: loadingApprovedBills,
     isError: errorApprovedBills,
-  } = useGetBillsByStatus('Pagado');
+  } = useGetBillsByStatusDashboard('Pagado');
 
   const {
     data: pendingBills,
     isLoading: loadingPendingbills,
     isError: errorPendingBills,
-  } = useGetBillsByStatus('pendiente');
+  } = useGetBillsByStatusDashboard('pendiente');
 
   const {
     data: cancelledBills,
     isLoading: loadingCancelledBills,
     isError: errorCancelledBills,
-  } = useGetBillsByStatus('Cancelado');
+  } = useGetBillsByStatusDashboard('Cancelado');
 
   return (
     <>
@@ -98,7 +98,7 @@ const DashboardPage = () => {
           <div className="bg-white text-[#1d2630] shadow-none overflow-hidden relative border-1 border-solid border-[#dbe0e5a6] rounded-[12px]">
             <div className="p-5">
               <span className="m-0 text-xs font-semibold block uppercase">
-                Facturas Pagadas del mes
+                Últimas Facturas Pagadas
               </span>
             </div>
             <hr className="border-[#dbe0e5a6]" />
@@ -111,7 +111,7 @@ const DashboardPage = () => {
           <div className="bg-white text-[#1d2630] shadow-none overflow-hidden relative border-1 border-solid border-[#dbe0e5a6] rounded-[12px]">
             <div className="p-5">
               <span className="m-0 text-xs font-semibold block uppercase">
-                Facturas Pendientes del mes
+                Últimas Facturas Pendientes
               </span>
             </div>
             <hr className="border-[#dbe0e5a6]" />
@@ -124,7 +124,7 @@ const DashboardPage = () => {
           <div className="bg-white text-[#1d2630] shadow-none overflow-hidden relative border-1 border-solid border-[#dbe0e5a6] rounded-[12px]">
             <div className="p-5">
               <span className="m-0 text-xs font-semibold block uppercase">
-                Facturas canceladas del mes
+                Últimas Facturas Canceladas
               </span>
             </div>
             <hr className="border-[#dbe0e5a6]" />
