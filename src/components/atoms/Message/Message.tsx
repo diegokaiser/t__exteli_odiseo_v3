@@ -1,3 +1,5 @@
+'use client';
+
 import { Toast } from 'primereact/toast';
 import { useEffect, useRef } from 'react';
 
