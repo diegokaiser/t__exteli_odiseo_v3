@@ -129,7 +129,7 @@ const calendar = {
     event: Omit<CalendarEvent, 'id' | 'hour'>;
   }): Promise<string> => {
     try {
-      const eventRef = collection(db, 'calendar-test', userUid, 'events');
+      const eventRef = collection(db, 'calendar', userUid, 'events');
 
       const start =
         event.start instanceof Timestamp ? event.start : Timestamp.fromDate(event.start);
@@ -159,7 +159,7 @@ const calendar = {
   UpdateEvent: async () => {},
   ConfirmEventStripe: async (uid: string) => {
     try {
-      const eventDocRef = collection(db, 'calendar-test', 'np6Q466WIEW2ngYpPBbz7VxJHNY2', 'events');
+      const eventDocRef = collection(db, 'calendar', 'np6Q466WIEW2ngYpPBbz7VxJHNY2', 'events');
       const q = query(eventDocRef, where('stripeSessionId', '==', uid));
       const snapshot = await getDocs(q);
       await updateDoc(snapshot.docs[0].ref, {
@@ -173,7 +173,7 @@ const calendar = {
   },
   CancelEventStripe: async (uid: string) => {
     try {
-      const eventDocRef = collection(db, 'calendar-test', 'np6Q466WIEW2ngYpPBbz7VxJHNY2', 'events');
+      const eventDocRef = collection(db, 'calendar', 'np6Q466WIEW2ngYpPBbz7VxJHNY2', 'events');
       const q = query(eventDocRef, where('stripeSessionId', '==', uid));
       const snapshot = await getDocs(q);
       await updateDoc(snapshot.docs[0].ref, {
@@ -187,7 +187,7 @@ const calendar = {
   },
   FailedEventStripe: async (uid: string) => {
     try {
-      const eventDocRef = collection(db, 'calendar-test', 'np6Q466WIEW2ngYpPBbz7VxJHNY2', 'events');
+      const eventDocRef = collection(db, 'calendar', 'np6Q466WIEW2ngYpPBbz7VxJHNY2', 'events');
       const q = query(eventDocRef, where('stripeSessionId', '==', uid));
       const snapshot = await getDocs(q);
       await updateDoc(snapshot.docs[0].ref, {
