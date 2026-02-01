@@ -206,6 +206,8 @@ const ReservasCalendar = () => {
     await handleStripeCheckout(data);
   };
 
+  console.log(eventDate);
+
   return (
     <>
       <Toast ref={toast} />
@@ -216,6 +218,7 @@ const ReservasCalendar = () => {
               <div className="flex justify-center w-full">
                 <Calendar
                   inline
+                  disabledDays={[6]}
                   locale="es"
                   onChange={(e) => {
                     if (!e.value) return;
@@ -435,7 +438,7 @@ const ReservasCalendar = () => {
                             <label htmlFor="privacyPolicy">
                               Acepto la{' '}
                               <Link
-                                href="/politica-privacidad"
+                                href="https://extranjeriagrv.es/politica-de-privacidad/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-[#4680ff] font-normal"
@@ -455,7 +458,7 @@ const ReservasCalendar = () => {
                             <label htmlFor="termsAndConditions">
                               Acepto los{' '}
                               <Link
-                                href="/terminos-condiciones"
+                                href="https://extranjeriagrv.es/terminos-y-condiciones/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-[#4680ff] font-normal"

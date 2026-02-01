@@ -129,7 +129,7 @@ const calendar = {
     event: Omit<CalendarEvent, 'id' | 'hour'>;
   }): Promise<string> => {
     try {
-      const eventRef = collection(db, 'calendar', userUid, 'events');
+      const eventRef = collection(db, 'calendar-test', userUid, 'events');
 
       const start =
         event.start instanceof Timestamp ? event.start : Timestamp.fromDate(event.start);
