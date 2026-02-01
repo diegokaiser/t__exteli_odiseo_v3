@@ -108,15 +108,17 @@ const sidebarAdminMenu = [
     title: 'Contabilidad',
     items: [
       {
-        title: 'Ingresos por servicios',
-        href: '/accountability/incomings',
+        title: 'Ingresos',
+        href: '/accountability/incomes',
         icon: 'pi pi-chart-line',
       },
+      /*
       {
         title: 'Egresos',
         href: '/accountability/outcomings',
         icon: 'pi pi-chart-scatter',
       },
+      */
     ],
   },
   {
