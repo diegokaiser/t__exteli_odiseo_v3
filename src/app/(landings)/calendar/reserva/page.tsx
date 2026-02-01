@@ -441,7 +441,7 @@ const ReservasCalendar = () => {
                             <label htmlFor="privacyPolicy">
                               Acepto la{' '}
                               <Link
-                                href="/politica-privacidad"
+                                href="https://extranjeriagrv.es/politica-de-privacidad/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-[#4680ff] font-normal"
@@ -461,7 +461,7 @@ const ReservasCalendar = () => {
                             <label htmlFor="termsAndConditions">
                               Acepto los{' '}
                               <Link
-                                href="/terminos-condiciones"
+                                href="https://extranjeriagrv.es/terminos-y-condiciones/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-[#4680ff] font-normal"
