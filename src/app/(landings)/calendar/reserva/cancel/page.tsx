@@ -1,7 +1,7 @@
-// prettier-ignore
-'use client';
-
 export const dynamic = 'force-dynamic';
+
+//prettier-ignore
+'use client';
 
 import Link from 'next/link';
 import { Toast } from 'primereact/toast';
