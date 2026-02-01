@@ -45,6 +45,7 @@ export const useUserName = (userUid: string) => {
   });
 };
 
+/*
 export const usePostUser = () => {
   const queryClient = useQueryClient();
 
@@ -55,6 +56,7 @@ export const usePostUser = () => {
     },
   });
 };
+*/
 
 export const useUpdateUser = () => {
   const queryClient = useQueryClient();
