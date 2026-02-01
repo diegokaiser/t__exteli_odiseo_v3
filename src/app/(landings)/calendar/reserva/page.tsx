@@ -18,6 +18,11 @@ import { CalendarEvent } from '@/types/calendar';
 import { reservasDateTime } from '@/utils/reservasDateTime';
 import { Timestamp } from 'firebase/firestore';
 
+const parseLocalDate = (yyyyMMdd: string): Date => {
+  const [year, month, day] = yyyyMMdd.split('-').map(Number);
+  return new Date(year, month - 1, day);
+};
+
 const ReservasCalendar = () => {
   const toast = useRef<any>(null);
   const [loading, setLoading] = useState(false);
@@ -206,6 +211,8 @@ const ReservasCalendar = () => {
     await handleStripeCheckout(data);
   };
 
+  console.log(eventDate);
+
   return (
     <>
       <Toast ref={toast} />
@@ -216,10 +223,12 @@ const ReservasCalendar = () => {
               <div className="flex justify-center w-full">
                 <Calendar
                   inline
+                  disabledDays={[6]}
                   locale="es"
+                  value={eventDate ? parseLocalDate(eventDate) : undefined}
                   onChange={(e) => {
                     if (!e.value) return;
-                    const date = e.value.toISOString().split('T')[0];
+                    const date = e.value.toLocaleDateString('sv-SE');
                     setValue('start', date);
                   }}
                 />
@@ -435,7 +444,7 @@ const ReservasCalendar = () => {
                             <label htmlFor="privacyPolicy">
                               Acepto la{' '}
                               <Link
-                                href="/politica-privacidad"
+                                href="https://extranjeriagrv.es/politica-de-privacidad/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-[#4680ff] font-normal"
@@ -455,7 +464,7 @@ const ReservasCalendar = () => {
                             <label htmlFor="termsAndConditions">
                               Acepto los{' '}
                               <Link
-                                href="/terminos-condiciones"
+                                href="https://extranjeriagrv.es/terminos-y-condiciones/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-[#4680ff] font-normal"
