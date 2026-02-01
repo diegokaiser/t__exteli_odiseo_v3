@@ -18,6 +18,11 @@ import { CalendarEvent } from '@/types/calendar';
 import { reservasDateTime } from '@/utils/reservasDateTime';
 import { Timestamp } from 'firebase/firestore';
 
+const parseLocalDate = (yyyyMMdd: string): Date => {
+  const [year, month, day] = yyyyMMdd.split('-').map(Number);
+  return new Date(year, month - 1, day);
+};
+
 const ReservasCalendar = () => {
   const toast = useRef<any>(null);
   const [loading, setLoading] = useState(false);
@@ -208,6 +213,12 @@ const ReservasCalendar = () => {
     await handleStripeCheckout(data);
   };
 
+  console.log(`eventDate: ${eventDate}`);
+  /*
+  console.log(`eventHour: ${eventHour}`);
+  console.log(`eventEnd: ${eventEnd}`);
+  */
+
   return (
     <>
       <Toast ref={toast} />
@@ -218,11 +229,13 @@ const ReservasCalendar = () => {
               <div className="flex justify-center w-full">
                 <Calendar
                   inline
-                  disabledDays={[0, 6]}
                   locale="es"
+                  value={eventDate ? parseLocalDate(eventDate) : undefined}
                   onChange={(e) => {
                     if (!e.value) return;
-                    const date = e.value.toISOString().split('T')[0];
+                    console.log(e.value);
+                    const date = e.value.toLocaleDateString('sv-SE');
+                    console.log(date);
                     setValue('start', date);
                   }}
                 />
@@ -521,7 +534,7 @@ const ReservasCalendar = () => {
               <div className="p-5">
                 <span className="m-0 text-xs font-semibold block uppercase">Fecha y hora</span>
                 <div className="flex m-0 mt-5 text-sm font-light block uppercase">
-                  {eventDate && eventHour && eventEnd && (
+                  {eventDate && eventHour && eventEnd ? (
                     <>
                       <div className="flex items-center w-2/12">
                         <i className="pi pi-calendar-clock"></i>
@@ -530,6 +543,8 @@ const ReservasCalendar = () => {
                         {reservasDateTime(eventDate, eventHour, eventEnd)}
                       </div>
                     </>
+                  ) : (
+                    <Loader />
                   )}
                 </div>
               </div>
