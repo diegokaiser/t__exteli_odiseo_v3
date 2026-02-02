@@ -9,6 +9,9 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'Extranjería Grupo Ramirez Ventura',
   description: 'by    t r a s c e n d i e n d o',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({

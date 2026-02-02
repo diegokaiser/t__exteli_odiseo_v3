@@ -53,7 +53,7 @@ const ReservasCalendar = () => {
         agent: 'np6Q466WIEW2ngYpPBbz7VxJHNY2',
         allDay: false,
         description: data.message,
-        title: 'Reserva de Cita Online',
+        title: `Reserva de Cita Online: ${data.name} ${data.lastName}`,
         venue: 'Puerto de Balbarán 15',
 
         start: Timestamp.fromDate(startDate),
@@ -216,8 +216,8 @@ const ReservasCalendar = () => {
       <Toast ref={toast} />
       <form onSubmit={handleSubmit(onSubmit)} className="p-6">
         <div className="flex justify-center">
-          <div className="container flex justify-center gap-x-4">
-            <div className="w-[410px]">
+          <div className="container flex flex-col-reverse lg:flex-row justify-center gap-x-4">
+            <div className="w-full lg:w-[410px]">
               <div className="flex justify-center w-full">
                 <Calendar
                   inline
@@ -503,7 +503,7 @@ const ReservasCalendar = () => {
                 </div>
               </div>
             </div>
-            <div className="w-[260px]">
+            <div className="w-full lg:w-[260px]">
               <div className="p-5">
                 <span className="m-0 text-xs font-semibold block uppercase">
                   Detalles de la reunión
