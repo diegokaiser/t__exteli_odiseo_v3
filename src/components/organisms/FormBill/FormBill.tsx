@@ -263,7 +263,7 @@ const FormBill = () => {
       });
     } finally {
       setLoading(false);
-      router.push('/billing');
+      //router.push('/billing');
     }
   };
 
@@ -764,7 +764,7 @@ const FormBill = () => {
                 <Button
                   type="button"
                   label="Previsualizar"
-                  disabled={!isValid || loading}
+                  disabled={!isValid || (isRegisteredCustomer && !selectedCustomer) || loading}
                   className="disabled:bg-transparent! disabled:cursor-not-allowed! disabled:text-[#dbe0e5]! disabled:border-[#dbe0e5]! disabled:border-[2px]!"
                   onClick={() => showModal()}
                 />
