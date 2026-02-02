@@ -1,6 +1,7 @@
 import { DashboardWrapper } from '@/components/wrappers';
+import { ReactNode } from 'react';
 
-const DashboardLayout = ({ children }: { children: React.ReactElement }) => {
+const DashboardLayout = ({ children }: { children: ReactNode }) => {
   return <DashboardWrapper>{children}</DashboardWrapper>;
 };
 
