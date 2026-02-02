@@ -105,7 +105,12 @@ const calendar = {
       const endOfDay = new Date(now.setHours(23, 59, 59, 999));
 
       const eventRef = collection(db, 'calendar', uid, 'events');
-      const q = query(eventRef, where('start', '>=', startOfDay), where('start', '<=', endOfDay));
+      const q = query(
+        eventRef,
+        where('start', '>=', startOfDay),
+        where('start', '<=', endOfDay),
+        where('status', '==', 'confirmed')
+      );
 
       const snapshot = await getDocs(q);
 
