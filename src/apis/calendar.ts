@@ -81,8 +81,6 @@ const calendar = {
       const q = query(eventRef, where('status', '==', 'confirmed'));
       const querySnapshot = await getDocs(q);
 
-      console.log(querySnapshot.docs);
-
       return querySnapshot.docs.map((doc) => {
         const data = doc.data() as CalendarEvent;
 
