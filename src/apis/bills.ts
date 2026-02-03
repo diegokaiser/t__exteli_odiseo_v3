@@ -197,7 +197,7 @@ const bills = {
   PostBill: async (bill: Omit<Bill, 'createdAt'>): Promise<void> => {
     try {
       console.log(bill);
-      const billsRef = collection(db, 'bills-test');
+      const billsRef = collection(db, 'bills');
       await addDoc(billsRef, {
         ...bill,
       });
