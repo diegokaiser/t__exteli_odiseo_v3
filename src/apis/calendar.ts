@@ -78,7 +78,8 @@ const calendar = {
   GetEvents: async (uid: string): Promise<CalendarEventUI[]> => {
     try {
       const eventRef = collection(db, 'calendar', uid, 'events');
-      const querySnapshot = await getDocs(eventRef);
+      const q = query(eventRef, where('status', '==', 'confirmed'));
+      const querySnapshot = await getDocs(q);
 
       return querySnapshot.docs.map((doc) => {
         const data = doc.data() as CalendarEvent;
