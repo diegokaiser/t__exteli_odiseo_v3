@@ -80,8 +80,11 @@ const calendar = {
       const eventRef = collection(db, 'calendar', uid, 'events');
       const q = query(eventRef, where('status', '==', 'confirmed'));
       const querySnapshot = await getDocs(q);
+<<<<<<< HEAD
 
       console.log(querySnapshot.docs);
+=======
+>>>>>>> fixpro
 
       return querySnapshot.docs.map((doc) => {
         const data = doc.data() as CalendarEvent;

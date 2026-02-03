@@ -50,6 +50,30 @@ const bills = {
       throw err;
     }
   },
+  GetAllBillsByMonth: async (month: number, year: number): Promise<Bill[]> => {
+    try {
+      const start = new Date(year, month, 1);
+      const end = new Date(year, month + 1, 1);
+
+      const billsRef = collection(db, 'bills');
+      const q = query(billsRef, where('createdAt', '>=', start), where('createdAt', '<', end));
+      const snapshot = await getDocs(q);
+
+      return snapshot.docs
+        .map((doc) => ({
+          id: doc.id,
+          ...(doc.data() as Bill),
+        }))
+        .sort((a, b) => {
+          const aTime = a.createdAt?.seconds ?? 0;
+          const bTime = b.createdAt?.seconds ?? 0;
+          return bTime - aTime;
+        });
+    } catch (err) {
+      console.error(`GetAllBillsByMonth (${month}, ${year}) error: ${err}`);
+      throw err;
+    }
+  },
   // trae todas las facturas, necesita optimización
   GetBillsByStatus: async (status: string): Promise<Bill[]> => {
     try {
@@ -172,6 +196,7 @@ const bills = {
   },
   PostBill: async (bill: Omit<Bill, 'createdAt'>): Promise<void> => {
     try {
+      console.log(bill);
       const billsRef = collection(db, 'bills');
       await addDoc(billsRef, {
         ...bill,

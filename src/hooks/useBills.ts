@@ -39,6 +39,23 @@ export const useBills = () => {
   });
 };
 
+export const useBillsByMonth = (month: number, year: number) => {
+  return useQuery<Bill[]>({
+    queryKey: ['bills-by-month', month, year],
+    queryFn: async () => {
+      const response = await apis.bills.GetAllBillsByMonth(month, year);
+      if (!response) return [];
+      return response.map((item: any) => ({
+        id: item.id,
+        number: `${item.billSerial}-${item.billNumber}`,
+        ...item,
+      }));
+    },
+    staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: false,
+  });
+};
+
 export const useGetLastBill = () => {
   return useQuery({
     queryKey: ['last-bill'],

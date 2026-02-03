@@ -17,13 +17,21 @@ import { Tooltip } from 'primereact/tooltip';
 import { LoadingScreen, Message } from '@/components/atoms';
 import { Breadcrumbs } from '@/components/organisms';
 import { withAuth } from '@/hocs/withAuth';
-import { useBills, useCancelBill, usePaidBill } from '@/hooks/useBills';
+import { useBillsByMonth, useCancelBill, usePaidBill } from '@/hooks/useBills';
 import { Bill } from '@/types/bills';
 import Link from 'next/link';
 
 const BillingPage = () => {
   const router = useRouter();
-  const { data: bills, isLoading, isError } = useBills();
+
+  const today = new Date();
+  const currentMonth = today.getMonth();
+  const currentYear = today.getFullYear();
+
+  const [month, setMonth] = useState(currentMonth);
+  const [year, setYearh] = useState(currentYear);
+
+  const { data: bills, isLoading, isError } = useBillsByMonth(month, year);
 
   const { mutate: paidBill, isPending: isPaidBillLoading } = usePaidBill();
   const { mutate: cancelBill, isPending: isCancelBillLoading } = useCancelBill();
@@ -43,6 +51,20 @@ const BillingPage = () => {
     return <Message severity="error" summary="Error" detail="Error al cargar las facturas" />;
 
   const statusOptions = ['pendiente', 'pagada', 'cancelada'];
+
+  const goToPreviousMonth = () => {
+    const newDate = new Date(year, month - 1);
+    setMonth(newDate.getMonth());
+    setYearh(newDate.getFullYear());
+  };
+
+  const goToNextMonth = () => {
+    setMonth(month + 1);
+    setYearh(year);
+  };
+
+  const isCurrentMonth = month === currentMonth && year === currentYear;
+
   const getSeverity = (statusOptions: string) => {
     switch (statusOptions) {
       case 'pendiente':
@@ -199,6 +221,26 @@ const BillingPage = () => {
         className="box-border flex flex-wrap justify-center"
         style={{ width: 'calc(100% + 28px)' }}
       >
+        <div className="flex justify-between w-full">
+          <button
+            className="bg-[#06b6d4] border border-[#06b6d4] rounded-[6px] cursor-pointer flex items-center gap-x-3 px-[12px] py-[4px] text-white hover:bg-[white] hover:text-[#06b6d4]"
+            type="button"
+            onClick={goToPreviousMonth}
+          >
+            <i className="pi pi-arrow-left"></i>
+            <span>Mes Anterior</span>
+          </button>
+          {!isCurrentMonth && (
+            <button
+              className="bg-[#06b6d4] border border-[#06b6d4] rounded-[6px] cursor-pointer flex items-center gap-x-3 px-[12px] py-[4px] text-white hover:bg-[white] hover:text-[#06b6d4]"
+              type="button"
+              onClick={goToNextMonth}
+            >
+              <span>Mes Siguiente</span>
+              <i className="pi pi-arrow-right"></i>
+            </button>
+          )}
+        </div>
         <div className="box-border m-0 pt-5 basis-[100%] grow-0 max-w-[100%]">
           <div className="bg-white text-[#1d2630] shadow-none overflow-hidden relative border-1 border-solid border-[#dbe0e5a6] rounded-[12px]">
             <DataTable
