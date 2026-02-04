@@ -50,6 +50,32 @@ const bills = {
       throw err;
     }
   },
+  GetAllBillsByWeek: async (weekStart: Date, weekEnd: Date): Promise<Bill[]> => {
+    try {
+      const billsRef = collection(db, 'bills');
+      const q = query(
+        billsRef,
+        where('createdAt', '>=', weekStart),
+        where('createdAt', '<', weekEnd)
+      );
+
+      const snapshot = await getDocs(q);
+
+      return snapshot.docs
+        .map((doc) => ({
+          id: doc.id,
+          ...(doc.data() as Bill),
+        }))
+        .sort((a, b) => {
+          const aTime = a.createdAt?.seconds ?? 0;
+          const bTime = b.createdAt?.seconds ?? 0;
+          return bTime - aTime;
+        });
+    } catch (err) {
+      console.error(`GetAllBillsByWeek (${weekStart} - ${weekEnd}) error: ${err}`);
+      throw err;
+    }
+  },
   GetAllBillsByMonth: async (month: number, year: number): Promise<Bill[]> => {
     try {
       const start = new Date(year, month, 1);
@@ -196,7 +222,6 @@ const bills = {
   },
   PostBill: async (bill: Omit<Bill, 'createdAt'>): Promise<void> => {
     try {
-      console.log(bill);
       const billsRef = collection(db, 'bills');
       await addDoc(billsRef, {
         ...bill,
