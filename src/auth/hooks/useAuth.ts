@@ -45,6 +45,11 @@ export const useAuth = (
   }, []);
 
   const login = async (email: string, password: string, remember: boolean) => {
+    try {
+      await account.deleteSession('current');
+    } catch (error: any) {
+      if (error.code !== 401) console.error(error);
+    }
     await account.createEmailPasswordSession(email, password);
     if (remember) {
       localStorage.setItem('lastUser', JSON.stringify({ email, password }));
@@ -58,7 +63,12 @@ export const useAuth = (
   };
 
   const logout = async () => {
-    await account.deleteSession('current');
+    try {
+      await account.deleteSession('current');
+    } catch (err) {
+      console.error(err);
+    }
+    localStorage.removeItem('lastUser');
     setUser(null);
     router.push(redirectUnauthenticated);
   };
