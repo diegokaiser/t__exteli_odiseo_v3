@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FilterMatchMode } from 'primereact/api';
 import { Column } from 'primereact/column';
@@ -17,21 +18,20 @@ import { Tooltip } from 'primereact/tooltip';
 import { LoadingScreen, Message } from '@/components/atoms';
 import { Breadcrumbs } from '@/components/organisms';
 import { withAuth } from '@/hocs/withAuth';
-import { useBillsByMonth, useCancelBill, usePaidBill } from '@/hooks/useBills';
+import { useBillsByWeek, useCancelBill, usePaidBill } from '@/hooks/useBills';
 import { Bill } from '@/types/bills';
-import Link from 'next/link';
+import { getWeekRange } from '@/utils/getWeekRange';
 
 const BillingPage = () => {
   const router = useRouter();
 
   const today = new Date();
-  const currentMonth = today.getMonth();
-  const currentYear = today.getFullYear();
 
-  const [month, setMonth] = useState(currentMonth);
-  const [year, setYearh] = useState(currentYear);
+  const [currentDate, setCurrentDate] = useState(today);
 
-  const { data: bills, isLoading, isError } = useBillsByMonth(month, year);
+  const { start: weekStart, end: weekEnd } = getWeekRange(currentDate);
+
+  const { data: bills, isLoading, isError } = useBillsByWeek(weekStart, weekEnd);
 
   const { mutate: paidBill, isPending: isPaidBillLoading } = usePaidBill();
   const { mutate: cancelBill, isPending: isCancelBillLoading } = useCancelBill();
@@ -52,18 +52,19 @@ const BillingPage = () => {
 
   const statusOptions = ['pendiente', 'pagada', 'cancelada'];
 
-  const goToPreviousMonth = () => {
-    const newDate = new Date(year, month - 1);
-    setMonth(newDate.getMonth());
-    setYearh(newDate.getFullYear());
+  const goToPreviousWeek = () => {
+    const prev = new Date(currentDate);
+    prev.setDate(prev.getDate() - 7);
+    setCurrentDate(prev);
   };
 
-  const goToNextMonth = () => {
-    setMonth(month + 1);
-    setYearh(year);
+  const goToNextWeek = () => {
+    const next = new Date(currentDate);
+    next.setDate(next.getDate() + 7);
+    setCurrentDate(next);
   };
 
-  const isCurrentMonth = month === currentMonth && year === currentYear;
+  const isCurrentWeek = weekStart <= today && today < weekEnd;
 
   const getSeverity = (statusOptions: string) => {
     switch (statusOptions) {
@@ -162,7 +163,7 @@ const BillingPage = () => {
           className="bg-[#06b6d4] btn-primary cursor-pointer flex items-center justify-center p-[6px] rounded-full w-[32px] h-[32px]"
           data-pr-tooltip="Ver factura"
           data-pr-position="top"
-          href={`/dashboard/billing/${rowData.id}`}
+          href={`/billing/${rowData.id}`}
         >
           <i className="pi pi-file-pdf" style={{ color: 'white' }}></i>
         </Link>
@@ -216,7 +217,7 @@ const BillingPage = () => {
     <>
       {isPaidBillLoading || (isCancelBillLoading && <LoadingScreen />)}
       <ConfirmDialog group="headless" />
-      <Breadcrumbs labels={{ billing: 'Facturación' }} pageTitle="Facturación" />
+      <Breadcrumbs labels={{ billing: 'Facturación' }} pageTitle="Facturación - Semana actual" />
       <div
         className="box-border flex flex-wrap justify-center"
         style={{ width: 'calc(100% + 28px)' }}
@@ -225,18 +226,18 @@ const BillingPage = () => {
           <button
             className="bg-[#06b6d4] border border-[#06b6d4] rounded-[6px] cursor-pointer flex items-center gap-x-3 px-[12px] py-[4px] text-white hover:bg-[white] hover:text-[#06b6d4]"
             type="button"
-            onClick={goToPreviousMonth}
+            onClick={goToPreviousWeek}
           >
             <i className="pi pi-arrow-left"></i>
-            <span>Mes Anterior</span>
+            <span>Semana Anterior</span>
           </button>
-          {!isCurrentMonth && (
+          {!isCurrentWeek && (
             <button
               className="bg-[#06b6d4] border border-[#06b6d4] rounded-[6px] cursor-pointer flex items-center gap-x-3 px-[12px] py-[4px] text-white hover:bg-[white] hover:text-[#06b6d4]"
               type="button"
-              onClick={goToNextMonth}
+              onClick={goToNextWeek}
             >
-              <span>Mes Siguiente</span>
+              <span>Semana Siguiente</span>
               <i className="pi pi-arrow-right"></i>
             </button>
           )}
