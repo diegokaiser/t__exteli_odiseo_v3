@@ -18,7 +18,7 @@ export const useBill = (id: string) => {
       };
     },
     enabled: !!id,
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 10,
   });
 };
 
@@ -34,7 +34,7 @@ export const useBills = () => {
         ...item,
       }));
     },
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 10,
     refetchOnWindowFocus: false,
   });
 };
@@ -51,7 +51,24 @@ export const useBillsByMonth = (month: number, year: number) => {
         ...item,
       }));
     },
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 10,
+    refetchOnWindowFocus: false,
+  });
+};
+
+export const useBillsByWeek = (weekStart: Date, weekEnd: Date) => {
+  return useQuery<Bill[]>({
+    queryKey: ['bills-by-week', weekStart.toISOString(), weekEnd.toISOString()],
+    queryFn: async () => {
+      const response = await apis.bills.GetAllBillsByWeek(weekStart, weekEnd);
+      if (!response) return [];
+      return response.map((item: any) => ({
+        id: item.id,
+        number: `${item.billSerial}-${item.billNumber}`,
+        ...item,
+      }));
+    },
+    staleTime: 1000 * 60 * 10,
     refetchOnWindowFocus: false,
   });
 };
@@ -64,7 +81,7 @@ export const useGetLastBill = () => {
       if (!bill) return null;
       return bill.billNumber;
     },
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 10,
   });
 };
 
@@ -84,7 +101,7 @@ export const useGetBillsByStatus = (status: string) => {
         return createdAt.getMonth() === currentMonth && createdAt.getFullYear() === currentYear;
       });
     },
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 10,
     refetchOnWindowFocus: false,
   });
 };
@@ -97,7 +114,7 @@ export const useGetBillsByStatusDashboard = (status: string) => {
       if (!response) return [];
       return response;
     },
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 10,
     refetchOnWindowFocus: false,
   });
 };
@@ -110,7 +127,7 @@ export const useGetBillsByStatusRaw = (status: string) => {
       if (!response) return [];
       return response;
     },
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 10,
     refetchOnWindowFocus: false,
   });
 };
