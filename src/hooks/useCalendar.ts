@@ -28,6 +28,14 @@ export const useCalendarEvents = (userUid: string) => {
   });
 };
 
+export const useCalendarAllEvents = () => {
+  return useQuery<CalendarEventUI[]>({
+    queryKey: ['calendar-all-events'],
+    queryFn: () => apis.calendar.GetAllEvents(),
+    staleTime: 1000 * 60 * 5,
+  });
+};
+
 export const useCalendarEventsToday = (userUid: string) => {
   return useQuery<CalendarEventUI[]>({
     queryKey: ['calendar-events-today', userUid],

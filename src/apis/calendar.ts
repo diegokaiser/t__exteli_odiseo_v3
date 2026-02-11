@@ -96,6 +96,24 @@ const calendar = {
       throw err;
     }
   },
+  GetAllEvents: async (): Promise<CalendarEventUI[]> => {
+    try {
+      const q = query(collectionGroup(db, 'events'), where('status', '==', 'confirmed'));
+      const querySnapshot = await getDocs(q);
+      return querySnapshot.docs.map((doc) => {
+        const data = doc.data() as CalendarEvent;
+        return {
+          id: doc.id,
+          ...data,
+          start: calendarDayFormat(data.start)!,
+          end: calendarDayFormat(data.end)!,
+        };
+      });
+    } catch (err) {
+      console.error(`GetAllEvents error: ${err}`);
+      throw err;
+    }
+  },
   GetEventsToday: async (uid: string): Promise<CalendarEventUI[]> => {
     try {
       const now = new Date();

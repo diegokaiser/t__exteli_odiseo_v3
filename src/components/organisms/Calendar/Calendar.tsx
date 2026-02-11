@@ -10,7 +10,7 @@ import { Dialog } from 'primereact/dialog';
 import { useRef, useState } from 'react';
 
 import { useAuth } from '@/auth/hooks/useAuth';
-import { useCalendarEvents } from '@/hooks/useCalendar';
+import { useCalendarAllEvents } from '@/hooks/useCalendar';
 import { useUser } from '@/hooks/useUsers';
 import { calendarDateFormat } from '@/utils/calendarDateFormat';
 
@@ -28,11 +28,7 @@ const Calendar = ({ userUid }: { userUid: string }) => {
     agent: '',
   });
   const calendarRef = useRef(null);
-  const {
-    data: events,
-    isLoading: loadingEvents,
-    isError: errorEvents,
-  } = useCalendarEvents(userUid);
+  const { data: events, isLoading: loadingEvents, isError: errorEvents } = useCalendarAllEvents();
   const { data: agentData, isLoading: loadingAgent } = useUser(agentId || '');
 
   const headerDialog = <></>;
