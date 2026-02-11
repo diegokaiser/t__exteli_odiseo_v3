@@ -242,7 +242,7 @@ const FormBill = () => {
       total,
       notes: (document.getElementById('notes') as HTMLInputElement)?.value,
       paymentMethod: (document.getElementById('paymentMethod') as HTMLSelectElement)?.value,
-      status: 'pendiente',
+      status: 'Pagado',
       createdAt: new Date(),
       updatedAt: new Date(),
     };
