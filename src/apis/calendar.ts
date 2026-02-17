@@ -10,6 +10,8 @@ import {
   getDoc,
   getDocs,
   query,
+  serverTimestamp,
+  setDoc,
   Timestamp,
   updateDoc,
   where,
@@ -181,7 +183,31 @@ const calendar = {
       throw err;
     }
   },
-  UpdateEvent: async () => {},
+  UpdateEvent: async ({
+    uid,
+    eventUid,
+    agentAssigned,
+  }: {
+    uid: string;
+    eventUid: string;
+    agentAssigned: string | null;
+  }): Promise<void> => {
+    try {
+      const eventDocRef = doc(db, 'calendar', uid, 'events', eventUid);
+
+      await setDoc(
+        eventDocRef,
+        {
+          agentAssigned,
+          updatedAt: serverTimestamp(),
+        },
+        { merge: true }
+      );
+    } catch (err) {
+      console.error(`UpdateEvent (${uid}/${eventUid}) error: ${err}`);
+      throw err;
+    }
+  },
   ConfirmEventStripe: async (uid: string) => {
     try {
       const eventDocRef = collection(db, 'calendar', 'np6Q466WIEW2ngYpPBbz7VxJHNY2', 'events');

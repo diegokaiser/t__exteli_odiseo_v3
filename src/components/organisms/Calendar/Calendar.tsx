@@ -8,10 +8,12 @@ import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { Dialog } from 'primereact/dialog';
 import { useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 import { useAuth } from '@/auth/hooks/useAuth';
+import { Loader } from '@/components/atoms';
 import { useCalendarAllEvents } from '@/hooks/useCalendar';
-import { useUser } from '@/hooks/useUsers';
+import { useUser, useUsers } from '@/hooks/useUsers';
 import { calendarDateFormat } from '@/utils/calendarDateFormat';
 
 const Calendar = ({ userUid }: { userUid: string }) => {
@@ -19,6 +21,7 @@ const Calendar = ({ userUid }: { userUid: string }) => {
   const [visibleDialog, setVisibleDialog] = useState(false);
   const [agentId, setAgentId] = useState<string | null>(null);
   const [eventDialog, setEventDialog] = useState({
+    id: '',
     title: '',
     description: '',
     start: '',
@@ -30,19 +33,19 @@ const Calendar = ({ userUid }: { userUid: string }) => {
   const calendarRef = useRef(null);
   const { data: events, isLoading: loadingEvents, isError: errorEvents } = useCalendarAllEvents();
   const { data: agentData, isLoading: loadingAgent } = useUser(agentId || '');
+  const { data: allUsers, isLoading: loadingAllUsers, isError: errorAllUsers } = useUsers();
 
-  const headerDialog = <></>;
-  const footerDialog = (
-    <>
-      {user?.labels[0] === 'Administrador' && (
-        <div className="flex justify-center w-full">
-          <button className="bg-[#ef4444] font-bold h-[46px] mr-0! text-white px-4 py-2 rounded-md">
-            Cancelar evento
-          </button>
-        </div>
-      )}
-    </>
-  );
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { isValid },
+  } = useForm({
+    mode: 'onChange',
+  });
+
+  const selectedAgent = watch('agent');
 
   const handleSelect = (selectInfo: any) => {
     let calendar = selectInfo.view.calendar;
@@ -52,6 +55,7 @@ const Calendar = ({ userUid }: { userUid: string }) => {
     const event = selectInfo.event;
 
     setEventDialog({
+      id: event.id,
       title: event.title,
       description: event.extendedProps.description,
       start: event.start,
@@ -64,7 +68,18 @@ const Calendar = ({ userUid }: { userUid: string }) => {
     setVisibleDialog(true);
   };
   const handleCancelEvent = () => {};
-  const handleEditEvent = () => {};
+  const handleEditEvent = (formData: any) => {
+    const payload = {
+      uid: userUid,
+      eventUid: eventDialog.id,
+      agentAssigned: formData.agent,
+    };
+
+    console.log(payload);
+  };
+
+  const headerDialog = <></>;
+  const footerDialog = <></>;
 
   return (
     <>
@@ -98,7 +113,6 @@ const Calendar = ({ userUid }: { userUid: string }) => {
       <Dialog
         visible={visibleDialog}
         modal
-        footer={footerDialog}
         style={{ width: '50vw' }}
         onHide={() => {
           if (!visibleDialog) return;
@@ -149,11 +163,65 @@ const Calendar = ({ userUid }: { userUid: string }) => {
               </div>
             </div>
             <div className="w-11/12">
-              <strong>Agente:</strong>
+              <strong>Registrado para:</strong>
               <p>
                 {loadingAgent ? 'Cargando...' : agentData?.firstName + ' ' + agentData?.lastName}
               </p>
             </div>
+            {user?.labels[0] === 'Administrador' && (
+              <>
+                <div className="w-1/12">
+                  <div className="flex h-[48px] w-[48px] items-center justify-center rounded-full bg-gray-200">
+                    <i className="pi pi-user-plus"></i>
+                  </div>
+                </div>
+                <div className="w-11/12">
+                  <strong>Asignar a colaborador:</strong>
+                  <div className="flex">
+                    <div className="box-border m-0 basis-[50%] grow-0 min-w-[50%]">
+                      <div className="inline-flex flex-col relative min-w-0 p-0 border-0 align-top w-full mb-2 mt-2">
+                        <div className="box-border inline-flex w-full relative rounded-[8px] border border-solid border-[#bec8d0] h-12">
+                          {loadingAllUsers ? (
+                            <>
+                              <div className="border-0 box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px]">
+                                <Loader />
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <select
+                                id="agent"
+                                className="border-0 box-border bg-none m-0 block min-w-0 w-full p-[14px] disabled:bg-[#f3f5f7] disabled:text-[#dbe0e5] disabled:rounded-[8px] bg-transparent"
+                                {...register('agent', { required: true })}
+                              >
+                                <option value="">Seleccione</option>
+                                {allUsers?.map((user) => (
+                                  <option key={user.id} value={user.id}>
+                                    {user.firstName} {user.lastName}
+                                  </option>
+                                ))}
+                              </select>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex gap-x-4 justify-center w-full">
+                  <button className="bg-[#ef4444] font-bold h-[46px] mr-0! text-white px-4 py-2 rounded-md">
+                    Cancelar evento
+                  </button>
+                  <button
+                    disabled={!selectedAgent}
+                    className="bg-[#22c55e] cursor-pointer font-bold h-[46px] mr-0! text-white px-4 py-2 rounded-md disabled:bg-transparent! disabled:cursor-not-allowed! disabled:text-[#dbe0e5]! disabled:border-[#dbe0e5]! disabled:border-[2px]!"
+                    onClick={handleSubmit(handleEditEvent)}
+                  >
+                    Actualizar evento
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </Dialog>

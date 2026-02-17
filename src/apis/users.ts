@@ -1,6 +1,15 @@
 import { db } from '@/lib/firebase';
 import { User } from '@/types/users';
-import { collection, doc, getDoc, getDocs, orderBy, query, updateDoc } from 'firebase/firestore';
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
+  updateDoc,
+  where,
+} from 'firebase/firestore';
 
 const DEFAULT_PASSWORD = '3MiJ6R2glGF2Ql';
 
@@ -24,7 +33,7 @@ const users = {
   GetUsers: async (): Promise<User[]> => {
     try {
       const usersRef = collection(db, 'users');
-      const q = query(usersRef, orderBy('firstName', 'asc'));
+      const q = query(usersRef, orderBy('firstName', 'asc'), where('status', '==', 'Activo'));
       const snapshot = await getDocs(q);
 
       return snapshot.docs.map((doc) => ({

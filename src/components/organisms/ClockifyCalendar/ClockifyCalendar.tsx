@@ -43,7 +43,7 @@ const ClockifyCalendar = () => {
       });
     } finally {
       setLoading(false);
-      router.refresh();
+      window.location.reload();
     }
   };
 
