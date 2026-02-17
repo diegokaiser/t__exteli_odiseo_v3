@@ -43,6 +43,11 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 12,
   },
+  sectionImportant: {
+    margin: 10,
+    padding: 10,
+    fontSize: 10,
+  },
   sectionImg: {
     margin: 10,
     paddingLeft: 10,
@@ -397,12 +402,24 @@ const Document = ({
           </View>
         </View>
 
-        {/** aqui hay error */}
         <View style={styles.section}>
           <Text style={styles.fontBold}>Notas:</Text>
           <Text>Medio de pago: {paymentMethod}</Text>
           <Text>{notes}</Text>
         </View>
+
+        <View style={styles.sectionImportant}>
+          <Text style={styles.fontBold}>IMPORTANTE:</Text>
+          <Text>
+            Una vez iniciado el tramite no se devolverá el dinero a no ser que por fuerza mayor no
+            se pueda continuar con el proceso.
+          </Text>
+          <Text>
+            Se descontará por concepto de asesoramiento 50€ y la parte proporcional del trabajo
+            realizado hasta ese momento.
+          </Text>
+        </View>
+
         {status == 'Cancelado' && (
           <View style={styles.section}>
             <Text style={{ color: '#EF5350', fontFamily: 'Inter', fontWeight: 600 }}>

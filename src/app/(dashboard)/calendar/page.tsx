@@ -5,6 +5,7 @@ import { Loader } from '@/components/atoms';
 import { Breadcrumbs, Calendar } from '@/components/organisms';
 import { withAuth } from '@/hocs/withAuth';
 import { useUsers } from '@/hooks/useUsers';
+import Link from 'next/link';
 
 const CalendarPage = () => {
   const { user } = useAuth();
@@ -70,9 +71,12 @@ const CalendarPage = () => {
                 </div>
                 <div className="box-border m-0 basis-[100%] flex justify-end grow-0 min-w-[100%] pl-6 pt-6 lg:basis-[50%] lg:min-w-[50%]">
                   <div className="flex items-end justify-end w-6/12">
-                    <button className="bg-[#22c55e] font-bold h-[46px] text-white px-4 py-2 rounded-md">
+                    <Link
+                      href="/calendar/add"
+                      className="bg-[#22c55e] font-bold h-[46px] text-white px-4 py-2 rounded-md"
+                    >
                       Agregar cita
-                    </button>
+                    </Link>
                   </div>
                 </div>
                 <div className="box-border m-0 basis-[100%] grow-0 min-w-[100%] pl-6 pt-6">
