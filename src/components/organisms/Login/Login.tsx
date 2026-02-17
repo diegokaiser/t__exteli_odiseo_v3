@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { Button } from 'primereact/button'
+import { Button } from 'primereact/button';
 import { Checkbox } from 'primereact/checkbox';
 import { InputText } from 'primereact/inputtext';
 
@@ -25,8 +25,9 @@ const Login = () => {
     register,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors, isValid },
-  } = useForm<LoginFormValues>({ mode: 'onChange' });
+  } = useForm<LoginFormValues>({ mode: 'onChange', defaultValues: { email: '', password: '' } });
 
   const { login } = useAuth();
   const router = useRouter();
@@ -41,18 +42,20 @@ const Login = () => {
     } finally {
       setSubmitting(true);
     }
-  }
+  };
 
   useEffect(() => {
     const lastUser = localStorage.getItem('lastUser');
     if (lastUser) {
       const { email, password } = JSON.parse(lastUser);
-      setValue('email', email);
-      setValue('password', password);
+
+      reset({ email, password }, { keepDirty: false, keepTouched: false });
+      setValue('email', email, { shouldValidate: true, shouldDirty: true });
+      setValue('password', password, { shouldValidate: true, shouldDirty: true });
       setKeepSession(true);
     }
   }, []);
-  
+
   return (
     <>
       {submitting && <LoadingScreen />}
@@ -75,18 +78,17 @@ const Login = () => {
                       <InputText
                         aria-describedby="email-help"
                         id="email"
-                        placeholder='Correo electrónico'
+                        placeholder="Correo electrónico"
                         type="email"
-                        {...register('email', { 
+                        {...register('email', {
                           required: 'Este campo es obligatorio',
                           pattern: {
                             value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                            message: 'Por favor, ingresa un correo electrónico válido'
-                          }
-
+                            message: 'Por favor, ingresa un correo electrónico válido',
+                          },
                         })}
                       />
-                      {errors.email && <span className='text-red-500'>{errors.email.message}</span>}
+                      {errors.email && <span className="text-red-500">{errors.email.message}</span>}
                     </div>
                   </div>
                   <div className="box-border m-0 pt-6 lg:basis-full lg:flex-grow-0 lg:max-w-full">
@@ -98,10 +100,12 @@ const Login = () => {
                         aria-describedby="password-help"
                         id="password"
                         placeholder="********"
-                        type='password'
+                        type="password"
                         {...register('password', { required: 'Este campo es obligatorio' })}
                       />
-                      {errors.password && <span className='text-red-500'>{errors.password.message}</span>}
+                      {errors.password && (
+                        <span className="text-red-500">{errors.password.message}</span>
+                      )}
                     </div>
                   </div>
                   <div className="box-border m-0 pt-10 lg:basis-full lg:flex-grow-0 lg:max-w-full">
@@ -114,21 +118,18 @@ const Login = () => {
                           onChange={() => setKeepSession(!keepSession)}
                           checked={keepSession}
                         />
-                        <label className='text-gray-600' htmlFor='keepSession'>
+                        <label className="text-gray-600" htmlFor="keepSession">
                           Mantener la sesión
                         </label>
                       </div>
-                      <Link
-                        className='text-gray-600'
-                        href="/forgot-password"
-                      >
+                      <Link className="text-gray-600" href="/forgot-password">
                         Olvidé mi contraseña
                       </Link>
                     </div>
                   </div>
                   <div className="box-border m-0 pt-10 lg:basis-full lg:flex-grow-0 lg:max-w-full">
                     <Button
-                      className='w-full'
+                      className="w-full"
                       label="Login"
                       type="submit"
                       disabled={!isValid || submitting}
@@ -142,8 +143,7 @@ const Login = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Login
-
+export default Login;
