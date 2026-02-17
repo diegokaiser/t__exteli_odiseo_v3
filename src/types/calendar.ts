@@ -21,6 +21,7 @@ export interface CalendarEvent {
   paid?: boolean;
   stripeSessionId?: string | null;
   createdAt?: Timestamp;
+  agentAssigned?: string;
 }
 
 export interface CalendarEventUI extends Omit<CalendarEvent, 'start' | 'end'> {
