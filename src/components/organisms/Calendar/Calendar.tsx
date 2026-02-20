@@ -29,6 +29,8 @@ const Calendar = ({ userUid }: { userUid: string }) => {
     venue: '',
     client: '',
     agent: '',
+    phone: '',
+    email: '',
   });
   const calendarRef = useRef(null);
   const { data: events, isLoading: loadingEvents, isError: errorEvents } = useCalendarAllEvents();
@@ -63,6 +65,8 @@ const Calendar = ({ userUid }: { userUid: string }) => {
       venue: event.extendedProps.venue,
       client: event.id,
       agent: event.extendedProps.agent,
+      phone: event.extendedProps.phone || '',
+      email: event.extendedProps.email || '',
     });
     setAgentId(event.extendedProps.agent);
     setVisibleDialog(true);
@@ -80,6 +84,8 @@ const Calendar = ({ userUid }: { userUid: string }) => {
 
   const headerDialog = <></>;
   const footerDialog = <></>;
+
+  console.log(eventDialog);
 
   return (
     <>
@@ -157,6 +163,32 @@ const Calendar = ({ userUid }: { userUid: string }) => {
               <strong>Descripción:</strong>
               <p>{eventDialog.description}</p>
             </div>
+            {eventDialog.phone && (
+              <>
+                <div className="w-1/12">
+                  <div className="flex h-[48px] w-[48px] items-center justify-center rounded-full bg-gray-200">
+                    <i className="pi pi-mobile"></i>
+                  </div>
+                </div>
+                <div className="w-11/12">
+                  <strong>Móvil:</strong>
+                  <p>{eventDialog.phone}</p>
+                </div>
+              </>
+            )}
+            {eventDialog.email && (
+              <>
+                <div className="w-1/12">
+                  <div className="flex h-[48px] w-[48px] items-center justify-center rounded-full bg-gray-200">
+                    <i className="pi pi-envelope"></i>
+                  </div>
+                </div>
+                <div className="w-11/12">
+                  <strong>Correo electrónico:</strong>
+                  <p className="lowercase">{eventDialog.email}</p>
+                </div>
+              </>
+            )}
             <div className="w-1/12">
               <div className="flex h-[48px] w-[48px] items-center justify-center rounded-full bg-gray-200">
                 <i className="pi pi-user"></i>

@@ -263,7 +263,7 @@ const FormBill = () => {
       });
     } finally {
       setLoading(false);
-      //router.push('/billing');
+      router.push('/billing');
     }
   };
 

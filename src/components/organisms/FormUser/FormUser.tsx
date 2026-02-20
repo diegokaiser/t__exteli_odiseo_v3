@@ -48,7 +48,7 @@ const FormUser = () => {
       });
     } finally {
       setLoading(false);
-      //router.push('/users');
+      router.push('/users');
     }
   };
 

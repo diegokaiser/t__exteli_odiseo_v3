@@ -1,0 +1,124 @@
+{
+  "regMasCalc": {
+    "title": "Answer these questions and find out, at no cost, whether you are eligible for the Mass Regularization and how to prepare for it",
+    "update": "According to the draft law, updated on",
+    "questions": {
+      "q1": {
+        "tag": "First question",
+        "title": "Did you enter Spain before December 31, 2025?",
+        "help": "We ask this because the law states that you must have entered Spain without interruption before December 31, 2025.",
+        "options": {
+          "yes": "Yes, I entered before",
+          "no": "No, I entered after"
+        },
+        "success": "👍 Great!"
+      },
+      "q2": {
+        "tag": "Second question (optional)",
+        "title": "For better accuracy, could you tell us the date you entered Spain?",
+        "help": "There are other alternatives if you cannot apply for the Mass Regularization. To help you more accurately, we need this information.",
+        "placeholder": "dd/mm/yyyy",
+        "success": "👍 Great!"
+      },
+      "q3": {
+        "tag": "Third question",
+        "title": "Could you prove that you have lived in Spain for 5 continuous months?",
+        "help": "The draft law states that the applicant must have lived in Spain for 5 continuous months before applying and must have entered the country before 12/31/25. You can prove this through registration (padrón), rental contracts, utility bills, etc. If you do not have registration, there are other ways to prove it.",
+        "options": {
+          "yes": "Yes, I can",
+          "no": "No, I can’t"
+        },
+        "success": "👍 Great!"
+      },
+      "q4": {
+        "tag": "Fourth question",
+        "title": "Right now, what is your status in Spain?",
+        "help": "There are other alternatives if you cannot apply for the Mass Regularization. To help you more accurately, we need this information.",
+        "select": {
+          "placeholder": "Select...",
+          "options": {
+            "asilo": "Asylum seeker or International Protection applicant",
+            "irregular": "Irregular / undocumented",
+            "visado": "Student visa",
+            "turismo": "Regular status or tourism",
+            "arraigo": "With a residency application (arraigo) in progress"
+          }
+        },
+        "success": "👍 Great!"
+      },
+      "q5": {
+        "tag": "Fifth question",
+        "title": "Do you have family with you here?",
+        "help": "We mean minor children, children with a disability, or a spouse/partner. We ask because you may obtain a broader or longer residence authorization if you do.",
+        "options": {
+          "yes": "Yes, I do",
+          "no": "No, I'm on my own"
+        },
+        "success": "👍 Great!"
+      },
+      "q6": {
+        "tag": "Sixth question",
+        "title": "What is your nationality or country of origin?",
+        "help": "We ask so we can offer a more detailed assessment or, if applicable, other options based on your nationality.",
+        "success": "👍 Great!"
+      },
+      "q7": {
+        "tag": "Seventh question",
+        "title": "Which province or region do you currently live in?",
+        "help": "Please note that processing times may depend on this.",
+        "select": {
+          "placeholder": "Select..."
+        },
+        "success": "👍 Great!"
+      },
+      "q8": {
+        "tag": "Last question",
+        "title": "Is there anything else you’d like to share or that we should know?",
+        "help": "Please share your story and any difficulties you’ve faced. This information will help us suggest the best path forward.",
+        "success": "👍 Great!"
+      }
+    },
+    "actions": {
+      "evaluate": "Evaluate my situation",
+      "reset": "Reset"
+    },
+    "results": {
+      "eligible": {
+        "title": "🥳🥳🥳 You may be eligible through multiple paths 🥳🥳🥳",
+        "intro": "Based on your answers and the requirements proposed in the draft law, you may be eligible to apply for the Mass Regularization.",
+        "recommendationsTitle": "If you want to be ready and get ahead, we recommend:",
+        "recommendations": {
+          "r1": "Keep proof of your entry into Spain handy (tickets, reservations, passport stamp, etc.).",
+          "r2": "Gather documents that prove your stay in Spain: registration (padrón), medical appointments, bank transfers, etc.",
+          "r3": "Check that your passport is valid; if not, renew it at your country’s consulate.",
+          "r4": "Request a Criminal Record Certificate and, if needed, start the clearing/cancellation process. Also check any police records.",
+          "r5": "If possible, request the Social Roots (Arraigo Social) report (if you meet the two-year stay requirement), or gather information from your country of origin about assets or income. Note that this documentation may need an apostille.",
+          "r6": "If you are in an irregular situation, gather evidence of your status (expired permit, asylum denial, etc.), as this documentation may be relevant to support a vulnerability pathway.",
+          "r7": "Leave your details and we will notify you when there are official updates and concrete steps to apply for the Mass Regularization."
+        }
+      },
+      "notEligible": {
+        "title": "🤔🕜🤔 You may not be eligible, but you may have other options 🤔🕜🤔",
+        "intro": "Based on your answers and the requirements proposed in the draft law, you are likely not eligible for the Mass Regularization.",
+        "body": "However, that does not mean you have no options. There are other regularization pathways and permits that may fit your situation, such as arraigo routes or a study stay permit."
+      }
+    },
+    "leadForm": {
+      "nameLabel": "What is your name?",
+      "namePlaceholder": "John Doe",
+      "emailLabel": "What is your email address?",
+      "emailPlaceholder": "john.doe@example.com",
+      "phoneLabel": "What is your phone number (WhatsApp)?",
+      "phonePlaceholder": "+34 654321987",
+      "benefits": {
+        "b1": "👉 You will receive a notification when the final text is published.",
+        "b2": "👉 Stay up to date: We’ll let you know if there are relevant changes in the draft proposal.",
+        "b3": "👉 Save time: Receive a clear summary of scattered information.",
+        "b4": "👉 No spam! We’ll only contact you when there is useful information about this process.",
+        "b5": "👉 Please leave your details and we will call you at no cost, or you can book a consultation to guide you toward the most viable options for your situation."
+      },
+      "submit": "📧 Send my details and get updates",
+      "bookCta": "👉 Book a consultation with our specialist team to review your case in detail."
+    }
+  }
+}

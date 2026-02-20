@@ -1,0 +1,124 @@
+{
+  "regMasCalc": {
+    "title": "Responde estas preguntas y descubre, sin coste alguno, si eres elegible para la Regularización Masiva y cómo prepararte para ello",
+    "update": "Según el borrador de la ley, actualizado el",
+    "questions": {
+      "q1": {
+        "tag": "Primera pregunta",
+        "title": "¿Ingresaste a España antes del 31 de diciembre de 2025?",
+        "help": "Te hacemos esta pregunta porque la ley establece que debes haber ingresado a España de forma no interrumpida antes del 31 de diciembre de 2025.",
+        "options": {
+          "yes": "Sí, ingresé antes",
+          "no": "No, ingresé después"
+        },
+        "success": "👍 ¡Excelente!"
+      },
+      "q2": {
+        "tag": "Segunda pregunta (opcional)",
+        "title": "Para mayor exactitud, ¿podrías indicarnos en qué fecha ingresaste a España?",
+        "help": "Existen otras alternativas en caso de que no puedas solicitar la Regularización Masiva. Para poder ayudarte con mayor exactitud, necesitamos este dato.",
+        "placeholder": "dd/mm/aaaa",
+        "success": "👍 ¡Excelente!"
+      },
+      "q3": {
+        "tag": "Tercera pregunta",
+        "title": "¿Podrías demostrar que has estado 5 meses continuados en España?",
+        "help": "El borrador de ley establece que el solicitante debe haber estado en España durante 5 meses continuos antes de la solicitud y haber ingresado al país antes del 31/12/25. Puedes demostrarlo mediante el empadronamiento, contratos de alquiler, facturas de servicios, etc. Si no tienes empadronamiento, existen otras formas de demostrarlo.",
+        "options": {
+          "yes": "Sí puedo",
+          "no": "No puedo"
+        },
+        "success": "👍 ¡Excelente!"
+      },
+      "q4": {
+        "tag": "Cuarta pregunta",
+        "title": "En este momento, ¿cuál es tu situación en España?",
+        "help": "Existen otras alternativas en caso de que no puedas solicitar la Regularización Masiva. Para poder ayudarte con mayor exactitud, necesitamos este dato.",
+        "select": {
+          "placeholder": "Seleccione...",
+          "options": {
+            "asilo": "Solicitante de asilo o Protección Internacional",
+            "irregular": "Irregular",
+            "visado": "Visado de estudiante",
+            "turismo": "Situación regular o turismo",
+            "arraigo": "Con una solicitud de arraigo en proceso"
+          }
+        },
+        "success": "👍 ¡Excelente!"
+      },
+      "q5": {
+        "tag": "Quinta pregunta",
+        "title": "¿Tienes familia contigo aquí?",
+        "help": "Nos referimos a hijos menores de edad, hijos con alguna discapacidad o habilidades diferentes, o cónyuge. Preguntamos porque es probable que obtengas una autorización de residencia más amplia o por más tiempo si los tienes.",
+        "options": {
+          "yes": "Sí, tengo",
+          "no": "No, estoy solo"
+        },
+        "success": "👍 ¡Excelente!"
+      },
+      "q6": {
+        "tag": "Sexta pregunta",
+        "title": "¿Cuál es tu nacionalidad o país de origen?",
+        "help": "Preguntamos para poder ofrecerte un análisis más detallado o, en su caso, otras opciones de acuerdo con tu nacionalidad.",
+        "success": "👍 ¡Excelente!"
+      },
+      "q7": {
+        "tag": "Séptima pregunta",
+        "title": "¿En qué provincia o región vives actualmente?",
+        "help": "Ten en cuenta que los tiempos de tramitación pueden depender de ello.",
+        "select": {
+          "placeholder": "Seleccione..."
+        },
+        "success": "👍 ¡Excelente!"
+      },
+      "q8": {
+        "tag": "Última pregunta",
+        "title": "¿Algo más que nos quieras comentar o debamos saber?",
+        "help": "Por favor, es importante para nosotros que compartas tu historia y nos comentes sobre cualquier dificultad que hayas enfrentado. Esta información nos ayudará mucho a sugerirte el mejor camino a seguir.",
+        "success": "👍 ¡Excelente!"
+      }
+    },
+    "actions": {
+      "evaluate": "Evaluar mi situación",
+      "reset": "Reiniciar"
+    },
+    "results": {
+      "eligible": {
+        "title": "🥳🥳🥳 Puedes ser elegible por varias vías 🥳🥳🥳",
+        "intro": "De acuerdo con tus respuestas, en el marco de requisitos propuestos en el borrador de ley, podrías ser elegible para acogerte a la Regularización Masiva.",
+        "recommendationsTitle": "Si quieres estar listo y partir con ventaja, te recomendamos:",
+        "recommendations": {
+          "r1": "Ten a la mano pruebas de tu ingreso a España (billetes, reservas, sello del pasaporte, etc.).",
+          "r2": "Recopila documentos que acrediten tu permanencia en España: empadronamiento, citas médicas, transferencias bancarias, etc.",
+          "r3": "Revisa que tu pasaporte esté vigente; en caso contrario, renuévalo en el Consulado de tu país.",
+          "r4": "Solicita el certificado de Antecedentes Penales y, de tenerlos, inicia el proceso de cancelación. También revisa los antecedentes policiales.",
+          "r5": "Si está a tu alcance, solicita el informe de Arraigo Social (si cumples con los dos años de estar en España), o busca información de tu país de origen sobre tus bienes o rentas. Ten en cuenta que esta documentación debe estar apostillada.",
+          "r6": "Si estás en una situación de irregularidad, reúne pruebas de tu situación (caducidad de permiso, denegación de asilo, etc.), ya que esta documentación es relevante para acreditar la vía de vulnerabilidad.",
+          "r7": "Déjanos tus datos y te avisaremos cuando haya novedades oficiales y pasos concretos para acogerte a la Regularización Masiva."
+        }
+      },
+      "notEligible": {
+        "title": "🤔🕜🤔 No eres elegible, pero puedes optar por otras opciones 🤔🕜🤔",
+        "intro": "De acuerdo con tus respuestas, con los requisitos propuestos en el borrador de ley, es probable que no seas elegible para la Regularización Masiva.",
+        "body": "Sin embargo, eso no significa que no tengas opciones, ya que existen otras vías de regularización y permisos que pueden encajar contigo, ya sean arraigos o estancia por estudios."
+      }
+    },
+    "leadForm": {
+      "nameLabel": "¿Cuál es tu nombre completo?",
+      "namePlaceholder": "Juan Pérez",
+      "emailLabel": "¿Cuál es tu correo electrónico?",
+      "emailPlaceholder": "juan.perez@ejemplo.com",
+      "phoneLabel": "¿Cuál es tu teléfono (WhatsApp)?",
+      "phonePlaceholder": "+34 654321987",
+      "benefits": {
+        "b1": "👉 Recibirás un aviso cuando se publique el texto definitivo.",
+        "b2": "👉 Siempre al día: Te comunicaremos si hay cambios relevantes en la propuesta de ley.",
+        "b3": "👉 Optimiza tu tiempo: Recibe un resumen claro de la información dispersa.",
+        "b4": "👉 ¡Sin spam! Solo nos comunicaremos contigo en caso de información útil sobre este proceso.",
+        "b5": "👉 Por favor, déjanos tus datos y te llamaremos sin coste, o puedes agendar una cita de asesoría para orientarte sobre las opciones más viables según tu situación."
+      },
+      "submit": "📧 Enviar datos y obtener información",
+      "bookCta": "👉 Reserva una cita de asesoría con nuestro equipo de especialistas para analizar tu caso con detalle."
+    }
+  }
+}
