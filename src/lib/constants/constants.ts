@@ -79,6 +79,16 @@ const sidebarMenu = [
       },
     ],
   },
+  {
+    title: 'Lista de interés',
+    items: [
+      {
+        title: 'Listado',
+        href: '/list',
+        icon: 'pi pi-users',
+      },
+    ],
+  },
 ];
 
 const sidebarAdminMenu = [

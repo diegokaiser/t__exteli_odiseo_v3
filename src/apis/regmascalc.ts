@@ -20,7 +20,7 @@ const regmascalc = {
   GetCustomers: async (): Promise<RegMasCalc[]> => {
     try {
       const ref = collection(db, 'customers-calc');
-      const q = query(ref, orderBy('createdAt', 'desc'));
+      const q = query(ref, orderBy('name', 'desc'));
       const snap = await getDocs(q);
 
       const customers = snap.docs.map((doc) => ({
@@ -38,7 +38,7 @@ const regmascalc = {
     console.log(data);
     try {
       const ref = collection(db, 'customers-calc');
-      await addDoc(ref, { data });
+      await addDoc(ref, data);
     } catch (err) {
       console.error(`PostCustomer error: ${err}`);
       throw err;

@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useGetCustomer = (id: string) => {
   return useQuery<RegMasCalc | null>({
-    queryKey: ['customer', id],
+    queryKey: ['customer-calc', id],
     queryFn: async () => {
       const customer = await apis.regmascalc.GetCustomer(id);
       if (!customer) return null;
@@ -22,14 +22,14 @@ export const useGetCustomer = (id: string) => {
 
 export const useGetCustomers = () => {
   return useQuery<RegMasCalc[]>({
-    queryKey: ['customers'],
+    queryKey: ['customers-calc'],
     queryFn: async () => {
       const response = await apis.regmascalc.GetCustomers();
       if (!response) return [];
 
       return response.map((item: any) => ({
         id: item.id,
-        ...item.customer,
+        ...item,
       }));
     },
     staleTime: 1000 * 60 * 5,
