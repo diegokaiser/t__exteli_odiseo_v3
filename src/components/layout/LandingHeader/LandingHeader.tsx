@@ -6,7 +6,7 @@ const LandingHeader = () => {
   return (
     <header className="bg-white w-full!">
       <div className="py-[14px]">
-        <div className="w-[1140px] mx-auto my-auto">
+        <div className="w-full lg:w-[1140px] mx-auto my-auto">
           <div className="flex items-center justify-between">
             <div className="w-[200px]">
               <a href="https://extranjeriagrv.es/" target="_self" rel="noopener noreferrer">

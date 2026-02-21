@@ -80,11 +80,15 @@
     },
     "actions": {
       "evaluate": "Evaluar mi situación",
-      "reset": "Reiniciar"
+      "reset": "Reiniciar",
+      "evaluated": "¡Evaluado!"
+    },
+    "calculating": {
+      "title": "Estamos calculando según tus posibilidades"
     },
     "results": {
       "eligible": {
-        "title": "🥳🥳🥳 Puedes ser elegible por varias vías 🥳🥳🥳",
+        "title": "Puedes ser elegible por varias vías",
         "intro": "De acuerdo con tus respuestas, en el marco de requisitos propuestos en el borrador de ley, podrías ser elegible para acogerte a la Regularización Masiva.",
         "recommendationsTitle": "Si quieres estar listo y partir con ventaja, te recomendamos:",
         "recommendations": {
@@ -98,7 +102,7 @@
         }
       },
       "notEligible": {
-        "title": "🤔🕜🤔 No eres elegible, pero puedes optar por otras opciones 🤔🕜🤔",
+        "title": "No eres elegible, pero puedes optar por otras opciones",
         "intro": "De acuerdo con tus respuestas, con los requisitos propuestos en el borrador de ley, es probable que no seas elegible para la Regularización Masiva.",
         "body": "Sin embargo, eso no significa que no tengas opciones, ya que existen otras vías de regularización y permisos que pueden encajar contigo, ya sean arraigos o estancia por estudios."
       }

@@ -80,11 +80,15 @@
     },
     "actions": {
       "evaluate": "Evaluate my situation",
-      "reset": "Reset"
+      "reset": "Reset",
+      "evaluated": "Evaluated!"
+    },
+    "calculating": {
+      "title": "We are calculating your posibilities"
     },
     "results": {
       "eligible": {
-        "title": "🥳🥳🥳 You may be eligible through multiple paths 🥳🥳🥳",
+        "title": "You may be eligible through multiple paths",
         "intro": "Based on your answers and the requirements proposed in the draft law, you may be eligible to apply for the Mass Regularization.",
         "recommendationsTitle": "If you want to be ready and get ahead, we recommend:",
         "recommendations": {
@@ -98,7 +102,7 @@
         }
       },
       "notEligible": {
-        "title": "🤔🕜🤔 You may not be eligible, but you may have other options 🤔🕜🤔",
+        "title": "You may not be eligible, but you may have other options",
         "intro": "Based on your answers and the requirements proposed in the draft law, you are likely not eligible for the Mass Regularization.",
         "body": "However, that does not mean you have no options. There are other regularization pathways and permits that may fit your situation, such as arraigo routes or a study stay permit."
       }

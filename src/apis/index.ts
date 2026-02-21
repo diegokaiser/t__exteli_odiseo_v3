@@ -8,6 +8,7 @@ import nationalities from './nationalities';
 import notification from './notification';
 import packs from './packs';
 import procedures from './procedures';
+import regmascalc from './regmascalc';
 import timelines from './timelines';
 import users from './users';
 
@@ -22,6 +23,7 @@ const apis = {
   notification,
   packs,
   procedures,
+  regmascalc,
   timelines,
   users,
 };
