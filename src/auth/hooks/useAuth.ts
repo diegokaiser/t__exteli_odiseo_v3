@@ -5,7 +5,7 @@ import { Models } from 'appwrite';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-const ALLOW_UNAUTHENTICATED = ['/landings', '/calendar/reserva', '/api/stripe'];
+const ALLOW_UNAUTHENTICATED = ['/landings', '/calendar/reserva', '/api/stripe', '/calc'];
 
 export const useAuth = (
   redirectAuthenticated = '/dashboard',

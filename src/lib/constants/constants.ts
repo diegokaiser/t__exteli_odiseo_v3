@@ -47,6 +47,11 @@ const sidebarMenu = [
         href: '/billing/add',
         icon: 'pi pi-file-plus',
       },
+      {
+        title: 'Buscar factura',
+        href: '/billing/search',
+        icon: 'pi pi-search',
+      },
     ],
   },
   {
