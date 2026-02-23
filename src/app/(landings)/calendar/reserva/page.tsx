@@ -221,7 +221,7 @@ const ReservasCalendar = () => {
               <div className="flex justify-center w-full">
                 <Calendar
                   inline
-                  disabledDays={[6]}
+                  disabledDays={[0]}
                   locale="es"
                   value={eventDate ? parseLocalDate(eventDate) : undefined}
                   onChange={(e) => {
