@@ -20,6 +20,7 @@ import { Breadcrumbs } from '@/components/organisms';
 import { withAuth } from '@/hocs/withAuth';
 import { useBillsByWeek, useCancelBill, usePaidBill } from '@/hooks/useBills';
 import { Bill } from '@/types/bills';
+import { formatDateDDMMYYYY } from '@/utils/billWeekFormat';
 import { getWeekRange } from '@/utils/getWeekRange';
 
 const BillingPage = () => {
@@ -50,7 +51,7 @@ const BillingPage = () => {
   if (isError)
     return <Message severity="error" summary="Error" detail="Error al cargar las facturas" />;
 
-  const statusOptions = ['pendiente', 'pagada', 'cancelada'];
+  const statusOptions = ['pendiente', 'pagada', 'cancelada', 'devuelta'];
 
   const goToPreviousWeek = () => {
     const prev = new Date(currentDate);
@@ -70,6 +71,8 @@ const BillingPage = () => {
     switch (statusOptions) {
       case 'pendiente':
         return 'warning';
+      case 'devuelta':
+        return 'info';
       case 'pagada':
         return 'success';
       case 'cancelada':
@@ -152,6 +155,14 @@ const BillingPage = () => {
           <i className="pi pi-arrow-up" style={{ color: 'white' }}></i>
         </button>
         <button
+          className="bg-[#f97316] btn-success cursor-pointer flex items-center justify-center p-[6px] rounded-full w-[32px] h-[32px]"
+          data-pr-tooltip="Marcar como devuelta"
+          data-pr-position="top"
+          onClick={() => openConfirmDialog({ id: rowData.id, type: 'markAsReturned' })}
+        >
+          <i className="pi pi-arrow-down" style={{ color: 'white' }}></i>
+        </button>
+        <button
           className="bg-[#ef4444] btn-danger cursor-pointer flex items-center justify-center p-[6px] rounded-full w-[32px] h-[32px]"
           data-pr-tooltip="Cancelar factura"
           data-pr-position="top"
@@ -176,10 +187,12 @@ const BillingPage = () => {
     type,
   }: {
     id: string;
-    type: 'markAsPaid' | 'markAsCanceled';
+    type: 'markAsPaid' | 'markAsReturned' | 'markAsCanceled';
   }) => {
     if (type === 'markAsPaid') {
       confirmMarkAsPaid(id);
+    } else if (type === 'markAsReturned') {
+      confirmMarkAsReturned(id);
     } else {
       confirmMarkAsCanceled(id);
     }
@@ -191,6 +204,19 @@ const BillingPage = () => {
       message: '¿Estás seguro de marcar la factura como pagada?',
       defaultFocus: 'accept',
       acceptLabel: 'Marcar como pagada',
+      rejectLabel: 'Cancelar',
+      accept: () => {
+        paidBill(id);
+      },
+    });
+  };
+
+  const confirmMarkAsReturned = (id: string) => {
+    confirmDialog({
+      group: 'headless',
+      message: '¿Estás seguro de marcar la factura como devuelta?',
+      defaultFocus: 'accept',
+      acceptLabel: 'Marcar como devuelta',
       rejectLabel: 'Cancelar',
       accept: () => {
         paidBill(id);
@@ -213,11 +239,20 @@ const BillingPage = () => {
 
   const header = renderHeader();
 
+  console.log(weekStart);
+
   return (
     <>
       {isPaidBillLoading || (isCancelBillLoading && <LoadingScreen />)}
       <ConfirmDialog group="headless" />
-      <Breadcrumbs labels={{ billing: 'Facturación' }} pageTitle="Facturación - Semana actual" />
+      <Breadcrumbs
+        labels={{ billing: 'Facturación' }}
+        pageTitle={
+          isCurrentWeek
+            ? 'Facturación - Semana actual'
+            : `Semana del ${formatDateDDMMYYYY(weekStart)} al ${formatDateDDMMYYYY(weekEnd)}`
+        }
+      />
       <div
         className="box-border flex flex-wrap justify-center"
         style={{ width: 'calc(100% + 28px)' }}

@@ -1,7 +1,7 @@
 'use client';
 
 import { Breadcrumbs } from '@/components/organisms';
-import FormSearchBill from '@/components/organisms/FormSearchBill/FormSearchBill';
+import { FormSearchBill } from '@/components/organisms/';
 import { withAuth } from '@/hocs/withAuth';
 
 const SearchPage = () => {

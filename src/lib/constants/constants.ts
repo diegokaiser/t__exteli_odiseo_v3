@@ -67,6 +67,11 @@ const sidebarMenu = [
         href: '/clockify/report',
         icon: 'pi pi-calendar-clock',
       },
+      {
+        title: 'Ver registros',
+        href: '/clockify/records',
+        icon: 'pi pi-eye',
+      },
     ],
   },
   {

@@ -1,5 +1,6 @@
 import { db } from '@/lib/firebase';
-import { Bill } from '@/types/bills';
+import { Bill, BillSearch } from '@/types/bills';
+import { normalizeString } from '@/utils/normalizeString';
 import {
   addDoc,
   collection,
@@ -240,12 +241,43 @@ const bills = {
       throw err;
     }
   },
+  ReturnBill: async (uid: string): Promise<void> => {
+    try {
+      const billRef = doc(db, 'bills', uid);
+      await updateDoc(billRef, { status: 'devuelta' });
+    } catch (err) {
+      console.error(`ReturnBill error (${uid}): ${err}`);
+      throw err;
+    }
+  },
   PaidBill: async (uid: string): Promise<void> => {
     try {
       const billRef = doc(db, 'bills', uid);
       await updateDoc(billRef, { status: 'pagada' });
     } catch (err) {
       console.error(`PaidBill error (${uid}): ${err}`);
+      throw err;
+    }
+  },
+  FindBills: async (params: BillSearch): Promise<Bill[]> => {
+    try {
+      let q;
+      if (params.by === 'billNumber') {
+        q = query(collection(db, 'bills'), where('billNumber', '==', params.value.trim()));
+      } else if (params.by === 'customer') {
+        q = query(collection(db, 'bills'), where('customer', '==', normalizeString(params.value)));
+      } else {
+        q = query(collection(db, 'bills'), where('createDate', '==', params.value.trim()));
+      }
+
+      const snapshot = await getDocs(q);
+
+      return snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...(doc.data() as Bill),
+      }));
+    } catch (err) {
+      console.error(`FindBills (${params.by}:${params.value}) error: ${err}`);
       throw err;
     }
   },

@@ -79,7 +79,7 @@ export interface Bill {
   irpfs: BillIrpf[];
 
   notes: string;
-  status: 'pendiente' | 'pagada' | 'cancelada';
+  status: 'pendiente' | 'pagada' | 'cancelada' | 'devuelta';
 
   provider: Company;
 
@@ -111,7 +111,7 @@ export interface BillForm {
   irpfs: BillIrpf[];
 
   notes: string;
-  status: 'pendiente' | 'pagada' | 'cancelada';
+  status: 'pendiente' | 'pagada' | 'cancelada' | 'devuelta';
 
   provider: Company;
 
@@ -119,3 +119,10 @@ export interface BillForm {
 
   registerdBy?: string;
 }
+
+export type BillSearch =
+  | { by: 'billNumber'; value: string }
+  | { by: 'customer'; value: string }
+  | { by: 'createDate'; value: string };
+
+export type BillSearchBy = 'billNumber' | 'customer' | 'createDate';

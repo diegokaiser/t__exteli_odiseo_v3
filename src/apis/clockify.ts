@@ -1,8 +1,9 @@
 import { db } from '@/lib/firebase';
-import { ClockifyDay, ClockifyRecord } from '@/types/clockify';
+import { ClockifyDay, ClockifyDayWithUser, ClockifyRecord } from '@/types/clockify';
 import {
   arrayUnion,
   collection,
+  collectionGroup,
   doc,
   getDoc,
   getDocs,
@@ -84,6 +85,26 @@ const clockify = {
       }));
     } catch (err) {
       console.error(`GetRecordsByMonth error (${userUid}, ${year}, ${month}): ${err}`);
+      throw err;
+    }
+  },
+  GetAllRecordsByDay: async (day: string): Promise<ClockifyDayWithUser[]> => {
+    try {
+      const ref = collectionGroup(db, 'records');
+      const q = query(ref, where('date', '==', day));
+
+      const snap = await getDocs(q);
+
+      return snap.docs.map((doc) => {
+        const data = doc.data() as ClockifyDay;
+        return {
+          id: doc.id,
+          userUid: doc.ref.parent.parent?.id || '',
+          ...data,
+        };
+      });
+    } catch (err) {
+      console.error(`GetAllRecordsByDay error (${day}): ${err}`);
       throw err;
     }
   },

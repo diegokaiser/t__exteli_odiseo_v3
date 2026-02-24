@@ -18,6 +18,8 @@ const BillPage = () => {
 
   const { data: bill, isLoading: loadingBill, isError: errorBill } = useBill(billId);
 
+  console.log(bill);
+
   return (
     <>
       {loadingBill && <LoadingScreen />}

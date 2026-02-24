@@ -198,8 +198,34 @@ export const usePaidBill = () => {
   });
 };
 
+export const useReturnBill = () => {
+  return useMutation({
+    mutationFn: (id: string) => apis.bills.ReturnBill(id),
+  });
+};
+
 export const useCancelBill = () => {
   return useMutation({
     mutationFn: (id: string) => apis.bills.CancelBill(id),
+  });
+};
+
+export const useFindBills = (params: {
+  by: 'billNumber' | 'customer' | 'createDate';
+  value: string;
+}) => {
+  return useQuery({
+    queryKey: ['find-bills', params.by, params.value],
+    queryFn: async () => {
+      if (!params.value.trim()) return [];
+      return apis.bills.FindBills(params);
+    },
+    enabled: false,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 30 * 60 * 1000,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    retry: 1,
   });
 };
