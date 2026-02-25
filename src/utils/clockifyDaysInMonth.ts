@@ -21,7 +21,8 @@ export const clockifyDaysInMonth = (year: number, month: number) => {
     const dayOfWeek = date.toLocaleString('es-ES', { weekday: 'long' });
     const dayNumber = date.getDate();
 
-    const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+    //const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+    const isWeekend = date.getDay() === 0;
     const isToday =
       date.getFullYear() === today.getFullYear() &&
       date.getMonth() === today.getMonth() &&

@@ -7,6 +7,7 @@ import { useMemo, useRef, useState } from 'react';
 import { LoadingScreen } from '@/components/atoms';
 import { useFindBills } from '@/hooks/useBills';
 import { BillSearchBy } from '@/types/bills';
+import Link from 'next/link';
 
 const FormSearchBill = () => {
   const toast = useRef<any>(null);
@@ -144,14 +145,16 @@ const FormSearchBill = () => {
                   <ul className="divide-y">
                     {q.data.map((bill: any) => (
                       <li key={bill.id} className="py-3 flex items-center justify-between">
-                        <div className="flex flex-col">
-                          <span className="font-medium">
-                            #{bill.billNumber} — {bill.customer}
-                          </span>
-                          <span className="text-xs text-[#5b6b79]">
-                            Fecha: {bill.createDate} · Estado: {bill.status} · Total: {bill.total}
-                          </span>
-                        </div>
+                        <Link href={`/billing/${bill.id}`} className="w-full">
+                          <div className="flex flex-col">
+                            <span className="font-medium">
+                              #{bill.billNumber} — {bill.customer}
+                            </span>
+                            <span className="text-xs text-[#5b6b79]">
+                              Fecha: {bill.createDate} · Estado: {bill.status} · Total: {bill.total}
+                            </span>
+                          </div>
+                        </Link>
                       </li>
                     ))}
                   </ul>
