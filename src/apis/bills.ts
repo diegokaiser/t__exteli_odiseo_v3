@@ -1,6 +1,5 @@
 import { db } from '@/lib/firebase';
 import { Bill, BillSearch } from '@/types/bills';
-import { normalizeString } from '@/utils/normalizeString';
 import {
   addDoc,
   collection,
@@ -273,8 +272,6 @@ const bills = {
           startAt(params.value),
           endAt(params.value + '\uf8ff')
         );
-        console.log(params.value);
-        console.log(normalizeString(params.value));
       } else {
         q = query(collection(db, 'bills'), where('createDate', '==', params.value.trim()));
       }
