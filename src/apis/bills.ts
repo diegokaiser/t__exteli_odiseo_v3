@@ -5,12 +5,14 @@ import {
   addDoc,
   collection,
   doc,
+  endAt,
   getCountFromServer,
   getDoc,
   getDocs,
   limit,
   orderBy,
   query,
+  startAt,
   updateDoc,
   where,
 } from 'firebase/firestore';
@@ -265,7 +267,14 @@ const bills = {
       if (params.by === 'billNumber') {
         q = query(collection(db, 'bills'), where('billNumber', '==', params.value.trim()));
       } else if (params.by === 'customer') {
-        q = query(collection(db, 'bills'), where('customer', '==', normalizeString(params.value)));
+        q = query(
+          collection(db, 'bills'),
+          orderBy('customer'),
+          startAt(params.value),
+          endAt(params.value + '\uf8ff')
+        );
+        console.log(params.value);
+        console.log(normalizeString(params.value));
       } else {
         q = query(collection(db, 'bills'), where('createDate', '==', params.value.trim()));
       }
