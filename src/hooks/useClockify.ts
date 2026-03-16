@@ -1,8 +1,15 @@
 import apis from '@/apis';
-import { ClockifyDay, ClockifyDayWithUser, ClockifyDayWithUserUI } from '@/types/clockify';
+import {
+  ClockifyDay,
+  ClockifyDayWithUser,
+  ClockifyDayWithUserUI,
+  HoursYearDoc,
+  PatchContext,
+  PatchMonthVars,
+} from '@/types/clockify';
 import { clockifyRecordHour } from '@/utils/clockifyRecordHour';
 import { clockifyToSecondsNanos } from '@/utils/ClockifyToSecondsNanos';
-import { useMutation, useQueries, useQuery } from '@tanstack/react-query';
+import { useMutation, useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
 export const useGetRecords = (id: string) => {
@@ -139,5 +146,62 @@ export const useGetAllRecordsByDayWithUsers = (day: string) => {
 export const usePostRecord = () => {
   return useMutation({
     mutationFn: apis.clockify.PostRecord,
+  });
+};
+
+export const useGetHoursByYear = (year: string, enabled: boolean) => {
+  return useQuery<HoursYearDoc | null>({
+    queryKey: ['hours-by-year', year],
+    queryFn: () => apis.clockify.GetHoursByYear(year),
+    enabled: enabled && Boolean(year),
+    staleTime: 5 * 60 * 1000,
+    gcTime: 30 * 60 * 1000,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    retry: 1,
+  });
+};
+
+export const usePatchHoursByYear = () => {
+  const qc = useQueryClient();
+
+  return useMutation<
+    boolean, // TData
+    Error, // TError
+    PatchMonthVars, // TVariables
+    PatchContext // TContext
+  >({
+    mutationFn: ({ year, month, totalHours }) =>
+      apis.clockify.PatchHoursByYear(year, month, totalHours),
+
+    onMutate: async ({ year, month, totalHours }) => {
+      const key = ['hours-by-year', year] as const;
+
+      await qc.cancelQueries({ queryKey: key });
+
+      const previous = qc.getQueryData<HoursYearDoc | null>(key);
+
+      qc.setQueryData<HoursYearDoc | null>(key, (curr) => {
+        if (!curr) return curr;
+
+        return {
+          ...curr,
+          months: {
+            ...curr.months,
+            [month]: { totalHours },
+          },
+        };
+      });
+
+      return { previous }; // 👈 ahora TS sabe qué es
+    },
+
+    onError: (_err, vars, ctx) => {
+      const key = ['hours-by-year', vars.year] as const;
+
+      if (ctx?.previous !== undefined) {
+        qc.setQueryData(key, ctx.previous);
+      }
+    },
   });
 };

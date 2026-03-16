@@ -43,3 +43,37 @@ export type ClockifyDayWithUserUI = {
 export type FirestoreTimestampLike =
   | { seconds: number; nanoseconds: number }
   | { toDate: () => Date };
+
+export type MonthKey =
+  | 'enero'
+  | 'febrero'
+  | 'marzo'
+  | 'abril'
+  | 'mayo'
+  | 'junio'
+  | 'julio'
+  | 'agosto'
+  | 'septiembre'
+  | 'octubre'
+  | 'noviembre'
+  | 'diciembre';
+
+export type MonthHours = {
+  [K in MonthKey]?: { totalHours: number };
+};
+
+export type HoursYearDoc = {
+  id?: string;
+  year: number;
+  months: Record<MonthKey, { totalHours: number }>;
+};
+
+export type PatchMonthVars = {
+  year: string;
+  month: MonthKey;
+  totalHours: number;
+};
+
+export type PatchContext = {
+  previous?: HoursYearDoc | null;
+};

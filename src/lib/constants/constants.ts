@@ -7,6 +7,20 @@ const companyDocumentType = ['CIF', 'NIF', 'NIE'] as const;
 const officeLocations = ['Puerto de Balbarán 15'] as const;
 const userRoles = ['Administrador', 'Colaborador', 'Practicante'] as const;
 const userStatus = ['Activo', 'Pendiente', 'Baja', 'Inhabilitado'] as const;
+const MONTHS_ES = [
+  'enero',
+  'febrero',
+  'marzo',
+  'abril',
+  'mayo',
+  'junio',
+  'julio',
+  'agosto',
+  'septiembre',
+  'octubre',
+  'noviembre',
+  'diciembre',
+] as const;
 
 const sidebarMenu = [
   {
@@ -159,6 +173,11 @@ const sidebarAdminMenu = [
         href: '/settings/procedures',
         icon: 'pi pi-file-import',
       },
+      {
+        title: 'Horas por mes',
+        href: '/settings/hours',
+        icon: 'pi pi-clock',
+      },
     ],
   },
 ];
@@ -169,6 +188,7 @@ export const constants = {
   gender,
   status,
   messenger,
+  MONTHS_ES,
   officeLocations,
   paymentMethods,
   sidebarMenu,

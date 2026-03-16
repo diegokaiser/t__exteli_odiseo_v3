@@ -1,5 +1,11 @@
 import { db } from '@/lib/firebase';
-import { ClockifyDay, ClockifyDayWithUser, ClockifyRecord } from '@/types/clockify';
+import {
+  ClockifyDay,
+  ClockifyDayWithUser,
+  ClockifyRecord,
+  HoursYearDoc,
+  MonthKey,
+} from '@/types/clockify';
 import {
   arrayUnion,
   collection,
@@ -165,6 +171,31 @@ const clockify = {
       console.error(`PatchRecord error (${recordUid}): ${err}`);
       throw err;
     }
+  },
+  GetHoursByYear: async (year: string): Promise<HoursYearDoc | null> => {
+    try {
+      const ref = doc(db, 'settings', 'clockify', 'hours', year);
+      const snap = await getDoc(ref);
+
+      if (!snap.exists()) return null;
+
+      const data = snap.data() as Omit<HoursYearDoc, 'id'>;
+
+      return {
+        id: snap.id,
+        ...data,
+      };
+    } catch (err) {
+      console.error(`GetHoursByYear error: ${err}`);
+      throw err;
+    }
+  },
+  PatchHoursByYear: async (year: string, month: MonthKey, totalHours: number) => {
+    const ref = doc(db, 'settings', 'clockify', 'hours', year);
+    await updateDoc(ref, {
+      [`months.${month}.totalHours`]: totalHours,
+    });
+    return true;
   },
 };
 

@@ -417,8 +417,8 @@ const Document = ({
         <View style={styles.sectionImportant}>
           <Text style={styles.fontBold}>IMPORTANTE:</Text>
           <Text>
-            Una vez iniciado el tramite no se devolverá el dinero a no ser que por fuerza mayor no
-            se pueda continuar con el proceso.
+            Una vez iniciado el tramite no hay devolución de dinero, sin embargo puede obtar por un
+            cambio de tramite.
           </Text>
           <Text>
             Se descontará por concepto de asesoramiento 50€ y la parte proporcional del trabajo

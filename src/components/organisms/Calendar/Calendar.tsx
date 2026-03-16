@@ -85,8 +85,6 @@ const Calendar = ({ userUid }: { userUid: string }) => {
   const headerDialog = <></>;
   const footerDialog = <></>;
 
-  console.log(eventDialog);
-
   return (
     <>
       <FullCalendar
