@@ -257,7 +257,9 @@ const FormBill = () => {
       provider: providers?.[0],
       customer: isRegisteredCustomer ? selectedCustomer : data.nonRegisteredCustomerName,
       phone: isRegisteredCustomer ? selectedCustomer?.phone : data.nonRegisteredCustomerPhone,
-      email: isRegisteredCustomer ? selectedCustomer?.email : data.nonRegisteredCustomerEmail,
+      email: isRegisteredCustomer
+        ? selectedCustomer?.email || ''
+        : data.nonRegisteredCustomerEmail || '',
       createDate,
       description: rows,
       subtotal,
@@ -265,12 +267,12 @@ const FormBill = () => {
       ivas,
       irpfs,
       total,
-      notes: (document.getElementById('notes') as HTMLInputElement)?.value,
-      paymentMethod: (document.getElementById('paymentMethod') as HTMLSelectElement)?.value,
+      notes: data.notes,
+      paymentMethod: data.paymentMethod,
       status: 'Pagado',
       registeredBy: user?.name,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: data.createDate,
+      updatedAt: data.createDate,
     };
     try {
       await postBill.mutateAsync(bill);
@@ -289,7 +291,9 @@ const FormBill = () => {
       });
     } finally {
       setLoading(false);
-      //router.push('/billing');
+      setTimeout(() => {
+        router.push('/billing');
+      }, 4000);
     }
   };
 
@@ -298,7 +302,7 @@ const FormBill = () => {
       <Toast ref={toast} />
       <ConfirmDialog group="templating" style={{ width: '70vw' }} />
       {loading && <LoadingScreen />}
-      <form onSubmit={handleSubmit(onSubmit)} className="p-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="p-6" autoComplete="off">
         <div className="basis-[50%] min-w-[50%]">
           <div
             className="box-border flex flex-wrap mt-[-24px] mb-[24px] ml-[-24px] text-[#5b6b79]"
@@ -423,7 +427,7 @@ const FormBill = () => {
                           {...register('nonRegisteredCustomerEmail', {
                             validate: (value) => {
                               if (isRegisteredCustomer) return true;
-                              if (!value?.trim()) return 'El correo electrónico no es válido';
+                              if (!value?.trim()) return true;
                               const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                               return emailRegex.test(value)
                                 ? true
