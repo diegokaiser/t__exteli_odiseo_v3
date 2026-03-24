@@ -271,8 +271,8 @@ const FormBill = () => {
       paymentMethod: data.paymentMethod,
       status: 'Pagado',
       registeredBy: user?.name,
-      createdAt: data.createDate,
-      updatedAt: data.createDate,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     };
     try {
       await postBill.mutateAsync(bill);
