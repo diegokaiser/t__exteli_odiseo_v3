@@ -34,7 +34,7 @@ Font.register({
 const styles = StyleSheet.create({
   body: {
     paddingTop: 14,
-    paddingBottom: 21,
+    paddingBottom: 7,
     paddingHorizontal: 21,
     fontFamily: 'Inter',
   },
@@ -45,7 +45,9 @@ const styles = StyleSheet.create({
   },
   sectionImportant: {
     margin: 10,
-    padding: 10,
+    paddingTop: 4,
+    paddingHorizontal: 10,
+    paddingBottom: 4,
     fontSize: 10,
   },
   sectionImg: {
@@ -152,6 +154,7 @@ const Document = ({
   provider,
   customerData,
   customerPhone,
+  customerEmail,
   createDate,
   rowsData,
   subtotal,
@@ -162,12 +165,15 @@ const Document = ({
   notes,
   paymentMethod,
   status,
+  registeredBy,
+  isPreview,
 }: {
   billSerial: string;
   billNumber: string;
   provider: Company;
   customerData: BillCustomer;
-  customerPhone: string | undefined;
+  customerPhone?: string | undefined;
+  customerEmail?: string | undefined;
   createDate: string;
   rowsData: any[];
   subtotal: number;
@@ -178,6 +184,8 @@ const Document = ({
   notes: string;
   paymentMethod: string;
   status: string;
+  registeredBy: string | undefined;
+  isPreview?: boolean;
 }) => {
   const isCustomerObject = typeof customerData !== 'string' && customerData?.customer !== undefined;
 
@@ -226,17 +234,43 @@ const Document = ({
                 {!isCustomerObject && (
                   <>
                     <View style={styles.tableColw12d12}>
-                      <Text style={styles.fontExtralight}>
-                        {typeof customerData === 'string'
-                          ? customerData
-                          : customerData.customer.documentType +
+                      {typeof customerData === 'string' ? (
+                        <View style={styles.tableRow}>
+                          <View>
+                            <Text style={styles.fontBold}>Nombre: </Text>
+                          </View>
+                          <View>
+                            <Text style={styles.fontExtralight}>{customerData}</Text>
+                          </View>
+                        </View>
+                      ) : (
+                        <Text style={styles.fontExtralight}>
+                          {customerData.customer.documentType +
                             ': ' +
                             customerData.customer.documentNumber}
-                      </Text>
+                        </Text>
+                      )}
                     </View>
-                    <View style={styles.tableColw12d12}>
-                      <Text style={styles.fontExtralight}>{customerPhone}</Text>
-                    </View>
+                    {customerPhone && (
+                      <View style={styles.tableColw12d12}>
+                        <View style={styles.tableRow}>
+                          <View>
+                            <Text style={styles.fontBold}>Teléfono: </Text>
+                          </View>
+                          <View>
+                            <Text style={styles.fontExtralight}>{customerPhone}</Text>
+                          </View>
+                        </View>
+                      </View>
+                    )}
+                    {customerEmail && (
+                      <View style={styles.tableColw12d12}>
+                        <View style={styles.tableRow}>
+                          <Text style={styles.fontBold}>Correo electrónico: </Text>
+                          <Text style={styles.fontExtralight}>{customerEmail}</Text>
+                        </View>
+                      </View>
+                    )}
                   </>
                 )}
                 {isCustomerObject && (
@@ -408,10 +442,23 @@ const Document = ({
           </View>
         </View>
 
-        <View style={styles.section}>
+        <View style={styles.sectionImportant}>
           <Text style={styles.fontBold}>Notas:</Text>
-          <Text>Medio de pago: {paymentMethod}</Text>
           <Text>{notes}</Text>
+          <View style={styles.tableFull}>
+            <View style={styles.tableRow}>
+              <Text style={styles.fontBold}>Medio de pago: </Text>
+              <Text>{paymentMethod}</Text>
+            </View>
+          </View>
+          {registeredBy && (
+            <View style={styles.tableFull}>
+              <View style={styles.tableRow}>
+                <Text style={styles.fontBold}>Gestor(a): </Text>
+                <Text>{registeredBy}</Text>
+              </View>
+            </View>
+          )}
         </View>
 
         <View style={styles.sectionImportant}>
@@ -430,6 +477,16 @@ const Document = ({
           <View style={styles.section}>
             <Text style={{ color: '#EF5350', fontFamily: 'Inter', fontWeight: 600 }}>
               FACTURA CANCELADA
+            </Text>
+          </View>
+        )}
+        {isPreview && (
+          <View style={styles.section}>
+            <Text style={{ color: '#039BE5', fontFamily: 'Inter', fontWeight: 600 }}>
+              PREVISUALIZACIÓN
+            </Text>
+            <Text style={{ color: '#039BE5', fontFamily: 'Inter', fontWeight: 600 }}>
+              Esta factura carece de validez
             </Text>
           </View>
         )}

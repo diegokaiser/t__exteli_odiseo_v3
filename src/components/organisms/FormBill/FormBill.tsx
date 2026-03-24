@@ -79,9 +79,20 @@ const FormBill = () => {
     handleSubmit,
     setValue,
     watch,
-    formState: { isValid },
+    getValues,
+    trigger,
+    formState: { isValid, errors, touchedFields },
   } = useForm<BillForm>({
     mode: 'onChange',
+    defaultValues: {
+      createDate,
+      paymentMethod: '',
+      notes: '',
+      nonRegisteredCustomerName: '',
+      nonRegisteredCustomerPhone: '',
+      nonRegisteredCustomerEmail: '',
+      description: rows,
+    },
   });
 
   const toggleCustomerType = () => {
@@ -183,7 +194,13 @@ const FormBill = () => {
     calculateTotal();
   }, [subtotal, descuentos, ivas, irpfs]);
 
+  useEffect(() => {
+    trigger();
+  }, [isRegisteredCustomer, trigger]);
+
   const showModal = () => {
+    const formValues = getValues();
+
     confirmDialog({
       group: 'templating',
       header: 'Confirmación',
@@ -197,10 +214,18 @@ const FormBill = () => {
               customerData={
                 isRegisteredCustomer
                   ? selectedCustomer!.name!
-                  : (document.getElementById('nonRegisteredCustomerName') as HTMLInputElement)
-                      ?.value
+                  : formValues.nonRegisteredCustomerName || ''
               }
-              customerPhone={selectedCustomer?.phone}
+              customerPhone={
+                isRegisteredCustomer
+                  ? selectedCustomer?.phone
+                  : formValues.nonRegisteredCustomerPhone || ''
+              }
+              customerEmail={
+                isRegisteredCustomer
+                  ? selectedCustomer?.email
+                  : formValues.nonRegisteredCustomerEmail || ''
+              }
               createDate={createDate}
               rowsData={rows}
               subtotal={subtotal}
@@ -208,9 +233,11 @@ const FormBill = () => {
               ivas={ivas}
               irpfs={irpfs}
               total={total}
-              notes={(document.getElementById('notes') as HTMLInputElement)?.value}
-              paymentMethod={(document.getElementById('paymentMethod') as HTMLSelectElement)?.value}
+              notes={formValues.notes || ''}
+              paymentMethod={formValues.paymentMethod}
               status={'emitted'}
+              registeredBy={user?.name}
+              isPreview={true}
             />
           </PDFViewer>
         </div>
@@ -223,16 +250,14 @@ const FormBill = () => {
 
   const onSubmit = async (data: BillForm) => {
     setLoading(true);
+
     const bill = {
       billSerial,
       billNumber,
       provider: providers?.[0],
-      customer: isRegisteredCustomer
-        ? selectedCustomer
-        : (document.getElementById('nonRegisteredCustomerName') as HTMLInputElement)?.value,
-      phone: !isRegisteredCustomer
-        ? (document.getElementById('nonRegisteredCustomerPhone') as HTMLInputElement)?.value
-        : '',
+      customer: isRegisteredCustomer ? selectedCustomer : data.nonRegisteredCustomerName,
+      phone: !isRegisteredCustomer ? selectedCustomer?.phone : data.nonRegisteredCustomerPhone,
+      email: !isRegisteredCustomer ? selectedCustomer?.email : data.nonRegisteredCustomerEmail,
       createDate,
       description: rows,
       subtotal,
@@ -243,6 +268,7 @@ const FormBill = () => {
       notes: (document.getElementById('notes') as HTMLInputElement)?.value,
       paymentMethod: (document.getElementById('paymentMethod') as HTMLSelectElement)?.value,
       status: 'Pagado',
+      registeredBy: user?.name,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -322,6 +348,12 @@ const FormBill = () => {
                         <InputText
                           id="nonRegisteredCustomerName"
                           className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] bg-transparent"
+                          {...register('nonRegisteredCustomerName', {
+                            validate: (value) =>
+                              isRegisteredCustomer || value?.trim()
+                                ? true
+                                : 'El nombre es obligatorio',
+                          })}
                         />
                       </div>
                     </div>
@@ -331,15 +363,73 @@ const FormBill = () => {
                   <div className="flex flex-col">
                     <label
                       htmlFor="nonRegisteredCustomerPhone"
-                      className="text-xs font-light p-0 relative block whitespace-nowrap overflow-hidden max-w-[100%]"
+                      className={`text-xs font-light p-0 relative block whitespace-nowrap overflow-hidden max-w-[100%] ${
+                        errors.nonRegisteredCustomerPhone &&
+                        touchedFields.nonRegisteredCustomerPhone
+                          ? 'text-red-500'
+                          : 'text-[#5b6b79]'
+                      }`}
                     >
                       Número de móvil
                     </label>
                     <div className="inline-flex flex-col relative min-w-0 p-0 border-0 align-top w-full mb-2 mt-2">
-                      <div className="box-border inline-flex w-full relative rounded-[8px] border border-solid border-[#bec8d0] h-12">
+                      <div
+                        className={`box-border inline-flex w-full relative rounded-[8px] border border-solid h-12 ${
+                          errors.nonRegisteredCustomerPhone &&
+                          touchedFields.nonRegisteredCustomerPhone
+                            ? 'border-red-500'
+                            : 'border-[#bec8d0]'
+                        }`}
+                      >
                         <InputText
                           id="nonRegisteredCustomerPhone"
                           className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] bg-transparent"
+                          {...register('nonRegisteredCustomerPhone', {
+                            validate: (value) =>
+                              isRegisteredCustomer || value?.trim()
+                                ? true
+                                : 'El número de móvil es obligatorio',
+                          })}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="box-border m-0 basis-[100%] grow-0 min-w-[100%] pl-6 pt-6 lg:basis-[25%] lg:min-w-[25%]">
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="nonRegisteredCustomerEmail"
+                      className={`text-xs font-light p-0 relative block whitespace-nowrap overflow-hidden max-w-[100%] ${
+                        errors.nonRegisteredCustomerEmail &&
+                        touchedFields.nonRegisteredCustomerEmail
+                          ? 'text-red-500'
+                          : 'text-[#5b6b79]'
+                      }`}
+                    >
+                      Correo electrónico
+                    </label>
+                    <div className="inline-flex flex-col relative min-w-0 p-0 border-0 align-top w-full mb-2 mt-2">
+                      <div
+                        className={`box-border inline-flex w-full relative rounded-[8px] border border-solid h-12 ${
+                          errors.nonRegisteredCustomerEmail &&
+                          touchedFields.nonRegisteredCustomerEmail
+                            ? 'border-red-500'
+                            : 'border-[#bec8d0]'
+                        }`}
+                      >
+                        <InputText
+                          id="nonRegisteredCustomerEmail"
+                          className="border-0! box-border bg-none m-0 block min-w-0 w-full p-[14px] bg-transparent"
+                          {...register('nonRegisteredCustomerEmail', {
+                            validate: (value) => {
+                              if (isRegisteredCustomer) return true;
+                              if (!value?.trim()) return 'El correo electrónico no es válido';
+                              const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                              return emailRegex.test(value)
+                                ? true
+                                : 'El correo electrónico no es válido';
+                            },
+                          })}
                         />
                       </div>
                     </div>
@@ -362,10 +452,8 @@ const FormBill = () => {
                 />
               </div>
             </div>
-            {isRegisteredCustomer ? (
+            {isRegisteredCustomer && (
               <div className="box-border m-0 basis-[100%] grow-0 min-w-[100%] pl-6 pt-6 lg:basis-[50%] lg:min-w-[50%]"></div>
-            ) : (
-              <div className="box-border m-0 basis-[100%] grow-0 min-w-[100%] pl-6 pt-6 lg:basis-[25%] lg:min-w-[25%]"></div>
             )}
 
             <div className="box-border m-0 basis-[100%] grow-0 min-w-[100%] pl-6 pt-6 lg:basis-[25%] lg:min-w-[25%]">

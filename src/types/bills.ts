@@ -118,6 +118,10 @@ export interface BillForm {
   paymentMethod: 'Efectivo' | 'Bizum' | 'Tarjeta' | 'Transferencia bancaria' | string;
 
   registerdBy?: string;
+
+  nonRegisteredCustomerName?: string;
+  nonRegisteredCustomerPhone?: string;
+  nonRegisteredCustomerEmail?: string;
 }
 
 export type BillSearch =

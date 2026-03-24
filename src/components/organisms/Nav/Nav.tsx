@@ -65,7 +65,7 @@ const Nav = () => {
                   whiteSpace: 'nowrap',
                 }}
               >
-                v2.4.2
+                v2.4.5
               </span>
             </div>
             {/** menu */}

@@ -18,8 +18,6 @@ const BillPage = () => {
 
   const { data: bill, isLoading: loadingBill, isError: errorBill } = useBill(billId);
 
-  console.log(bill);
-
   return (
     <>
       {loadingBill && <LoadingScreen />}
@@ -45,6 +43,7 @@ const BillPage = () => {
                     provider={bill?.provider}
                     customerData={bill?.customer}
                     customerPhone={bill?.phone}
+                    customerEmail={bill?.email}
                     createDate={bill?.createDate}
                     rowsData={bill?.description}
                     subtotal={bill?.subtotal}
@@ -55,6 +54,8 @@ const BillPage = () => {
                     notes={bill?.notes}
                     paymentMethod={bill?.paymentMethod}
                     status={bill?.status}
+                    registeredBy={bill?.registeredBy}
+                    isPreview={false}
                   />
                 </PDFViewer>
               )}
