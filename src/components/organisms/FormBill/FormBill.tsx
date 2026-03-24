@@ -256,8 +256,8 @@ const FormBill = () => {
       billNumber,
       provider: providers?.[0],
       customer: isRegisteredCustomer ? selectedCustomer : data.nonRegisteredCustomerName,
-      phone: !isRegisteredCustomer ? selectedCustomer?.phone : data.nonRegisteredCustomerPhone,
-      email: !isRegisteredCustomer ? selectedCustomer?.email : data.nonRegisteredCustomerEmail,
+      phone: isRegisteredCustomer ? selectedCustomer?.phone : data.nonRegisteredCustomerPhone,
+      email: isRegisteredCustomer ? selectedCustomer?.email : data.nonRegisteredCustomerEmail,
       createDate,
       description: rows,
       subtotal,
@@ -289,7 +289,7 @@ const FormBill = () => {
       });
     } finally {
       setLoading(false);
-      router.push('/billing');
+      //router.push('/billing');
     }
   };
 
