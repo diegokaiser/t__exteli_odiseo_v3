@@ -263,14 +263,6 @@ const Document = ({
                         </View>
                       </View>
                     )}
-                    {customerEmail && (
-                      <View style={styles.tableColw12d12}>
-                        <View style={styles.tableRow}>
-                          <Text style={styles.fontBold}>Correo electrónico: </Text>
-                          <Text style={styles.fontExtralight}>{customerEmail}</Text>
-                        </View>
-                      </View>
-                    )}
                   </>
                 )}
                 {isCustomerObject && (
@@ -304,6 +296,22 @@ const Document = ({
                   </View>
                 </View>
               </View>
+            </View>
+          </View>
+          <View style={styles.tableRow}>
+            <View style={styles.tableColw12d12}>
+              {!isCustomerObject && (
+                <>
+                  {customerEmail && (
+                    <View style={styles.tableColw12d12}>
+                      <View style={styles.tableRow}>
+                        <Text style={styles.fontBold}>Correo electrónico: </Text>
+                        <Text style={styles.fontExtralight}>{customerEmail}</Text>
+                      </View>
+                    </View>
+                  )}
+                </>
+              )}
             </View>
           </View>
         </View>
