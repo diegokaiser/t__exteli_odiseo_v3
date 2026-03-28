@@ -43,7 +43,8 @@ const FormSearchBill = () => {
     return null;
   };
 
-  const onSearch = async () => {
+  const onSearch = async (e?: React.FormEvent<HTMLFormElement>) => {
+    e?.preventDefault();
     const error = validate(by, input);
     if (error) {
       toast.current?.show({
@@ -115,8 +116,7 @@ const FormSearchBill = () => {
                     </div>
                     <div className="w-4/12">
                       <button
-                        type="button"
-                        onClick={onSearch}
+                        type="submit"
                         disabled={isBusy}
                         className="bg-[#007bff] box-border flex items-center gap-x-2 h-12 text-white px-4 py-2 rounded-[8px]"
                       >
@@ -148,10 +148,15 @@ const FormSearchBill = () => {
                         <Link href={`/billing/${bill.id}`} className="w-full">
                           <div className="flex flex-col">
                             <span className="font-medium">
-                              #{bill.billNumber} — {bill.customer}
+                              #{bill.billNumber} — {bill.customer}{' '}
+                              {bill.phone ? ` - ${bill.phone}` : ''}
                             </span>
                             <span className="text-xs text-[#5b6b79]">
-                              Fecha: {bill.createDate} · Estado: {bill.status} · Total: {bill.total}
+                              <strong>Fecha:</strong> {bill.createDate} · <strong>Estado:</strong>{' '}
+                              {bill.status} · <strong>Total:</strong> {bill.total}
+                            </span>
+                            <span className="text-xs text-[#5b6b79]">
+                              <strong>Notas:</strong> {bill.notes}
                             </span>
                           </div>
                         </Link>
