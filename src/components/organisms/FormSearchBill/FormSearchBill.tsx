@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { Toast } from 'primereact/toast';
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { LoadingScreen } from '@/components/atoms';
 import { useFindBills } from '@/hooks/useBills';
@@ -14,7 +14,7 @@ const FormSearchBill = () => {
   const router = useRouter();
 
   const [by, setBy] = useState<BillSearchBy>('billNumber');
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState<string>('');
 
   const [searchParams, setSearchParams] = useState<{ by: BillSearchBy; value: string }>({
     by: 'billNumber',
@@ -29,6 +29,10 @@ const FormSearchBill = () => {
     if (by === 'billNumber') return 'Número de factura';
     if (by === 'customer') return 'Cliente';
     return 'Fecha de creación';
+  }, [by]);
+
+  useEffect(() => {
+    setInput('');
   }, [by]);
 
   const validate = (by: BillSearchBy, value: string) => {
@@ -70,6 +74,8 @@ const FormSearchBill = () => {
     });
   };
 
+  console.log(q.data);
+
   return (
     <>
       <Toast ref={toast} />
@@ -104,7 +110,7 @@ const FormSearchBill = () => {
                       <div className="bg-white box-border inline-flex w-full relative rounded-[8px] border border-solid border-[#bec8d0] h-12">
                         <input
                           className="w-full h-full px-3 rounded-[8px] outline-none"
-                          type="text"
+                          type={by === 'createDate' ? 'date' : 'text'}
                           value={input}
                           placeholder={placeholder}
                           onChange={(e) => setInput(e.target.value)}
@@ -158,6 +164,11 @@ const FormSearchBill = () => {
                             <span className="text-xs text-[#5b6b79]">
                               <strong>Notas:</strong> {bill.notes}
                             </span>
+                            {bill.registeredBy && (
+                              <span className="text-xs text-[#5b6b79]">
+                                <strong>Registrado por:</strong> {bill.registeredBy}
+                              </span>
+                            )}
                           </div>
                         </Link>
                       </li>
