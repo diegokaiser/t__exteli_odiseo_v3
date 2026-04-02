@@ -43,9 +43,33 @@ const ListPage = () => {
     setGlobalFilterValue(value);
   };
 
+  const exportExcel = () => {
+    import('xlsx').then((xlsx) => {
+      if (!customers?.length) return;
+      const worksheet = xlsx.utils.json_to_sheet(customers);
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+      const excelBuffer = xlsx.write(workbook, {
+        bookType: 'xlsx',
+        type: 'array',
+      });
+      saveAsExcelFile(excelBuffer, 'customers');
+    });
+  };
+
+  const saveAsExcelFile = async (buffer: ArrayBuffer, fileName: string) => {
+    const FileSaver = await import('file-saver');
+
+    const EXCEL_TYPE =
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    const EXCEL_EXTENSION = '.xlsx';
+
+    const data = new Blob([buffer], { type: EXCEL_TYPE });
+    FileSaver.default.saveAs(data, `${fileName}_${new Date().getTime()}${EXCEL_EXTENSION}`);
+  };
+
   const renderHeader = () => {
     return (
-      <div>
+      <div className="flex items-center justify-between">
         <IconField iconPosition="left">
           <InputIcon className="pi pi-search" />
           <InputText
@@ -54,6 +78,12 @@ const ListPage = () => {
             placeholder="Buscar..."
           />
         </IconField>
+        <button
+          className="bg-[#388E3C] inline-flex items-center gap-x-2 rounded-[6px] px-4 py-2 text-white"
+          onClick={exportExcel}
+        >
+          <i className="pi pi-file-excel"></i> Exportar a Excel
+        </button>
       </div>
     );
   };
