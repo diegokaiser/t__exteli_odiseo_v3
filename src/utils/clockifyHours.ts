@@ -108,7 +108,6 @@ export const calculateDaySummary = (day: ClockifyDay): ClockifyDaySummary => {
     workedMinutes,
     pauseMinutes,
     totalMinutes,
-    totalHours: undefined as never,
     isComplete,
     hasErrors,
   };
