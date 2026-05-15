@@ -7,6 +7,7 @@ import {
   PatchContext,
   PatchMonthVars,
 } from '@/types/clockify';
+import { calculateMonthSummary } from '@/utils/clockifyHours';
 import { clockifyRecordHour } from '@/utils/clockifyRecordHour';
 import { clockifyToSecondsNanos } from '@/utils/ClockifyToSecondsNanos';
 import { useMutation, useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -204,4 +205,56 @@ export const usePatchHoursByYear = () => {
       }
     },
   });
+};
+
+export const useGetRecordsByMonth = ({
+  userUid,
+  year,
+  month,
+}: {
+  userUid: string;
+  year: string;
+  month: string;
+}) => {
+  return useQuery<ClockifyDay[]>({
+    queryKey: ['clockify-records-month', userUid, year, month],
+    queryFn: () =>
+      apis.clockify.GetRecordsByMonth({
+        userUid,
+        year,
+        month,
+      }),
+    enabled: Boolean(userUid && year && month),
+  });
+};
+
+export const useClockifyMonthSummary = ({
+  userUid,
+  year,
+  month,
+}: {
+  userUid: string;
+  year: string;
+  month: string;
+}) => {
+  const query = useGetRecordsByMonth({
+    userUid,
+    year,
+    month,
+  });
+
+  const summary = useMemo(() => {
+    if (!query.data) return null;
+
+    return calculateMonthSummary({
+      days: query.data,
+      year,
+      month,
+    });
+  }, [query.data, year, month]);
+
+  return {
+    ...query,
+    summary,
+  };
 };

@@ -12,6 +12,7 @@ export { default as DashboardBill } from './DashboardBill';
 export { default as DashboardBillCount } from './DashboardBillCount';
 export { default as DataClockify } from './DataClockify';
 export { default as DataCustomer } from './DataCustomer';
+export { default as DataMonthClockify } from './DataMonthClockify';
 export { default as DataUser } from './DataUser';
 export { default as FormBill } from './FormBill';
 export { default as FormCalendar } from './FormCalendar';

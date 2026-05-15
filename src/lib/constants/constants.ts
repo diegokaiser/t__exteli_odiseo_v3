@@ -86,6 +86,11 @@ const sidebarMenu = [
         href: '/clockify/records',
         icon: 'pi pi-eye',
       },
+      {
+        title: 'Horas por mes',
+        href: '/clockify/hours',
+        icon: 'pi pi-clock',
+      },
     ],
   },
   {

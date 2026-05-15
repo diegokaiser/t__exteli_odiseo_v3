@@ -13,12 +13,25 @@ import {
   doc,
   getDoc,
   getDocs,
+  orderBy,
   query,
   setDoc,
   Timestamp,
   updateDoc,
   where,
 } from 'firebase/firestore';
+
+const getNextMonthPrefix = (year: string, month: string) => {
+  const yearNumber = Number(year);
+  const monthNumber = Number(month);
+
+  const nextMonthDate = new Date(yearNumber, monthNumber, 1);
+
+  const nextYear = nextMonthDate.getFullYear();
+  const nextMonth = String(nextMonthDate.getMonth() + 1).padStart(2, '0');
+
+  return `${nextYear}-${nextMonth}`;
+};
 
 const clockify = {
   GetRecord: async (userUid: string, recordUid: string): Promise<ClockifyDay | null> => {
@@ -78,19 +91,25 @@ const clockify = {
   }): Promise<ClockifyDay[]> => {
     try {
       const ref = collection(db, `clockify/${userUid}/records`);
-      const prefix = `${year}-${month.toString().padStart(2, '0')}`;
+
+      const currentMonth = `${year}-${String(month).padStart(2, '0')}`;
+      const nextMonth = getNextMonthPrefix(year, month);
+
       const q = query(
         ref,
-        where('date', '>=', `${prefix}-01`),
-        where('date', '<=', `${prefix}-31`)
+        where('date', '>=', `${currentMonth}-01`),
+        where('date', '<', `${nextMonth}-01`),
+        orderBy('date', 'asc')
       );
+
       const snap = await getDocs(q);
+
       return snap.docs.map((doc) => ({
         id: doc.id,
         ...(doc.data() as ClockifyDay),
       }));
     } catch (err) {
-      console.error(`GetRecordsByMonth error (${userUid}, ${year}, ${month}): ${err}`);
+      console.error(`GetRecordsByMonth error (${userUid}, ${year}, ${month}):`, err);
       throw err;
     }
   },
