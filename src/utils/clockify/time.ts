@@ -20,3 +20,19 @@ export const formatMinutesToReadableHours = (minutes: number) => {
 
   return `${remainingMinutes} ${minutesLabel}`;
 };
+
+export const getDailyBalanceMinutes = (date: string, totalMinutes: number) => {
+  const day = new Date(`${date}T00:00:00`).getDay();
+
+  const isSaturday = day === 6;
+  const expectedMinutes = isSaturday ? 4 * 60 : 8 * 60;
+
+  return totalMinutes - expectedMinutes;
+};
+
+export const formatSignedMinutes = (minutes: number) => {
+  const sign = minutes >= 0 ? '+' : '-';
+  const absoluteMinutes = Math.abs(minutes);
+
+  return `${sign}${formatMinutesToReadableHours(absoluteMinutes)}`;
+};
